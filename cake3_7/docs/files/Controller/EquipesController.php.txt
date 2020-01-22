@@ -1,0 +1,113 @@
+<?php
+namespace App\Controller;
+
+use App\Controller\AppController;
+
+/**
+ * Equipes Controller
+ *
+ * @property \App\Model\Table\EquipesTable $Equipes
+ *
+ * @method \App\Model\Entity\Equipe[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ */
+class EquipesController extends AppController
+{
+    /**
+     * Index method
+     *
+     * @return \Cake\Http\Response|void
+     */
+    public function index()
+    {
+		$this->set('searchLabelExtra', "nom d'équipe");
+
+		$query = $this->Equipes
+			// Use the plugins 'search' custom finder and pass in the
+			// processed query params
+			->find('search', ['search' => $this->request->getQueryParams()]);
+
+        $this->paginate = [
+            'contain' => ['Membres']
+        ];
+
+        $this->set('equipes', $this->paginate($query));
+    }
+
+    /**
+     * View method
+     *
+     * @param string|null $id Equipe id.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function view($id = null)
+    {
+        $equipe = $this->Equipes->get($id, [
+            'contain' => ['Membres', 'Projets', 'EquipesResponsables']
+        ]);
+
+		// Chargement des entités membres en tant que mmebres de l'équipe 
+		$this->loadModel('Membres');
+		$query = $this->Membres->find('all')
+                        ->where(['Membres.equipe_id =' => $equipe->id]);
+		$equipe->membres = $query->all();
+		
+		// Chargement de l'entité membre en tant que responsables de l'équipe
+		$query = $this->Membres->find('all')
+                        ->where(['Membres.id =' => $equipe->responsable_id])
+						->limit(1);
+		$equipe->equipes_responsables = $query->first();
+		
+        $this->set('equipe', $equipe);
+    }
+
+    /**
+     * Edit method ; if $id is null it behaves like an add method instead.
+     *
+     * @param string|null $id Equipe id.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function edit($id = null)
+    {
+		if($id == null)
+			$equipe = $this->Equipes->newEntity();
+		else
+			$equipe = $this->Equipes->get($id, [
+				'contain' => ['Projets']
+			]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $equipe = $this->Equipes->patchEntity($equipe, $this->request->getData());
+            if ($this->Equipes->save($equipe)) {
+                $this->Flash->success(__('The equipe has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The equipe could not be saved. Please, try again.'));
+        }
+        $membres = $this->Equipes->Membres->find('list', ['limit' => 200]);
+        $projets = $this->Equipes->Projets->find('list', ['limit' => 200]);
+        $this->set(compact('equipe', 'membres', 'projets'));
+    }
+
+    /**
+     * Delete method
+     *
+     * @param string|null $id Equipe id.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function delete($id = null)
+    {
+        $this->request->allowMethod(['post', 'delete']);
+        $equipe = $this->Equipes->get($id);
+        if ($this->Equipes->delete($equipe)) {
+            $this->Flash->success(__('The equipe has been deleted.'));
+        } else {
+            $this->Flash->error(__('The equipe could not be deleted. Please, try again.'));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
+}
+

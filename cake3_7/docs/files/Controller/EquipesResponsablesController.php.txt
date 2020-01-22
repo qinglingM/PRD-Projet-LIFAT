@@ -1,0 +1,114 @@
+<?php
+namespace App\Controller;
+
+use App\Controller\AppController;
+
+/**
+ * EquipesResponsables Controller
+ *
+ * @property \App\Model\Table\EquipesResponsablesTable $EquipesResponsables
+ *
+ * @method \App\Model\Entity\EquipesResponsable[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ */
+class EquipesResponsablesController extends AppController
+{
+    /**
+     * Index method
+     *
+     * @return \Cake\Http\Response|void
+     */
+    public function index()
+    {
+        $this->paginate = [
+            'contain' => ['Equipes', 'Membres']
+        ];
+        $equipesResponsables = $this->paginate($this->EquipesResponsables);
+
+        $this->set(compact('equipesResponsables'));
+    }
+
+    /**
+     * View method
+     *
+     * @param string|null $id Equipes Responsable id.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function view($id = null)
+    {
+        $equipesResponsable = $this->EquipesResponsables->get($id, [
+            'contain' => ['Equipes', 'Membres']
+        ]);
+
+        $this->set('equipesResponsable', $equipesResponsable);
+    }
+
+    /**
+     * Add method
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     */
+    public function add()
+    {
+        $equipesResponsable = $this->EquipesResponsables->newEntity();
+        if ($this->request->is('post')) {
+            $equipesResponsable = $this->EquipesResponsables->patchEntity($equipesResponsable, $this->request->getData());
+            if ($this->EquipesResponsables->save($equipesResponsable)) {
+                $this->Flash->success(__('The equipes responsable has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The equipes responsable could not be saved. Please, try again.'));
+        }
+        $equipes = $this->EquipesResponsables->Equipes->find('list', ['limit' => 200]);
+        $membres = $this->EquipesResponsables->Membres->find('list', ['limit' => 200]);
+        $this->set(compact('equipesResponsable', 'equipes', 'membres'));
+    }
+
+    /**
+     * Edit method
+     *
+     * @param string|null $id Equipes Responsable id.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function edit($id = null)
+    {
+        $equipesResponsable = $this->EquipesResponsables->get($id, [
+            'contain' => []
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $equipesResponsable = $this->EquipesResponsables->patchEntity($equipesResponsable, $this->request->getData());
+            if ($this->EquipesResponsables->save($equipesResponsable)) {
+                $this->Flash->success(__('The equipes responsable has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The equipes responsable could not be saved. Please, try again.'));
+        }
+        $equipes = $this->EquipesResponsables->Equipes->find('list', ['limit' => 200]);
+        $membres = $this->EquipesResponsables->Membres->find('list', ['limit' => 200]);
+        $this->set(compact('equipesResponsable', 'equipes', 'membres'));
+    }
+
+    /**
+     * Delete method
+     *
+     * @param string|null $id Equipes Responsable id.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function delete($id = null)
+    {
+        $this->request->allowMethod(['post', 'delete']);
+        $equipesResponsable = $this->EquipesResponsables->get($id);
+        if ($this->EquipesResponsables->delete($equipesResponsable)) {
+            $this->Flash->success(__('The equipes responsable has been deleted.'));
+        } else {
+            $this->Flash->error(__('The equipes responsable could not be deleted. Please, try again.'));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
+}
+

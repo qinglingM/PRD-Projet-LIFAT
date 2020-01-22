@@ -1,0 +1,112 @@
+<?php
+namespace App\Controller;
+
+use App\Controller\AppController;
+
+/**
+ * BudgetsAnnuels Controller
+ *
+ * @property \App\Model\Table\BudgetsAnnuelsTable $BudgetsAnnuels
+ *
+ * @method \App\Model\Entity\BudgetsAnnuel[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ */
+class BudgetsAnnuelsController extends AppController
+{
+    /**
+     * Index method
+     *
+     * @return \Cake\Http\Response|void
+     */
+    public function index()
+    {
+        $this->paginate = [
+            'contain' => ['Projets']
+        ];
+        $budgetsAnnuels = $this->paginate($this->BudgetsAnnuels);
+
+        $this->set(compact('budgetsAnnuels'));
+    }
+
+    /**
+     * View method
+     *
+     * @param string|null $id Budgets Annuel id.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function view($id = null)
+    {
+        $budgetsAnnuel = $this->BudgetsAnnuels->get($id, [
+            'contain' => ['Projets']
+        ]);
+
+        $this->set('budgetsAnnuel', $budgetsAnnuel);
+    }
+
+    /**
+     * Add method
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     */
+    public function add()
+    {
+        $budgetsAnnuel = $this->BudgetsAnnuels->newEntity();
+        if ($this->request->is('post')) {
+            $budgetsAnnuel = $this->BudgetsAnnuels->patchEntity($budgetsAnnuel, $this->request->getData());
+            if ($this->BudgetsAnnuels->save($budgetsAnnuel)) {
+                $this->Flash->success(__('The budgets annuel has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The budgets annuel could not be saved. Please, try again.'));
+        }
+        $projets = $this->BudgetsAnnuels->Projets->find('list', ['limit' => 200]);
+        $this->set(compact('budgetsAnnuel', 'projets'));
+    }
+
+    /**
+     * Edit method
+     *
+     * @param string|null $id Budgets Annuel id.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function edit($id = null)
+    {
+        $budgetsAnnuel = $this->BudgetsAnnuels->get($id, [
+            'contain' => []
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $budgetsAnnuel = $this->BudgetsAnnuels->patchEntity($budgetsAnnuel, $this->request->getData());
+            if ($this->BudgetsAnnuels->save($budgetsAnnuel)) {
+                $this->Flash->success(__('The budgets annuel has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The budgets annuel could not be saved. Please, try again.'));
+        }
+        $projets = $this->BudgetsAnnuels->Projets->find('list', ['limit' => 200]);
+        $this->set(compact('budgetsAnnuel', 'projets'));
+    }
+
+    /**
+     * Delete method
+     *
+     * @param string|null $id Budgets Annuel id.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function delete($id = null)
+    {
+        $this->request->allowMethod(['post', 'delete']);
+        $budgetsAnnuel = $this->BudgetsAnnuels->get($id);
+        if ($this->BudgetsAnnuels->delete($budgetsAnnuel)) {
+            $this->Flash->success(__('The budgets annuel has been deleted.'));
+        } else {
+            $this->Flash->error(__('The budgets annuel could not be deleted. Please, try again.'));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
+}
+

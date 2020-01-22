@@ -1,0 +1,79 @@
+<?php
+namespace App\Controller;
+
+use App\Controller\AppController;
+use App\Form\ShareFileForm;
+
+class ShareFileController extends AppController
+{
+	
+    public function index()
+    {
+		$uploadFolder = "./UploadedFiles";
+		if(!file_exists($uploadFolder))
+					mkdir($uploadFolder);
+		$folder = opendir($uploadFolder);
+		
+		$files = array();
+		while(false !== ($file = readdir($folder))) {
+			if($file != '.' && $file != '..') {
+				array_push($files, $file);
+			}
+		}
+		
+		closedir($folder);
+		
+		$this->set('files', $files);
+		$this->set('uploadfolder', $uploadFolder);
+    }
+	
+	public function add() {
+		$uploadFolder = "UploadedFiles";
+		$shareFile = new ShareFileForm();
+        if ($this->request->is('post')) {
+            if ($shareFile->execute($this->request->getData())) {
+                if(!file_exists($uploadFolder))
+					mkdir($uploadFolder);
+				
+				$file = $this->request->getData()['nomfichier'];
+				
+				// Erreur
+				if($file['error'] > 0) {
+					$this->Flash->error('Erreur lors de la récupération du fichier !');
+					return $this->redirect(['action' => 'index']);
+				}
+				
+				// Limitation à 10Mo
+				if($file['size'] > 10000000) {
+					$this->Flash->error('Votre fichier est trop volumineux (>10Mo) !');
+					return $this->redirect(['action' => 'index']);
+				}
+				
+				// Type de fichier
+				if($file['type'] != 'application/pdf') {
+					$this->Flash->error('Vous ne pouvez envoyer que des fichiers PDF (.pdf) !');
+					return $this->redirect(['action' => 'index']);
+				}
+				
+				// Enregistrement
+				$savedFile = $uploadFolder.'/'.$file['name'];
+				if(move_uploaded_file($file['tmp_name'], $savedFile)) {
+					$this->Flash->Success($file['name'].' enregistré avec succès !');
+					$this->redirect(['action' => 'index']);
+				}
+				else {
+					$this->Flash->error('Erreur lors de l\'enregistrement du fichier.');
+					return $this->redirect(['action' => 'index']);
+				}
+				
+            } else {
+                $this->Flash->error('Il y a eu un problème lors de la soumission de votre formulaire.');
+            }
+        }
+        $this->set('shareFile', $shareFile);
+	}
+	
+	public function remove() {
+		
+	}
+}

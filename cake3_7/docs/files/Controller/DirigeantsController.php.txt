@@ -1,0 +1,109 @@
+<?php
+namespace App\Controller;
+
+use App\Controller\AppController;
+
+/**
+ * Dirigeants Controller
+ *
+ * @property \App\Model\Table\DirigeantsTable $Dirigeants
+ *
+ * @method \App\Model\Entity\Dirigeant[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ */
+class DirigeantsController extends AppController
+{
+    /**
+     * Index method
+     *
+     * @return \Cake\Http\Response|void
+     */
+    public function index()
+    {
+        $dirigeants = $this->paginate($this->Dirigeants);
+
+        $this->set(compact('dirigeants'));
+    }
+
+    /**
+     * View method
+     *
+     * @param string|null $id Dirigeant id.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function view($id = null)
+    {
+        $dirigeant = $this->Dirigeants->get($id, [
+            'contain' => ['Theses', 'Dirigeants']
+        ]);
+
+        $this->set('dirigeant', $dirigeant);
+    }
+
+    /**
+     * Add method
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     */
+    public function add()
+    {
+        $dirigeant = $this->Dirigeants->newEntity();
+        if ($this->request->is('post')) {
+            $dirigeant = $this->Dirigeants->patchEntity($dirigeant, $this->request->getData());
+            if ($this->Dirigeants->save($dirigeant)) {
+                $this->Flash->success(__('The dirigeant has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The dirigeant could not be saved. Please, try again.'));
+        }
+        $theses = $this->Dirigeants->Theses->find('list', ['limit' => 200]);
+        $this->set(compact('dirigeant', 'theses'));
+    }
+
+    /**
+     * Edit method
+     *
+     * @param string|null $id Dirigeant id.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function edit($id = null)
+    {
+        $dirigeant = $this->Dirigeants->get($id, [
+            'contain' => ['Theses']
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $dirigeant = $this->Dirigeants->patchEntity($dirigeant, $this->request->getData());
+            if ($this->Dirigeants->save($dirigeant)) {
+                $this->Flash->success(__('The dirigeant has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The dirigeant could not be saved. Please, try again.'));
+        }
+        $theses = $this->Dirigeants->Theses->find('list', ['limit' => 200]);
+        $this->set(compact('dirigeant', 'theses'));
+    }
+
+    /**
+     * Delete method
+     *
+     * @param string|null $id Dirigeant id.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function delete($id = null)
+    {
+        $this->request->allowMethod(['post', 'delete']);
+        $dirigeant = $this->Dirigeants->get($id);
+        if ($this->Dirigeants->delete($dirigeant)) {
+            $this->Flash->success(__('The dirigeant has been deleted.'));
+        } else {
+            $this->Flash->error(__('The dirigeant could not be deleted. Please, try again.'));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
+}
+

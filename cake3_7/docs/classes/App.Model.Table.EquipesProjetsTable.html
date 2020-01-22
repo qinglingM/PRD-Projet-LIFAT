@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/App.html">\App</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">99</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-58163980"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-58163980" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1009980558"></a>
+                                <a href="../namespaces/App.html" style="margin-left: 30px; padding-left: 0">App</a>
+            </div>
+            <div id="namespace-1009980558" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-529290382"></a>
+                                <a href="../namespaces/App.Console.html" style="margin-left: 30px; padding-left: 0">Console</a>
+            </div>
+            <div id="namespace-529290382" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/App.Console.Installer.html">Installer</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1219678072"></a>
+                                <a href="../namespaces/App.Controller.html" style="margin-left: 30px; padding-left: 0">Controller</a>
+            </div>
+            <div id="namespace-1219678072" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/App.Controller.AppController.html">AppController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.BudgetsAnnuelsController.html">BudgetsAnnuelsController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.DirigeantsController.html">DirigeantsController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.DirigeantsThesesController.html">DirigeantsThesesController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.EncadrantsController.html">EncadrantsController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.EncadrantsThesesController.html">EncadrantsThesesController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.EquipesController.html">EquipesController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.EquipesProjetsController.html">EquipesProjetsController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.EquipesResponsablesController.html">EquipesResponsablesController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.ErrorController.html">ErrorController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.ExportController.html">ExportController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.FinancementsController.html">FinancementsController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.GraphiqueController.html">GraphiqueController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.LieusController.html">LieusController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.LieuTravailsController.html">LieuTravailsController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.MembresController.html">MembresController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.MissionsController.html">MissionsController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.MissionsTransportsController.html">MissionsTransportsController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.MotifsController.html">MotifsController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.PagesController.html">PagesController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.ProjetsController.html">ProjetsController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.ShareFileController.html">ShareFileController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.ThesesController.html">ThesesController</a></li>
+                                                    <li class="class"><a href="../classes/App.Controller.TransportsController.html">TransportsController</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2099993784"></a>
+                                <a href="../namespaces/App.Form.html" style="margin-left: 30px; padding-left: 0">Form</a>
+            </div>
+            <div id="namespace-2099993784" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/App.Form.ExportForm.html">ExportForm</a></li>
+                                                    <li class="class"><a href="../classes/App.Form.ShareFileForm.html">ShareFileForm</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1265257263"></a>
+                                <a href="../namespaces/App.Model.html" style="margin-left: 30px; padding-left: 0">Model</a>
+            </div>
+            <div id="namespace-1265257263" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1545201825"></a>
+                                <a href="../namespaces/App.Model.Entity.html" style="margin-left: 30px; padding-left: 0">Entity</a>
+            </div>
+            <div id="namespace-1545201825" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/App.Model.Entity.BudgetsAnnuel.html">BudgetsAnnuel</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Entity.Dirigeant.html">Dirigeant</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Entity.DirigeantsTheses.html">DirigeantsTheses</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Entity.Encadrant.html">Encadrant</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Entity.EncadrantsTheses.html">EncadrantsTheses</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Entity.Equipe.html">Equipe</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Entity.EquipesProjet.html">EquipesProjet</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Entity.EquipesResponsable.html">EquipesResponsable</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Entity.Financement.html">Financement</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Entity.Lieus.html">Lieus</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Entity.LieuTravail.html">LieuTravail</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Entity.Membre.html">Membre</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Entity.Mission.html">Mission</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Entity.MissionsTransport.html">MissionsTransport</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Entity.Motif.html">Motif</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Entity.Projet.html">Projet</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Entity.These.html">These</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Entity.Transport.html">Transport</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1222255491"></a>
+                                <a href="../namespaces/App.Model.Table.html" style="margin-left: 30px; padding-left: 0">Table</a>
+            </div>
+            <div id="namespace-1222255491" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/App.Model.Table.BudgetsAnnuelsTable.html">BudgetsAnnuelsTable</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Table.DirigeantsTable.html">DirigeantsTable</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Table.DirigeantsThesesTable.html">DirigeantsThesesTable</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Table.Encadrants_thesesTable.html">Encadrants_thesesTable</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Table.EncadrantsTable.html">EncadrantsTable</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Table.EncadrantsThesesTable.html">EncadrantsThesesTable</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Table.EquipesProjetsTable.html">EquipesProjetsTable</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Table.EquipesResponsablesTable.html">EquipesResponsablesTable</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Table.EquipesTable.html">EquipesTable</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Table.FinancementsTable.html">FinancementsTable</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Table.LieusTable.html">LieusTable</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Table.LieuTravailsTable.html">LieuTravailsTable</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Table.MembresTable.html">MembresTable</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Table.MissionsTable.html">MissionsTable</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Table.MissionsTransportsTable.html">MissionsTransportsTable</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Table.MotifsTable.html">MotifsTable</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Table.ProjetsTable.html">ProjetsTable</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Table.ThesesTable.html">ThesesTable</a></li>
+                                                    <li class="class"><a href="../classes/App.Model.Table.TransportsTable.html">TransportsTable</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1776406388"></a>
+                                <a href="../namespaces/App.Shell.html" style="margin-left: 30px; padding-left: 0">Shell</a>
+            </div>
+            <div id="namespace-1776406388" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/App.Shell.ConsoleShell.html">ConsoleShell</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-892390781"></a>
+                                <a href="../namespaces/App.View.html" style="margin-left: 30px; padding-left: 0">View</a>
+            </div>
+            <div id="namespace-892390781" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/App.View.AjaxView.html">AjaxView</a></li>
+                                                    <li class="class"><a href="../classes/App.View.AppView.html">AppView</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/App.Application.html">Application</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/App.Model.Table.html">\App\Model\Table</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\App\Model\Table</small>EquipesProjetsTable</h1>
+                    <p><em>EquipesProjets Model</em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/App.Model.Table.EquipesProjetsTable.html#method_initialize" class="">initialize()</a><br />
+                                                                    <a href="../classes/App.Model.Table.EquipesProjetsTable.html#method_buildRules" class="">buildRules()</a><br />
+                                                                    <a href="../classes/App.Model.Table.EquipesProjetsTable.html#method_get" class="">get()</a><br />
+                                                                    <a href="../classes/App.Model.Table.EquipesProjetsTable.html#method_newEntity" class="">newEntity()</a><br />
+                                                                    <a href="../classes/App.Model.Table.EquipesProjetsTable.html#method_" class="">()</a><br />
+                                                                    <a href="../classes/App.Model.Table.EquipesProjetsTable.html#method_save" class="">save()</a><br />
+                                                                    <a href="../classes/App.Model.Table.EquipesProjetsTable.html#method_saveOrFail" class="">saveOrFail()</a><br />
+                                                                    <a href="../classes/App.Model.Table.EquipesProjetsTable.html#method_patchEntity" class="">patchEntity()</a><br />
+                                                                    <a href="../classes/App.Model.Table.EquipesProjetsTable.html#method_" class="">()</a><br />
+                                                                    <a href="../classes/App.Model.Table.EquipesProjetsTable.html#method_findOrCreate" class="">findOrCreate()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/App.Model.Table.EquipesProjetsTable.html#property_Equipes" class="">$Equipes</a><br />
+                                                                    <a href="../classes/App.Model.Table.EquipesProjetsTable.html#property_Projets" class="">$Projets</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/Model.Table.EquipesProjetsTable.html"><div class="path-wrapper">Model\Table\EquipesProjetsTable.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                                                                                                                                                
+                                        <div class="namespace-wrapper">\Cake\ORM\Table</div>
+                                                                                                    <div class="namespace-wrapper">\App\Model\Table\EquipesProjetsTable</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_Equipes" name="property_Equipes" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$Equipes</h3>
+                <pre class="signature">$Equipes : \App\Model\Table\EquipesTable|\Cake\ORM\Association\BelongsTo</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                \App\Model\Table\EquipesTable|\Cake\ORM\Association\BelongsTo
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_Projets" name="property_Projets" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$Projets</h3>
+                <pre class="signature">$Projets : \App\Model\Table\ProjetsTable|\Cake\ORM\Association\BelongsTo</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                \App\Model\Table\ProjetsTable|\Cake\ORM\Association\BelongsTo
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_initialize" name="method_initialize" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">initialize()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">initialize(array  <span class="argument">$config</span>) : void</pre>
+                <p><em>Initialize method</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$config </td>
+                                <td><p>The configuration for the Table.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_buildRules" name="method_buildRules" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">buildRules()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">buildRules(\Cake\ORM\RulesChecker  <span class="argument">$rules</span>) : \Cake\ORM\RulesChecker</pre>
+                <p><em>Returns a rules checker object that will be used for validating
+application integrity.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Cake\ORM\RulesChecker</td>
+                                <td>$rules </td>
+                                <td><p>The rules object to be modified.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \Cake\ORM\RulesChecker
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_get" name="method_get" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">get()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">get(mixed  <span class="argument">$primaryKey</span>, \=  <span class="argument">$options</span>) : \App\Model\Entity\EquipesProjet</pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$primaryKey </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>\=</td>
+                                <td>$options </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \App\Model\Entity\EquipesProjet
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_newEntity" name="method_newEntity" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">newEntity()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">newEntity(\=  <span class="argument">$data</span>, array  <span class="argument">$options = []</span>) : \App\Model\Entity\EquipesProjet</pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\=</td>
+                                <td>$data </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$options </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \App\Model\Entity\EquipesProjet
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_" name="method_" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">() : </pre>
+                <p><em></em></p>
+                <p>\App\Model\Entity\EquipesProjet[] newEntities(array $data, array $options = [])</p>
+
+                
+                
+                                    <h4>Returns</h4>
+                    
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_save" name="method_save" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">save()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">save(\Cake\Datasource\EntityInterface  <span class="argument">$entity</span>, \=  <span class="argument">$options</span>) : \App\Model\Entity\EquipesProjet|boolean</pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Cake\Datasource\EntityInterface</td>
+                                <td>$entity </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>\=</td>
+                                <td>$options </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \App\Model\Entity\EquipesProjet|boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_saveOrFail" name="method_saveOrFail" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">saveOrFail()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">saveOrFail(\Cake\Datasource\EntityInterface  <span class="argument">$entity</span>, \=  <span class="argument">$options</span>) : \App\Model\Entity\EquipesProjet</pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Cake\Datasource\EntityInterface</td>
+                                <td>$entity </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>\=</td>
+                                <td>$options </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \App\Model\Entity\EquipesProjet
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_patchEntity" name="method_patchEntity" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">patchEntity()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">patchEntity(\Cake\Datasource\EntityInterface  <span class="argument">$entity</span>, array  <span class="argument">$data</span>, array  <span class="argument">$options = []</span>) : \App\Model\Entity\EquipesProjet</pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Cake\Datasource\EntityInterface</td>
+                                <td>$entity </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$data </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$options </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \App\Model\Entity\EquipesProjet
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_" name="method_" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">() : </pre>
+                <p><em></em></p>
+                <p>\App\Model\Entity\EquipesProjet[] patchEntities($entities, array $data, array $options = [])</p>
+
+                
+                
+                                    <h4>Returns</h4>
+                    
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_findOrCreate" name="method_findOrCreate" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">findOrCreate()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">findOrCreate(mixed  <span class="argument">$search</span>, callable  <span class="argument">$callback = null</span>, \=  <span class="argument">$options</span>) : \App\Model\Entity\EquipesProjet</pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$search </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>callable</td>
+                                <td>$callback </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>\=</td>
+                                <td>$options </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \App\Model\Entity\EquipesProjet
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">EquipesProjetsTable.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/Model\Table\EquipesProjetsTable.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/App.html">\App</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on May 22nd, 2019 at 10:08.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

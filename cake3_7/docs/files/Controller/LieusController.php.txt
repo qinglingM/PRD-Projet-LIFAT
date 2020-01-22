@@ -1,0 +1,107 @@
+<?php
+namespace App\Controller;
+
+use App\Controller\AppController;
+
+/**
+ * Lieus Controller
+ *
+ * @property \App\Model\Table\LieusTable $Lieus
+ *
+ * @method \App\Model\Entity\Lieus[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ */
+class LieusController extends AppController
+{
+    /**
+     * Index method
+     *
+     * @return \Cake\Http\Response|void
+     */
+    public function index()
+    {
+        $lieus = $this->paginate($this->Lieus);
+
+        $this->set(compact('lieus'));
+    }
+
+    /**
+     * View method
+     *
+     * @param string|null $id Lieus id.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function view($id = null)
+    {
+        $lieus = $this->Lieus->get($id, [
+            'contain' => []
+        ]);
+
+        $this->set('lieus', $lieus);
+    }
+
+    /**
+     * Add method
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     */
+    public function add()
+    {
+        $lieus = $this->Lieus->newEntity();
+        if ($this->request->is('post')) {
+            $lieus = $this->Lieus->patchEntity($lieus, $this->request->getData());
+            if ($this->Lieus->save($lieus)) {
+                $this->Flash->success(__('The lieus has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The lieus could not be saved. Please, try again.'));
+        }
+        $this->set(compact('lieus'));
+    }
+
+    /**
+     * Edit method
+     *
+     * @param string|null $id Lieus id.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function edit($id = null)
+    {
+        $lieus = $this->Lieus->get($id, [
+            'contain' => []
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $lieus = $this->Lieus->patchEntity($lieus, $this->request->getData());
+            if ($this->Lieus->save($lieus)) {
+                $this->Flash->success(__('The lieus has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The lieus could not be saved. Please, try again.'));
+        }
+        $this->set(compact('lieus'));
+    }
+
+    /**
+     * Delete method
+     *
+     * @param string|null $id Lieus id.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function delete($id = null)
+    {
+        $this->request->allowMethod(['post', 'delete']);
+        $lieus = $this->Lieus->get($id);
+        if ($this->Lieus->delete($lieus)) {
+            $this->Flash->success(__('The lieus has been deleted.'));
+        } else {
+            $this->Flash->error(__('The lieus could not be deleted. Please, try again.'));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
+}
+

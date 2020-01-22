@@ -1,0 +1,109 @@
+<?php
+namespace App\Model\Table;
+
+use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
+use Cake\ORM\Table;
+use Cake\Validation\Validator;
+
+/**
+ * Equipes Model
+ *
+ * @property \App\Model\Table\MembresTable|\Cake\ORM\Association\BelongsTo $Membres
+ * @property \App\Model\Table\EquipesResponsablesTable|\Cake\ORM\Association\HasMany $EquipesResponsables
+ * @property \App\Model\Table\ProjetsTable|\Cake\ORM\Association\BelongsToMany $Projets
+ *
+ * @method \App\Model\Entity\Equipe get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Equipe newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Equipe[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Equipe|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Equipe saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Equipe patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Equipe[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Equipe findOrCreate($search, callable $callback = null, $options = [])
+ *
+ * @mixin \Search\Model\Behavior\SearchBehavior
+ */
+class EquipesTable extends Table
+{
+    /**
+     * Initialize method
+     *
+     * @param array $config The configuration for the Table.
+     * @return void
+     */
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+
+        $this->setTable('equipes');
+        $this->setDisplayField('nom_equipe');
+        $this->setPrimaryKey('id');
+
+        $this->belongsTo('Membres', [
+            'foreignKey' => 'responsable_id'
+        ]);
+        $this->hasMany('EquipesResponsables', [
+            'foreignKey' => 'equipe_id'
+        ]);
+        $this->belongsToMany('Projets', [
+            'foreignKey' => 'equipe_id',
+            'targetForeignKey' => 'projet_id',
+            'joinTable' => 'equipes_projets'
+        ]);
+
+		// Add the behaviour to your table
+		$this->addBehavior('Search.Search');
+
+		// Setup search filter using search manager
+		$this->searchManager()
+			/*	Here we will alias the 'id' query param to search the `Equipes.nom_equipe` field, using a LIKE match, with `%` both before and after.	*/
+			->add('Recherche', 'Search.Like', [
+				'before' => true,
+				'after' => true,
+				'multiValue' => true,
+				'multiValueSeparator' => ' ',
+				'valueMode' => 'OR',
+				'comparison' => 'LIKE',
+				'field' => ['nom_equipe']
+			]);
+    }
+
+    /**
+     * Default validation rules.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
+    public function validationDefault(Validator $validator)
+    {
+        $validator
+            ->integer('id')
+            ->allowEmptyString('id', 'create');
+
+        $validator
+            ->scalar('nom_equipe')
+            ->maxLength('nom_equipe', 25)
+            ->requirePresence('nom_equipe', 'create')
+            ->allowEmptyString('nom_equipe', false)
+            ->add('nom_equipe', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+
+        return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['nom_equipe']));
+        $rules->add($rules->existsIn(['responsable_id'], 'Membres'));
+
+        return $rules;
+    }
+}
+

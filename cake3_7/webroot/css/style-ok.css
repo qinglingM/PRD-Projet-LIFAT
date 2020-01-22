@@ -1,0 +1,450 @@
+/********************************/
+/*			 MAIN 				*/
+/********************************/
+
+body {
+	background-color: #F4F0EC;
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 0;
+	font-size: 14px;
+	color : #333;
+}
+
+#main {
+	margin: auto;
+	background-color: white;
+	min-width: 980px;
+	max-width: 1110px;
+	box-shadow: 0px 0px 20px #D8D8D8;
+}
+
+a {
+	text-decoration: none;
+	color: #428bca;
+}
+
+a:hover, a:focus {
+	color: #2a6496;
+	text-decoration: underline;
+}
+
+h1 {
+	color: #003F75;
+}
+
+h2 {
+	font-size: 20px;
+	color: #024F93;
+}
+
+p {
+	font-size: 15px;
+}
+
+.separation {
+	border-top: solid 1px #A4A4A4;
+	margin: 10px 0 0 0;
+}
+
+.inline {
+	display: inline;
+}
+
+hr {
+	color: #e6e6e6;
+	background-color: #e6e6e6;
+	height: 1px;
+	border: 0;
+}
+
+.center {
+	text-align: center;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.italic {
+	font-style: italic;
+}
+
+ul {
+	padding-left: 20px;
+}
+
+.grey {
+	color: #bababa;
+}
+
+.red {
+	color: red;
+}
+
+/********************************/
+/*		HEADER + MENU			*/
+/********************************/
+
+#header h1 {
+	text-align: center;
+	margin: 0;
+	padding: 20px 0 20px 0;
+}
+
+#menu {
+	margin-left:auto;
+	margin-right: auto;
+	padding:0;
+	width:100%;
+	clear:both;
+	text-align: center;
+	background: #FAFAFA;
+	border-top : 1px solid #E6E6E6;
+	border-bottom : 1px solid #E6E6E6;
+}
+
+#menu ul ul {
+	display: none;
+	z-index: 1;
+}
+
+#menu ul li:hover > ul {
+	display: block;
+}
+
+#menu ul {
+	margin: 0px auto;
+	padding: 0px;
+	list-style: none;
+	position: relative;
+	display: table;
+	text-align: center;
+}
+
+#menu ul li {
+	float: left;
+}
+
+#menu ul li:hover {
+	background: #EDEDED;
+}
+
+#menu ul li a {
+	display: block;
+	padding: 10px 20px;
+	margin: 0;
+	text-decoration: none;
+}
+
+#menu ul ul {
+	background: #EDEDED;
+	padding: 0;
+	position: absolute;
+	top: 100%;
+	box-shadow: 0px 0px 10px #EDEDED;
+}
+
+#menu ul ul li {
+	float: none; 
+	border-top: 1px solid #F5F5F5;
+	border-bottom: 1px solid #E6E6E6;
+	position: relative;
+}
+
+#menu ul ul li a {
+	padding: 10px 39px;
+}	
+
+#menu ul ul li a:hover {
+	background: #E6E6E6;
+}
+
+/********************************/
+/*			PROFIL				*/
+/********************************/
+
+#profil {
+	float:left;
+	width: 49%;
+	border-right: 1px solid #E6E6E6;
+	padding-right: 10px
+}
+
+#signature {
+	float:right;
+	width: 49%;
+}
+
+#signature .submit {
+	text-align: center;
+}
+
+#profil .submit {
+	text-align: center;
+}
+
+#password, #loginCas {
+	clear: both;
+	padding: 15px;
+}
+
+/********************************/
+/*			 CONTENT			*/
+/********************************/
+
+#content {
+	margin: 10px 0 10px 0;
+	padding: 5px 20px 5px 20px;
+}
+
+.signature {
+	text-align: center;
+}
+
+.signature_img {
+	max-width: 250px;
+}
+
+.infoUser{
+	margin-top: 15px;
+}
+
+/********************************/
+/*			 MESSAGES			*/
+/********************************/
+
+.message, .flash_failure, .error-message {
+	background-color: #F9F2F4;
+	border: 1px solid #C7254E;
+	color: #C7254E;
+	text-align: center;
+	padding: 2px 4px;
+	border-radius: 5px;
+	margin: 5px 0 5px 0;
+}
+
+.note {
+	background-color: #FCF8E3;
+	border: 1px solid #F0AD4E;
+	color: #DA7F00;
+	text-align: center;
+	padding: 2px 4px;
+	border-radius: 5px;
+	margin: 5px 0 5px 0;
+}
+
+.attention {
+	color: #C7254E;
+	background-color: #F9F2F4;
+	border-radius: 5px;	
+	padding: 2px 4px;
+}
+
+.flash_success {
+	background-color: #DFF0D8;
+	border: 1px solid #468847;
+	color: #468847;
+	text-align: center;
+	padding: 2px 4px;
+	border-radius: 5px;
+	margin: 5px 0 5px 0;
+}
+
+
+/********************************/
+/*			 TABLE				*/
+/********************************/
+
+table {
+	text-align: center;
+	border-collapse: collapse;
+}
+
+table th {
+	border-right: 1px solid #dddddd;
+	border-top: 1px solid #dddddd;
+}
+
+table th:first-child {
+	border-left: 1px solid #dddddd;
+}
+
+table td {
+	padding: 3px 5px 3px 5px !important;
+	word-break: break-all;
+}
+
+/********************************/
+/*			 FORM				*/
+/********************************/
+
+label {
+	margin: 10px 0 5px 0;
+	display: block;
+}
+
+fieldset {
+	padding: 0 20px 20px 20px;
+	margin-bottom: 10px;
+	border: 1px solid #E6E6E6;
+	background-color: #FAFAFA;
+	border-radius: 5px;
+	box-shadow: -1px 1px 0px #E6E6E6,-2px 2px 0px #E6E6E6;
+}
+
+legend {
+	color: #024F93;
+	font-weight: bold;
+}
+
+input, textarea, select, #ajoutTransport, #ajoutPassager {
+	padding: 3px;
+}
+
+#ajoutTransport, #ajoutPassager  {
+	border: 1px solid #A4A4A4;
+	border-radius: 5px;
+	transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    transition-property: border-color, box-shadow;
+    transition-duration: 0.15s, 0.15s;
+    transition-timing-function: ease-in-out, ease-in-out;
+    transition-delay: 0s, 0s;
+}
+
+form input {
+	width: 250px;
+}
+
+form select {
+	width: 258px;
+}
+
+input[type=submit] {
+	margin : 10px 0 10px 0;
+}
+
+#ajoutTransport:hover, #ajoutPassager:hover {
+	background-color: #E6E6E6;
+	cursor: pointer;
+}
+
+input[type=radio] {
+	width: auto;
+}
+
+.input.datetime select {
+	width: auto;
+	margin: 0 2px 0 2px;
+}
+
+#formDate select {
+	width: auto;
+}
+
+textarea {
+	width: 100%;
+	resize: vertical;
+}
+
+.input.checkbox label {
+	display: inline;
+}
+
+.input.checkbox input {
+	margin: 5px 5px 5px 0;
+	width: auto;
+}
+
+.labelMatricule, .labelLoginCas {
+	margin: 0;
+}
+
+#UserEditMatriculeForm select, #UserEditMatriculeForm input, #UserEditLoginCasForm select, #UserEditLoginCasForm input {
+	width: auto;
+}
+
+#ajoutTransport, #ajoutPassager {
+	margin-left: 5px;
+	padding: 4px 8px;
+	font-weight: bold;
+}
+
+#ajoutTransport:hover, #ajoutPassager:hover {
+	text-decoration: none;
+}
+
+.transport, .passager {
+	background-color: #428BCA;
+	border: 1px solid #285E8E;
+	color: #fff;
+	text-align: center;
+	padding: 2px 4px;
+	border-radius: 5px;
+	margin: 5px 0 5px 0;
+	width: 200px;
+}
+
+.removeButton {
+	font-weight: bold;
+	float: right;
+	cursor: pointer;
+	border-left: solid 1px #285E8E;
+	padding-left: 5px;
+	padding-right: 2px;
+}
+
+.checkbox input{
+	width: auto;
+}
+
+.checkbox label{
+	display: inline;
+}
+
+.date select{
+	width: auto;
+}
+
+/********************************/
+/*			 FOOTER				*/
+/********************************/
+
+#footer {
+	background-color: #FAFAFA;
+	border-top : 1px solid #E6E6E6;
+	padding: 5px;
+	clear: both;
+}
+
+#footer p {
+	margin: 0;
+	text-align: center;
+}
+
+/********************************/
+/*			 POPUP				*/
+/********************************/
+
+.popup {
+	position: relative;
+	background: #FFF;
+	padding: 20px;
+	width: 300px;
+	margin: 20px auto;
+	box-shadow: 0px 0px 20px #000000;
+	text-align: center;
+}
+
+.popup input, .popup .button-non {
+	width: 100px;
+	margin: 0;
+	padding: 5px;
+}
+
+.popup .button-non {
+	padding: 6px 5px;
+}
+
+.popup form, .popup input, .popup .submit {
+	display: inline
+}

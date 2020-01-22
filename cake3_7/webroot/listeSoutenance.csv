@@ -1,0 +1,7 @@
+id;sujet;type;date_debut;date_fin;autre_info;auteur_id
+1;these1;"Informatique Robotique";01/05/2019;23/01/2021;;9
+2;these2;"Taitement d image avance";24/02/2017;23/07/2018;;2
+3;these3;"MicroElectronique avance";24/03/2019;23/11/2019;;12
+4;these4;"Resolution de transfert important de donnees";27/06/2019;29/03/2020;;2
+5;these5;"Medecine et Informatique";24/02/2019;07/09/2019;;14
+6;these6;"Informatique au service de la planete";24/06/2020;19/01/2021;;15

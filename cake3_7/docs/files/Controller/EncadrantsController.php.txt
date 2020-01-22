@@ -1,0 +1,109 @@
+<?php
+namespace App\Controller;
+
+use App\Controller\AppController;
+
+/**
+ * Encadrants Controller
+ *
+ * @property \App\Model\Table\EncadrantsTable $Encadrants
+ *
+ * @method \App\Model\Entity\Encadrant[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ */
+class EncadrantsController extends AppController
+{
+    /**
+     * Index method
+     *
+     * @return \Cake\Http\Response|void
+     */
+    public function index()
+    {
+        $encadrants = $this->paginate($this->Encadrants);
+
+        $this->set(compact('encadrants'));
+    }
+
+    /**
+     * View method
+     *
+     * @param string|null $id Encadrant id.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function view($id = null)
+    {
+        $encadrant = $this->Encadrants->get($id, [
+            'contain' => ['Theses', 'Encadrants']
+        ]);
+
+        $this->set('encadrant', $encadrant);
+    }
+
+    /**
+     * Add method
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     */
+    public function add()
+    {
+        $encadrant = $this->Encadrants->newEntity();
+        if ($this->request->is('post')) {
+            $encadrant = $this->Encadrants->patchEntity($encadrant, $this->request->getData());
+            if ($this->Encadrants->save($encadrant)) {
+                $this->Flash->success(__('The encadrant has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The encadrant could not be saved. Please, try again.'));
+        }
+        $theses = $this->Encadrants->Theses->find('list', ['limit' => 200]);
+        $this->set(compact('encadrant', 'theses'));
+    }
+
+    /**
+     * Edit method
+     *
+     * @param string|null $id Encadrant id.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function edit($id = null)
+    {
+        $encadrant = $this->Encadrants->get($id, [
+            'contain' => ['Theses']
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $encadrant = $this->Encadrants->patchEntity($encadrant, $this->request->getData());
+            if ($this->Encadrants->save($encadrant)) {
+                $this->Flash->success(__('The encadrant has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The encadrant could not be saved. Please, try again.'));
+        }
+        $theses = $this->Encadrants->Theses->find('list', ['limit' => 200]);
+        $this->set(compact('encadrant', 'theses'));
+    }
+
+    /**
+     * Delete method
+     *
+     * @param string|null $id Encadrant id.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function delete($id = null)
+    {
+        $this->request->allowMethod(['post', 'delete']);
+        $encadrant = $this->Encadrants->get($id);
+        if ($this->Encadrants->delete($encadrant)) {
+            $this->Flash->success(__('The encadrant has been deleted.'));
+        } else {
+            $this->Flash->error(__('The encadrant could not be deleted. Please, try again.'));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
+}
+

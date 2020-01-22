@@ -1,0 +1,126 @@
+<?php
+namespace App\Model\Table;
+
+use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
+use Cake\ORM\Table;
+use Cake\Validation\Validator;
+
+/**
+ * Missions Model
+ *
+ * @property \App\Model\Table\ProjetsTable|\Cake\ORM\Association\BelongsTo $Projets
+ * @property \App\Model\Table\LieusTable|\Cake\ORM\Association\BelongsTo $Lieus
+ * @property \App\Model\Table\MotifsTable|\Cake\ORM\Association\BelongsTo $Motifs
+ * @property \App\Model\Table\TransportsTable|\Cake\ORM\Association\BelongsToMany $Transports
+ *
+ * @method \App\Model\Entity\Mission get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Mission newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Mission[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Mission|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Mission saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Mission patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Mission[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Mission findOrCreate($search, callable $callback = null, $options = [])
+ */
+class MissionsTable extends Table
+{
+    /**
+     * Initialize method
+     *
+     * @param array $config The configuration for the Table.
+     * @return void
+     */
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+
+        $this->setTable('missions');
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
+
+        $this->belongsTo('Projets', [
+            'foreignKey' => 'projet_id'
+        ]);
+        $this->belongsTo('Lieus', [
+            'foreignKey' => 'lieu_id'
+        ]);
+        $this->belongsTo('Motifs', [
+            'foreignKey' => 'motif_id'
+        ]);
+        $this->belongsToMany('Transports', [
+            'foreignKey' => 'mission_id',
+            'targetForeignKey' => 'transport_id',
+            'joinTable' => 'missions_transports'
+        ]);
+    }
+
+    /**
+     * Default validation rules.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
+    public function validationDefault(Validator $validator)
+    {
+        $validator
+            ->integer('id')
+            ->allowEmptyString('id', 'create');
+
+        $validator
+            ->scalar('complement_motif')
+            ->maxLength('complement_motif', 40)
+            ->allowEmptyString('complement_motif');
+
+        $validator
+            ->dateTime('date_depart')
+            ->allowEmptyDateTime('date_depart');
+
+        $validator
+            ->dateTime('date_retour')
+            ->allowEmptyDateTime('date_retour');
+
+        $validator
+            ->boolean('sans_frais')
+            ->allowEmptyString('sans_frais');
+
+        $validator
+            ->scalar('etat')
+            ->allowEmptyString('etat');
+
+        $validator
+            ->integer('nb_nuites')
+            ->allowEmptyString('nb_nuites');
+
+        $validator
+            ->integer('nb_repas')
+            ->allowEmptyString('nb_repas');
+
+        $validator
+            ->boolean('billet_agence')
+            ->allowEmptyString('billet_agence');
+
+        $validator
+            ->scalar('commentaire_transport')
+            ->allowEmptyString('commentaire_transport');
+
+        return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['projet_id'], 'Projets'));
+        $rules->add($rules->existsIn(['lieu_id'], 'Lieus'));
+        $rules->add($rules->existsIn(['motif_id'], 'Motifs'));
+
+        return $rules;
+    }
+}
+
