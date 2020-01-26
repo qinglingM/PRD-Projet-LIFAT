@@ -45,18 +45,38 @@ $optionsGenre = [
 			echo $this->Form->control('grade');
 			echo $this->Form->control('im_vehicule');
 			echo $this->Form->control('pf_vehicule');
+			
+			// $signaturePath = "sign/".$this->data['Membre']['signature_name'].".jpg";
+			$signaturePath = "sign/".$membre->signature_name.".jpg";
+			$fullSignaturePath ='./img/'.$signaturePath;
+			$verifSignature = file_exists($fullSignaturePath); 
+			// echo $this->Form->control();
 			echo $this->Form->control('signature_name', ['required' => false,'label' => 'Fichier signature (jpg,png | 10Mo max)', 'type' => 'file', 'accept' => 'image/png, image/jpeg, image/jpg']);
+			//echo $this->Form->control('signature',['required' => true,'lable' => 'Aperçu de la signature actuelle :', 'type' => 'image']);
+			if (!$verifSignature) {
+				echo '<div class="note">Merci de bien vouloir ajouter votre signature éléctronique.<br/>
+				Sans cette signature vous devrez aller signer l\'OdM au secrétariat.</div>';
+			}
+			if ($verifSignature) {
+				echo $this->Html->div('signature_name',
+					'<p>Aperçu de la signature actuelle : </p>'.
+					$this->Html->image($signaturePath,array('alt' => 'signature', 'width' => '235', 'height' => '50', 'class' => 'signature_img'))
+					);
+			}
+
 			echo $this->Form->control('login_cas');
 			echo $this->Form->control('carte_sncf');
 			echo $this->Form->control('matricule');
 			echo $this->Form->control('date_naissance', ['minYear' => 1901, 'maxYear' => 2019]);
-			echo $this->Form->control('lieu_travail_id', ['options' => $lieuTravails, 'empty' => false, 'label' => "lieu de travail"]);
+			echo $this->Form->control('lieu_travail_id', ['options' => $lieuTravails, 'empty' => false, 'label' => "Lieu de travail"]);
 			echo $this->Form->control('nationalite');
 			echo $this->Form->control('est_francais');
 			echo $this->Form->select('genre', $optionsGenre);
 			echo $this->Form->control('hdr');
 			echo $this->Form->control('permanent', ['label' => "Membre permanent"]);
 			echo $this->Form->control('est_porteur', ['label' => "Membre porteur"]);
+
+
 		}
 		?>
 	</fieldset>

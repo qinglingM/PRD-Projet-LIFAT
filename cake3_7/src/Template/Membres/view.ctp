@@ -6,6 +6,7 @@
 
 use App\Model\Entity\Membre;
 use App\View\AppView; ?>
+
 <div class="membres view large-9 medium-8 columns content">
 	<h3><?= h($membre->nom . ' ' . $membre->prenom) ?><font
 				size="+1">[<?= $this->Html->link(__('Editer'), ['action' => 'edit', $membre->id]) ?>]</font size></h3>
@@ -114,6 +115,7 @@ use App\View\AppView; ?>
 			<th scope="row"><?= __('Actif') ?></th>
 			<td><?= $membre->actif ? __('Oui') : __('Non'); ?></td>
 		</tr>
+		<tr>
 		<?php
 			if ($user['role'] === Membre::ADMIN && $membre->signature_name != null) {
 				echo "<tr><th>Signature</th><td>";
@@ -121,5 +123,6 @@ use App\View\AppView; ?>
 				echo "</td></tr>"; 
 			}
 		?>
+		</tr>
 	</table>
 </div>
