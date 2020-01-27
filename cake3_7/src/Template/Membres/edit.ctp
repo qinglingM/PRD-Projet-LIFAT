@@ -53,6 +53,8 @@ $optionsGenre = [
 			// echo $this->Form->control();
 			echo $this->Form->control('signature_name', ['required' => false,'label' => 'Fichier signature (jpg,png | 10Mo max)', 'type' => 'file', 'accept' => 'image/png, image/jpeg, image/jpg']);
 			//echo $this->Form->control('signature',['required' => true,'lable' => 'Aperçu de la signature actuelle :', 'type' => 'image']);
+
+			//affichage de la signature ou d'un message d'erreur
 			if (!$verifSignature) {
 				echo '<div class="note">Merci de bien vouloir ajouter votre signature éléctronique.<br/>
 				Sans cette signature vous devrez aller signer l\'OdM au secrétariat.</div>';
