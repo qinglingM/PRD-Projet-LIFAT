@@ -50,7 +50,7 @@ echo $this->element('searchbar');
 				<td><?= h($mission->date_retour) ?></td>
 				<td><?= h($mission->etat) ?></td>
 				<td class="actions">
-					<?= $this->Html->link(__('Details'), ['action' => 'view', $mission->id]) ?>
+					<?= $this->Html->link(__('Details'), ['action' => 'generation', $mission->id]) ?>
 					<?= $this->Html->link(__('Modifier'), ['action' => 'edit', $mission->id]) ?>
 					<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $mission->id], ['confirm' => __('Are you sure you want to delete # {0}?', $mission->id)]) ?>
 				</td>

@@ -41,6 +41,8 @@ use Cake\ORM\TableRegistry;
  * @property bool|null $est_porteur
  * @property FrozenTime|null $date_creation
  * @property FrozenTime|null $date_sortie
+ * 
+ * @property string|null $matricule
  *
  * @property LieuTravail $lieu_travail
  * @property Equipe $equipe
@@ -56,6 +58,12 @@ class Membre extends Entity
 	 * Class constant for the 'membre' role ($membre['role']).
 	 */
 	const MEMBRE = 'membre';
+
+
+	/**
+	 * Class constant for the 'Secretaire' role ($membre['role']).
+	 */
+	const SECRETAIRE = 'Secretaire';
 
 	/**
 	 * Fields that can be mass assigned using newEntity() or patchEntity().

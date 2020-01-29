@@ -22,6 +22,8 @@ use Cake\ORM\Entity;
  * @property int|null $lieu_id
  * @property int|null $motif_id
  * @property int|null $responsable_id
+ * @property int|null $membre_id
+
  *
  * @property Projet $projet
  * @property Lieus $lieus
@@ -41,6 +43,7 @@ class Mission extends Entity
 	 * @var array
 	 */
 	protected $_accessible = [
+		'id' =>true,
 		'complement_motif' => true,
 		'date_depart' => true,
 
@@ -55,6 +58,7 @@ class Mission extends Entity
 		'projet_id' => true,
 		'lieu_id' => true,
 		'motif_id' => true,
+		'membre_id' =>true,
 		'responsable_id' => true,
 		'projet' => true,
 		'lieus' => true,
@@ -62,4 +66,18 @@ class Mission extends Entity
 		'transports' => true,
 		'membre' =>true,
 	];
+
+
+	/**
+	 * Function that get the membre_id .
+	 * Returns the membre_id.
+	 *
+	 * @return int
+	 */
+	public function getMembreId(){
+		return membre_id;
+	}
+
+
+
 }

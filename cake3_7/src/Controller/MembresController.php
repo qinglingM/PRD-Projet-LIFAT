@@ -67,7 +67,6 @@ class MembresController extends AppController
 		$membre = $this->Membres->get($id, [
 			'contain' => ['LieuTravails', 'Equipes']
 		]);
-
 		$this->set('membre', $membre);
 	}
 
