@@ -19,7 +19,9 @@ echo $this->element('searchbar');
 			<?php
 			if ($user['permanent'] === true || $user['role'] === Membre::ADMIN) {
 				//	Seuls les membres permanents (& admins) peuvent ajouter des projets
+				// echo '[' . $this->Html->link(__('Nouveau mission'), ['action' => 'edit']) . ']';	
 				echo '[' . $this->Html->link(__('Nouveau mission'), ['action' => 'edit']) . ']';
+
 			}
 			?>
 		</font></h3>

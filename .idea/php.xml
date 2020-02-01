@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/cake3_7/vendor/squizlabs/php_codesniffer" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/jdorn/sql-formatter" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/justinrainbow/json-schema" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/umpirsky/twig-php-function" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/dnoegel/php-xdg-base-dir" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/seld/jsonlint" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/seld/phar-utils" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/josegonzalez/dotenv" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/JPGraph/barcode" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/zendframework/zend-diactoros" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/robmorgan/phinx" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/JPGraph/Examples" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/psy/psysh" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/mobiledetect/mobiledetectlib" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/twig/twig" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/asm89/twig-cache-extension" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/JPGraph/fonts" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/aptoma/twig-markdown" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/friendsofcake/search" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/JPGraph/lang" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/symfony/config" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/symfony/polyfill-php72" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/symfony/contracts" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/phpdocumentor/type-resolver" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/phpdocumentor/reflection-docblock" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/phpdocumentor/reflection-common" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/JPGraph/themes" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/composer" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/ajgl/breakpoint-twig-extension" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/webmozart/assert" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/wyrihaximus/twig-view" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/cakephp/debug_kit" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/cakephp/bake" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/cakephp/migrations" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/cakephp/cakephp" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/cakephp/cakephp-codesniffer" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/phpunit/php-token-stream" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/cakephp/chronos" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/cakephp/plugin-installer" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/phpunit/phpunit-mock-objects" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/jakub-onderka/php-console-highlighter" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/jakub-onderka/php-console-color" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/m1/env" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/jasny/twig-extensions" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/aura/intl" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/phpspec/prophecy" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/doctrine/instantiator" />
+    </include_path>
+  </component>
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/cake3_7/vendor/autoload.php" />
+    </phpunit_settings>
+  </component>
+</project>
