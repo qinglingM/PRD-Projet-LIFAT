@@ -21,7 +21,7 @@ class MissionsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Projets', 'Lieus', 'Motifs']
+            'contain' => ['Projets', 'Lieus', 'Motifs','Membres']
         ];
         $missions = $this->paginate($this->Missions);
 

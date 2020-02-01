@@ -63,7 +63,7 @@ class Membre extends Entity
 	/**
 	 * Class constant for the 'Secretaire' role ($membre['role']).
 	 */
-	const SECRETAIRE = 'Secretaire';
+	const SECRETAIRE = 'secretaire';
 
 	/**
 	 * Fields that can be mass assigned using newEntity() or patchEntity().

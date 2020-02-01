@@ -4,12 +4,19 @@ namespace App\Controller;
 
 use App\Model\Entity\Mission;
 use App\Model\Entity\Membre;
+
 use App\Model\Table\MissionsTable;
+
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Datasource\ResultSetInterface;
+use Cake\Datasource\EntityInterface;
 use Cake\Http\Response;
 use Cake\ORM\Query;
-
+use Cake\ORM\Entity;
+use Cake\Collection\CollectionInterface;
+use Cake\Collection\Collection;
+use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 
 /**
  * Missions Controller
@@ -27,15 +34,16 @@ class MissionsController extends AppController
 	 */
 	public function index()
 	{
+		// echo phpversion();
 		$this->set('searchLabelExtra', "Numéro de mission");
 
 		$query = $this->Missions
 		// Use the plugins 'search' custom finder and pass in the
 		// processed query params
 		->find('search', ['search' => $this->request->getQueryParams()]);
-
+		//Association tables
 		$this->paginate = [
-			'contain' => ['Projets', 'Lieus', 'Motifs']
+			'contain' => [ 'Projets', 'Lieus', 'Motifs']
 		];
 		$this->set('missions', $this->paginate($query));
 	}
@@ -49,6 +57,7 @@ class MissionsController extends AppController
 	 */
 	public function view($id = null)
 	{
+		
 		$mission = $this->Missions->get($id, [
 			'contain' => ['Projets', 'Lieus', 'Motifs', 'Transports','Membres']
 		]);
@@ -119,124 +128,201 @@ class MissionsController extends AppController
 	
 		include(dirname(__FILE__) . '/Component/generator.php');
 		//require '/Applications/MAMP/htdocs/PRD-Projet-LIFAT/cake3_7/src/Controller/Component/generator.php';
-
+		// $mission = $this->Missions->patchEntity($mission, $this->request->getData());
 		$generator = new \MyGenerator();
 
 		// Fin modification
+
 		$this->Missions->id = $id;
-		// $this->Missionsa->set('id',$id);
-		// echo $this->Missions->get('membre_id');
-		$this->Missions->Membres->id = $this->Missions->find()->select(['membre_id']);
-		$this->Missions->Motifs->id = $this->Missions->find()->select(['motif_id']);
-		$this->Missions->Lieus->id = $this->Missions->find()->select(['lieu_id']);
+		// echo $this->Missions->id;
 		
-		$query = $this->Missions->find()->contain('Membres', function (Query $q) {
-			return $q
-			->select(['equipe_id']);
-		});
+		// $this->Missions->Membres->id = $this->Missions->find()->select(['membre_id'])->where(['id' => $id]);
+		// $var1 = $this->Missions->find()->select(['membre_id'])->where(['id' => $id])->all()->toArray();
+		// print_r (array_column($var1,'membre_id'));
 
-		$this->Missions->Membres->Equipes->id = $query;
+		//-------------- // =  $this->Mission->field('motif_id'); //--------------------------
+		// print_r(array_column($this->Missions->find()->select(['membre_id'])->where(['id' => $id])->all()->toArray(),'membre_id'));
+		$this->Missions->Membres->id = array_column($this->Missions->find()->select(['membre_id'])->where(['id' => $id])->all()->toArray(),'membre_id')[0];		
+		// print_r($this->Missions->Membres->id);
+		$this->Missions->Motifs->id = array_column($this->Missions->find()->select(['motif_id'])->where(['id' => $id])->all()->toArray(),'motif_id')[0];
+		// print_r($this->Missions->Motifs->id);
+		$this->Missions->Lieus->id = array_column($this->Missions->find()->select(['lieu_id'])->where(['missions.id' => $id])->all()->toArray(),'lieu_id')[0];
+		//  print_r($this->Missions->Lieus->id);	
+		//----------------- // = $this->Mission->User->Equipe->id = $this->Mission->User->field('equipe_id'); //-----	
+		$result = $this->Missions->find()->contain('Membres', function (Query $q) {
+			return $q ->select(['membres.equipe_id']);})->where(['Missions.id' => $id])->all()->toList();
+		$this->Missions->Membres->Equipes->id = array_column(array_column($result,'membres'),'equipe_id')[0];
+		// print_r($this->Missions->Membres->Equipes->id);
+		$this->Missions->Projets->id = array_column($this->Missions->find()->select(['projet_id'])->where(['id' => $id])->all()->toArray(),'projet_id');
 
-		$this->Missions->Projets->id = $this->Missions->find()->select(['projet_id']);
-
-		// $transports = $this->Transport->findAllById($id);
-
-//-----------------------TO DO-------------------------------
-		//Ne rajoute la signature du chef d'équipe que si la mission a été validée
-		if ($this->Missions->find()->select(['etat']) == 'valide') {
-			// selectionnne la signature du chef de l'équipe dont fait partie l'utilisateur
-			$cheif = $this->Membres->find('first', array('conditions' => array('User.role' => 'admin', 'User.equipe_id' => $this->Mission->User->field('equipe_id'))));
-			// génère la signature du chef
-			$cheifSignaturePath = "./img/sign/".$cheif['User']['signature_name'];
-		} else {
-			$cheifSignaturePath = ""; 
+		//---------------  // transports = $this->Transport->findAllByMissionId($missionId); //--------
+		$result1 = $this->Missions->find('all')->InnerJoinWith('MissionsTransports')->select(['MissionsTransports.transport_id'])->where(['Missions.id' => $id])->all()->toArray();
+		// echo $result1;
+		$result2 = array_column($result1, '_matchingData');
+		$result3 = array_column($result2,'MissionsTransports');
+		$result4 = array_column($result3,'transport_id');
+		
+		$transports = array() ;
+		foreach($result4 as $key => $value){
+			if(is_array($value)){
+				getValue($value);
+				
+			}else{
+			//  echo $value."<br>";
+			$result5 = $this->Missions->MissionsTransports->find('all')->InnerJoinWith('Transports')
+				 ->select(['Transports.type_transport'])
+				 ->distinct('Transports.type_transport')
+				 ->where(['MissionsTransports.transport_id' => $value])->all()->toArray();
+			
+				 // ->all()->toArray();
+			 $result6 = array_column($result5, '_matchingData');
+			 $result7 = array_column($result6,'Transports');
+			//  $result8 = array_column($result7,'type_transport');
+			// print_r($result7[0]);
+			 array_push($transports,$result7[0]);
+			//  print_r($transports."<br>");
+			}
 		}
-//---------------------------TO DO END----------------------------------
+	//---------------  // End transports//------------------------------------		
+
+// //-----------------------TO DO-------------------------------
+// 		//Ne rajoute la signature du chef d'équipe que si la mission a été validée
+// 		if ($this->Missions->find()->select(['etat']) == 'valide') {
+// 			// selectionnne la signature du chef de l'équipe dont fait partie l'utilisateur
+// 			$cheif = $this->Membres->find('first', array('conditions' => array('User.role' => 'admin', 'User.equipe_id' => $this->Mission->User->field('equipe_id'))));
+// 			// génère la signature du chef
+// 			$cheifSignaturePath = "./img/sign/".$cheif['User']['signature_name'];
+// 		} else {
+// 			$cheifSignaturePath = ""; 
+// 		}
+
+	$result = $this->Missions->find()->contain('Membres', function (Query $q) {
+		return $q ->select(['membres.equipe_id']);})->where(['Missions.id' => $id])->all()->toList();
+	$var1 = array_column(array_column($result,'membres'),'equipe_id')[0];
+	$equipenom = array_column( $this->Missions->Membres->Equipes->find()->select(['Equipes.nom_equipe'])->where(['Equipes.id' => $var1])->all()->toArray(),'nom_equipe')[0];
+	// print_r($equipenom);
+
+// //---------------------------TO DO END----------------------------------
 		$generator->setAgent(
-			$this->Missions->find()->contain('Membres', function (Query $q) {
-				return $q
-				->select(['id']);
-			}),
-			$this->Missions->find()->contain('Membres', function (Query $q) {
-				return $q
-				->select(['name']);
-			}),$this->Missions->find()->contain('Membres', function (Query $q) {
-				return $q
-				->select(['first_name']);
-			}),$this->Missions->find()->contain('Membres', function (Query $q) {
-				return $q
-				->select(['adresse_agent_1']);
-			}),$this->Missions->find()->contain('Membres', function (Query $q) {
-				return $q
-				->select(['adresse_agent_2']);
-			}),$this->Missions->find()->contain('Membres', function (Query $q) {
-				return $q
-				->select(['residence_admin_1']);
-			}),$this->Missions->find()->contain('Membres', function (Query $q) {
-				return $q
-				->select(['residence_admin_2']);
-			}),$this->Missions->find()->contain([
-				'Membre',
-				'Equipes.id' => function (Query $q) {
-				return $q ->select(['nom_equipe']);
-				}
-			]),$this->Missions->find()->contain('Membres', function (Query $q) {
-				return $q
-				->select(['intitule']);
-			}),$this->Missions->find()->contain('Membres', function (Query $q) {
-				return $q
-				->select(['grade']);
-			}),$this->Missions->find()->contain('Membres', function (Query $q) {
-				return $q
-				->select(['personnel_type']);
-			}),$this->Missions->find()->contain('Membres', function (Query $q) {
-				return $q
-				->select(['signature_name']);
-			}),
-			// $this->Mission->User->Equipe->field('nom_equipe'),
-			$cheifSignaturePath,
-			$this->Missions->find()->contain('Membres', function (Query $q) {
-				return $q
-				->select(['date_naissance']);
-			})
+			array_column(array_column($this->Missions->find()->contain('Membres', function (Query $q) {
+				return $q ->select(['membres.id']);})
+				->where(['Missions.id' => $id])
+				->all()->toList(),'membres'),'id')[0],
+			array_column(array_column($this->Missions->find()->contain('Membres', function (Query $q) {
+				return $q ->select(['membres.nom']);})
+				->where(['Missions.id' => $id])
+				->all()->toList(),'membres'),'nom')[0],
+			array_column(array_column($this->Missions->find()->contain('Membres', function (Query $q) {
+				return $q ->select(['membres.prenom']);})
+				->where(['Missions.id' => $id])
+				->all()->toList(),'membres'),'prenom')[0],
+			array_column(array_column($this->Missions->find()->contain('Membres', function (Query $q) {
+				return $q ->select(['membres.adresse_agent_1']);})
+				->where(['Missions.id' => $id])
+				->all()->toList(),'membres'),'adresse_agent_1')[0],
+			array_column(array_column($this->Missions->find()->contain('Membres', function (Query $q) {
+				return $q ->select(['membres.adresse_agent_2']);})
+				->where(['Missions.id' => $id])
+				->all()->toList(),'membres'),'adresse_agent_2')[0],
+			array_column(array_column($this->Missions->find()->contain('Membres', function (Query $q) {
+				return $q ->select(['membres.residence_admin_1']);})
+				->where(['Missions.id' => $id])
+				->all()->toList(),'membres'),'residence_admin_1')[0],
+			array_column(array_column($this->Missions->find()->contain('Membres', function (Query $q) {
+				return $q ->select(['membres.residence_admin_2']);})
+				->where(['Missions.id' => $id])
+				->all()->toList(),'membres'),'residence_admin_2')[0],
+			$equipenom,
+			array_column(array_column($this->Missions->find()->contain('Membres', function (Query $q) {
+				return $q ->select(['membres.intitule']);})
+				->where(['Missions.id' => $id])
+				->all()->toList(),'membres'),'intitule')[0],
+			array_column(array_column($this->Missions->find()->contain('Membres', function (Query $q) {
+				return $q ->select(['membres.grade']);})
+				->where(['Missions.id' => $id])
+				->all()->toList(),'membres'),'grade')[0],
+			array_column(array_column($this->Missions->find()->contain('Membres', function (Query $q) {
+				return $q ->select(['membres.type_personnel']);})
+				->where(['Missions.id' => $id])
+				->all()->toList(),'membres'),'type_personnel')[0],
+			array_column(array_column($this->Missions->find()->contain('Membres', function (Query $q) {
+				return $q ->select(['membres.signature_name']);})
+				->where(['Missions.id' => $id])
+				->all()->toList(),'membres'),'signature_name')[0],
+			//------------- TO DO ----------------
+				// $cheifSignaturePath,
+			$equipenom,
+			array_column(array_column($this->Missions->find()->contain('Membres', function (Query $q) {
+				return $q ->select(['membres.date_naissance']);})
+				->where(['Missions.id' => $id])
+				->all()->toList(),'membres'),'date_naissance')[0]
 		);
+
+
+
+
+// $varr = array_column($this->Missions->find()->select(['nb_nuites'])->where(['id' => $id])->all()->toArray(),'nb_nuites')[0];
+
+// print_r($varr);
+
+// $varr = array_column(array_column($this->Missions->find()->contain('Lieus', function (Query $q) {
+// 	return $q ->select(['lieus.nom_lieu']);})
+// 	->where(['Missions.id' => $id])
+// 	->all()->toList(),'lieus'),'nom_lieu')[0];
+
+// print_r(array_column($vararray,'timezone'));
+
+
+
 
 		$generator->setMission(
-			$this->Missions->find()->contain('Motifs', function (Query $q) {
-				return $q
-				->select(['nom_motif']);
-			}),
-			$this->Missions->find()->select(['complement_motif']),
-			$this->Missions->find()->contain('Lieus', function (Query $q) {
-				return $q
-				->select(['nom_lieu']);
-			}),
-			strftime("%d %B %Y", strtotime($this->Missions->find()->select(['date_depart']))),
-			strftime("%Hh%M", strtotime($this->Missions->find()->select(['date_depart']))),
-			strftime("%d %B %Y", strtotime($this->Missions->find()->select(['date_retour']))),
-			strftime("%Hh%M", strtotime($this->Missions->find()->select(['date_retour']))),
-			$this->Missions->find()->select(['nb_repas']),
-			$this->Missions->find()->select(['nb_nuites'])
-			);
+			array_column(array_column($this->Missions->find()->contain('Motifs', function (Query $q) {
+				return $q ->select(['motifs.nom_motif']);})
+				->where(['Missions.id' => $id])
+				->all()->toList(),'motifs'),'nom_motif')[0],
 
+			array_column($this->Missions->find()->select(['complement_motif'])
+				->where(['id' => $id])->all()->toArray(),'complement_motif')[0],
+			$varr = array_column(array_column($this->Missions->find()->contain('Lieus', function (Query $q) {
+				return $q ->select(['lieus.nom_lieu']);})
+				->where(['Missions.id' => $id])
+				->all()->toList(),'lieus'),'nom_lieu')[0],
+			array_column($this->Missions->find()->select(['date_depart'])->where(['id' => $id])->all()->toArray(),'date_depart')[0]->format('d/m/Y'),
+			array_column($this->Missions->find()->select(['date_depart'])->where(['id' => $id])->all()->toArray(),'date_depart')[0]->format('H:i'),
+			array_column($this->Missions->find()->select(['date_retour'])->where(['id' => $id])->all()->toArray(),'date_retour')[0]->format('d/m/Y'),
+			array_column($this->Missions->find()->select(['date_retour'])->where(['id' => $id])->all()->toArray(),'date_retour')[0]->format('H:i'),
+			array_column($this->Missions->find()->select(['nb_repas'])->where(['id' => $id])->all()->toArray(),'nb_repas')[0],
+			array_column($this->Missions->find()->select(['nb_nuites'])->where(['id' => $id])->all()->toArray(),'nb_nuites')[0]
+		);
+		
+		
 		$generator->setCadreAdmin(
-			$this->Missions->Membres->find()->select(['matricule'])
+			array_column(array_column($this->Missions->find()->contain('Membres', function (Query $q) {
+				return $q ->select(['membres.matricule']);})->where(['Missions.id' => $id])->all()->toList(),'membres'),'matricule')[0]
 		);
 
-		//debug($generator);
+		// //debug($generator);
 
 		$generator->setFinance(
-			$this->Missions->find()->contain('Projets', function (Query $q) {
-				return $q
-				->select(['nom_projet']);
-			})
-			);
+			array_column(array_column($this->Missions->find()->contain('Projets', function (Query $q) {
+				return $q ->select(['projets.titre']);})->where(['Missions.id' => $id])->all()->toList(),'projets'),'titre')[0]
+	
+		);
+
+
+// $varr = array_column(array_column($this->Missions->find()->contain('Membres', function (Query $q) {
+// 	return $q ->select(['membres.carte_sncf']);})
+// 	->where(['Missions.id' => $id])
+// 	->all()->toList(),'membres'),'carte_sncf')[0];
+
+// print_r($varr);
 
 		$im_vehicule = '';
 		$pf_vehicule = '';
-		$transports = $this->Missions->Transports->find();
+		// print_r($transports);
 		// decision about imatriculation
 		foreach ($transports as $transport) {
+			// print_r($transport);
 			if ($transport -> type_transport === 'vehicule_service' || $transport->type_transport === 'vehicule_personnel') {
 				$im_vehicule = $transport->im_vehicule;
 				$pf_vehicule = $transport->pf_vehicule;
@@ -244,34 +330,42 @@ class MissionsController extends AppController
 			}
 		}
 
+
 		$generator->setTransport($transports);
 		$generator->setTransportBis(
 			$im_vehicule,
 			$pf_vehicule,
-			$this->Missions->find()->select(['commentaire_transport']),
-			$this->Missions->find()->contain('Membres', function (Query $q) {
-				return $q
-				->select(['carte_sncf']);
-			}),
-			$this->Missions->find()->select(['billet_agence'])
-			);
+			array_column($this->Missions->find()->select(['commentaire_transport'])->where(['id' => $id])->all()->toArray(),'commentaire_transport')[0],
+			array_column(array_column($this->Missions->find()->contain('Membres', function (Query $q) {
+			return $q ->select(['membres.carte_sncf']);})
+			->where(['Missions.id' => $id])
+			->all()->toList(),'membres'),'carte_sncf')[0],
+			array_column($this->Missions->find()->select(['billet_agence'])->where(['id' => $id])->all()->toArray(),'billet_agence')[0]
+
+		);
+
+
 
 		$sansFrais = false;
-		if ($this->Missions->find()->select(['sans_frais'])) 
-			$sansFrais = true;
+		if(array_column($this->Missions->find()->select(['sans_frais'])->where(['id' => $id])->all()->toArray(),'sans_frais')[0]
+		)
+		$sansFrais = true;
+
+		// print_r($sansFrais);
 
 		return $generator->generate($sansFrais, $fileName);
 
 	}
 
-
 	public function generation($id = null) {
+		$this->loadModel('Membres');
+
 		if ($id != null) {
 			$mission = $this->Missions->get($id, [
-				'contain' => []
+				'contain' => ['Projets', 'Lieus', 'Motifs', 'Transports','Membres']
 			]);
 
-			if ($this->Auth->user('id') == $mission->membre_id || $this->Auth->user('role') == Membre::ADMIN || $this->Auth->user('role') == Membre::SECRETAIRE )  {
+			if ($this->Auth->user('id') == $mission->membre_id || $this->Auth->user('role') === Membre::ADMIN || $this->Auth->user('role') === Membre::SECRETAIRE )  {
 				$this->_fileGeneration($id);
 			} else {
 				// $this->Session->setFlash('Lecture de l\'OdM impossible : Permission insuffisante','flash_failure');

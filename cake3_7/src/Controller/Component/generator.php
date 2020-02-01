@@ -127,7 +127,8 @@ class MyGenerator {
 	* return pdf
 	**/
 	function generate($sansFrais = false, $fileName = null) {
-
+		// error_reporting(0);
+		ob_start();
 		$pdf=new \pdfOrder('P','mm','A4');
 		$pdf->SetAutoPageBreak(false);
 		$pdf->AddPage();
@@ -147,6 +148,7 @@ class MyGenerator {
 		} else {
 			$pdf->Output($fileName,"F");
 		}
+		ob_end_flush();
 	}
 
 }

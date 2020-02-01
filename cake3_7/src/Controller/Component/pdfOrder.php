@@ -213,7 +213,8 @@ Projet : $projet
   function transport($transports) {
   	$firstTime = true;
 	foreach ($transports as $transport) {
-		switch ($transport['Transport']['type_transport']) {
+
+		switch ($transport->type_transport) {
 			case "train" :
 				$textTransport = "Train";
 				break;
