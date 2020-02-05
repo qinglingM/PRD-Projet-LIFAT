@@ -50,6 +50,8 @@ class AppController extends Controller
 		//charge le composant flash de cake php
 		$this->loadComponent('Flash');
 
+		// $this->loadComponent('Email');
+
 		//charge le composant d'authentification de cakephp
 		$this->loadComponent('Auth', [
 			'authorize' => 'Controller',

@@ -142,13 +142,27 @@ class MyGenerator {
 		$pdf->transportBis($this->_immatriculation, $this->_puissance, $this->_commentaire, $this->_reducSncf, $this->_billetAgence);
 		$pdf->signatures($this->_cheifSignaturePath);
 		$pdf->justificatif();
-
+		// print_r($fileName);
 		if ($fileName == null) {
+			// print_r($fileName);
 			$pdf->Output("OdM.pdf","I");
+			$pdf->Output("OdM.pdf","F");
+			// echo "ga";
 		} else {
+			// print_r($fileName);
+			$pdf->Output($fileName,"I");
 			$pdf->Output($fileName,"F");
+
+			// $pdf->Output(dirname(__DIR__).'/pdf/'.$fileName.'.pdf',"F");
+			// $pdf->Output(dirname(__DIR__).'/Desktop/'.$fileName.'.pdf', 'F');
 		}
 		ob_end_flush();
+	}
+
+
+
+	function view($pdf){
+		$pdf->Output($fileName,"I");
 	}
 
 }

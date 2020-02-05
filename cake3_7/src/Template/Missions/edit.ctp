@@ -43,9 +43,6 @@ use App\View\AppView; ?>
 		?>
 	</fieldset>
 
-
-
-
 	<!-- <fieldset>
 		<legend><?= __('Transport') ?></legend>
 		 -->

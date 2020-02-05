@@ -51,7 +51,7 @@ class ProjetsController extends AppController
 		$projet = $this->Projets->get($id, [
 			'contain' => ['Financements', 'Equipes', 'Missions']
 		]);
-			print_r($projet);
+			// åprint_r($projet);
 		$this->loadModel('Membres');
 		$projet->responsables = array();
 		foreach ($projet->equipes as &$equipes) {
