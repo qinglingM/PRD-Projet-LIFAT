@@ -38,11 +38,16 @@ class TransportsTable extends Table
 		$this->setDisplayField('id');
 		$this->setPrimaryKey('id');
 
-		$this->belongsToMany('Missions', [
-			'foreignKey' => 'transport_id',
-			'targetForeignKey' => 'mission_id',
-			'joinTable' => 'missions_transports'
+
+
+		$this->belongsTo('Missions', [
+			'foreignKey' => 'mission_id'
 		]);
+		// $this->belongsToMany('Missions', [
+		// 	'foreignKey' => 'transport_id',
+		// 	'targetForeignKey' => 'mission_id',
+		// 	'joinTable' => 'missions_transports'
+		// ]);
 
 		$this->displayField('type_transport');
 	}

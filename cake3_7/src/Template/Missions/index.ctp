@@ -2,15 +2,20 @@
 /**
  * @var AppView $this
  * @var Mission[]|CollectionInterface $missions
+ * @var Transport[]ConllectionInterface $transports
  */
 
 use App\Model\Entity\Mission;
+use App\Model\Entity\Transport;
+
 use App\View\AppView;
-use Cake\Collection\CollectionInterface; ?>
+use Cake\Collection\CollectionInterface; 
+?>
 
 <!-- Barre de recherche -->
 <?php
 echo $this->element('searchbar');
+
 ?>
 
 
@@ -20,7 +25,7 @@ echo $this->element('searchbar');
 			if ($user['permanent'] === true || $user['role'] === Membre::ADMIN) {
 				//	Seuls les membres permanents (& admins) peuvent ajouter des projets
 				// echo '[' . $this->Html->link(__('Nouveau mission'), ['action' => 'edit']) . ']';	
-				echo '[' . $this->Html->link(__('Nouveau mission'), ['action' => 'edit']) . ']';
+				echo '[' . $this->Html->link(__('Nouveau mission'), ['action' => 'add']) . ']';
 
 			}
 			?>
@@ -42,8 +47,12 @@ echo $this->element('searchbar');
 		<?php if(!empty($missions)){ ?>
 
 		
-		<?php foreach ($missions as $mission): ?>
+		<?php foreach ($missions as $mission): 
+			// echo $mission;
+			?>
+			
 			<tr>
+
 				<td><?= $this->Number->format($mission->id) ?></td>
 				<td><?= $mission->has('motif') ? $this->Html->link($mission->motif->nom_motif, ['controller' => 'Motifs', 'action' => 'view', $mission->motif->id]) : '' ?></td>
 				<td><?= $mission->has('lieus') ? $this->Html->link($mission->lieus->nom_lieu, ['controller' => 'Lieus', 'action' => 'view', $mission->lieus->id]) : '' ?></td>
@@ -53,6 +62,7 @@ echo $this->element('searchbar');
 				<td><?= h($mission->etat) ?></td>
 				<td class="actions">
 					<?= $this->Html->link(__('Details'), ['action' => 'generation', $mission->id]) ?>
+
 					<?= $this->Html->link(__('Modifier'), ['action' => 'edit', $mission->id]) ?>
 					<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $mission->id], ['confirm' => __('Are you sure you want to delete # {0}?', $mission->id)]) ?>
 				</td>

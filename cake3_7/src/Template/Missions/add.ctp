@@ -62,62 +62,8 @@ use App\View\AppView; ?>
 		// echo $this->Form->control('transports.type_transports', ['options' => $transports]);
 		// echo $this->Form->control('missions._ids', ['options' => $missions]);
 		// echo $this->Form->control('transports', ['options' => $transports],['multiple' => 'checkbox']);
-		
+
 		?>
-
-		<div id="transportAffichage">
-		<?php	
-		$i = 1;
-		// Affichage des transports enregistrés, lors de l'édition d'une mission déjà existante
-		if (isset($transport)) {
-			foreach ($transport as $transport1) {
-				switch ($transport1->type_transport) {
-					case "Train" :
-						echo $this->Form->select('mul', $options, ['checked' => ['Value1']]);
-						break;
-					case "Value2" :
-						echo $this->Form->select('mul', $options, ['checked' => ['Value2']]);
-						// $textTransport = "Avion";
-						break;
-					case "Vehicule_service" :
-						echo $this->Form->select('mul', $Value3, ['checked' => true]);
-						break;
-					case "Vehicule_personnel":
-						$textTransport = "Véhicule_Personnel";
-						break;
-					case "Autre":
-						$textTransport = "Autre";
-						break;
-					default:
-						$textTransport = "Autre";
-						break;
-				}
-
-				echo '<div class="transport">';
-				echo $this->Form->select('textTransport', $textTransport, ['checked' => 'true']);
-				echo '<span class="removeButton">×</span>';
-				echo '<input id="Transport';
-				echo $i;
-				echo 'type_transport" type="hidden" name="data[Transport][';
-				echo $i;
-				echo '][type_transport]" value="';
-				echo $transport['type_transport'];
-				echo '"></input>';
-				echo '<input id="Transport';
-				echo $i;
-				echo 'type_transport" type="hidden" name="data[Transport][';
-				echo $i;
-				echo '][id]" value="';
-				if (isset($transport['id'])){
-					echo $transport['id'];
-				}
-				echo '"/>';
-				echo '</div>';
-				$i++;
-			}
-		}
-	?>
-	</div>
 
 
 	<!-- </fieldset> -->

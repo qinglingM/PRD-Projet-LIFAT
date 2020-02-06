@@ -57,11 +57,14 @@ class MissionsTable extends Table
 		$this->belongsTo('Motifs', [
 			'foreignKey' => 'motif_id'
 		]);
-		$this->belongsToMany('Transports', [
-			'foreignKey' => 'mission_id',
-			'targetForeignKey' => 'transport_id',
-			'joinTable' => 'missions_transports'
+		$this->hasMany('Transports', [
+			'foreignKey' => 'transport_id'
 		]);
+		// $this->belongsToMany('Transports', [
+		// 	'foreignKey' => 'mission_id',
+		// 	'targetForeignKey' => 'transport_id',
+		// 	'joinTable' => 'missions_transports'
+		// ]);
 
 		
 		// Add the behaviour to your table

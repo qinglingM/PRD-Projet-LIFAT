@@ -12,7 +12,7 @@ use Cake\ORM\Entity;
  * @property string|null $im_vehicule
  * @property int|null $pf_vehicule
  *
- * @property Mission[] $missions
+ * @property Mission $mission
  */
 class Transport extends Entity
 {
@@ -29,6 +29,6 @@ class Transport extends Entity
 		'type_transport' => true,
 		'im_vehicule' => true,
 		'pf_vehicule' => true,
-		'missions' => true
+		'mission' => true
 	];
 }

@@ -112,8 +112,13 @@ class MyGenerator {
 	* Set transport information
 	**/
 	function setTransport($transport) {
+		// print_r($this->_transport);
 		$this->_transport = $transport;
 	}
+
+	// function getTransport(){
+	// 	return $this->_transport;
+	// }
 
 	function setTransportBis($immatriculation, $puissance, $commentaire, $reducSncf, $billetAgence) {
 		$this->_puissance = $puissance;
@@ -132,7 +137,7 @@ class MyGenerator {
 		$pdf=new \pdfOrder('P','mm','A4');
 		$pdf->SetAutoPageBreak(false);
 		$pdf->AddPage();
-
+// print_r($this->_transport);
 		$pdf->LI($sansFrais);
 		$pdf->cadreAdmin($this->_matricule);
 		$pdf->agent($this->_id, $this->_name, $this->_prenom,$this->_adresseagent1,$this->_adresseagent2,$this->_residenceadmin1,$this->_residenceadmin2,$this->_equipe,$this->_intitule,$this->_grade,$this->_personnel_type,$this->_signature_path,$this->_date_naissance);
@@ -146,11 +151,11 @@ class MyGenerator {
 		if ($fileName == null) {
 			// print_r($fileName);
 			$pdf->Output("OdM.pdf","I");
-			$pdf->Output("OdM.pdf","F");
+			// $pdf->Output("OdM.pdf","F");
 			// echo "ga";
 		} else {
 			// print_r($fileName);
-			$pdf->Output($fileName,"I");
+			// $pdf->Output($fileName,"I");
 			$pdf->Output($fileName,"F");
 
 			// $pdf->Output(dirname(__DIR__).'/pdf/'.$fileName.'.pdf',"F");

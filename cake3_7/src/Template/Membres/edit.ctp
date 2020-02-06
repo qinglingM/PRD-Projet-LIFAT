@@ -10,7 +10,8 @@ use App\View\AppView;
 
 $optionsMembres = [
 	Membre::ADMIN => 'Administrateur',
-	Membre::MEMBRE => 'Membre'    //	La dernière option est celle par défaut
+	Membre::MEMBRE => 'Membre',    //	La dernière option est celle par défaut
+    Membre::SECRETAIRE => 'Secretaire'
 ];
 $optionsGenre = [
 	'H' => 'Homme',
@@ -45,11 +46,11 @@ $optionsGenre = [
 			echo $this->Form->control('grade');
 			echo $this->Form->control('im_vehicule');
 			echo $this->Form->control('pf_vehicule');
-			
+
 			// $signaturePath = "sign/".$this->data['Membre']['signature_name'].".jpg";
 			$signaturePath = "sign/".$membre->signature_name.".jpg";
 			$fullSignaturePath ='./img/'.$signaturePath;
-			$verifSignature = file_exists($fullSignaturePath); 
+			$verifSignature = file_exists($fullSignaturePath);
 			// echo $this->Form->control();
 			echo $this->Form->control('signature_name', ['required' => false,'label' => 'Fichier signature (jpg,png | 10Mo max)', 'type' => 'file', 'accept' => 'image/png, image/jpeg, image/jpg']);
 			//echo $this->Form->control('signature',['required' => true,'lable' => 'Aperçu de la signature actuelle :', 'type' => 'image']);

@@ -19,6 +19,8 @@ if (!empty($user)) {
 	echo "</div>";
 }
 ?>
+
+
 <div id="menu">
 	<ul>
 		<?php if (!empty($user)): ?>                <!--	Si user non connecté : il ne peut faire que Connexion et Inscription	-->
