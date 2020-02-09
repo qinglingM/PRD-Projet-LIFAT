@@ -7,9 +7,9 @@
 use App\Model\Entity\Mission;
 use App\View\AppView; ?>
 
-<div class="missions view large-9 medium-8 columns content">
+<div class="col s12 m8 l4 offset-m4 offset-l8">
 	<h3><?= h($mission->id) ?></h3>
-	<table class="vertical-table">
+	<table class="vertical-table" style="margin: auto">
 		<tr>
 			<th scope="row"><?= __('Complement Motif') ?></th>
 			<td><?= h($mission->complement_motif) ?></td>
@@ -66,7 +66,7 @@ use App\View\AppView; ?>
 	<div class="related">
 		<h4><?= __('Related Transports') ?></h4>
 		<?php if (!empty($mission->transports)): ?>
-			<table cellpadding="0" cellspacing="0">
+			<table cellpadding="0" cellspacing="0" style="margin: auto">
 				<tr>
 					<th scope="col"><?= __('Id') ?></th>
 					<th scope="col"><?= __('Type Transport') ?></th>

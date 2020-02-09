@@ -8,7 +8,7 @@
 use App\Model\Entity\Membre;
 use App\Model\Entity\Projet;
 use App\View\AppView; ?>
-<div class="projets view large-9 medium-8 columns content">
+<div class="col s12 m8 l4 offset-m4 offset-l8">
 	<h3><?= h("Titre du projet : " . $projet->titre) ?> <font size="+1">
 			<?php
 			if ($user['permanent'] === true || $user['role'] === Membre::ADMIN) {
@@ -17,7 +17,7 @@ use App\View\AppView; ?>
 			}
 			?>
 		</font></h3>
-	<table class="vertical-table">
+	<table class="vertical-table" style="margin: auto">
 		<tr>
 			<th scope="row"><?= __('Description') ?></th>
 			<td><?= h($projet->description) ?></td>
@@ -50,7 +50,7 @@ use App\View\AppView; ?>
 	<div class="related">
 		<h4><?= __('Equipes associés') ?></h4>
 		<?php if (!empty($projet->equipes)): ?>
-			<table cellpadding="0" cellspacing="0">
+			<table cellpadding="0" cellspacing="0" style="margin: auto">
 				<tr>
 					<th scope="col"><?= __('Id') ?></th>
 					<th scope="col"><?= __('Nom de l\'équipe') ?></th>

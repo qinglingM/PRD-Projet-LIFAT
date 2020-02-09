@@ -61,6 +61,15 @@ use App\View\AppView; ?>
 			<td><?= h($membre->im_vehicule) ?></td>
 		</tr>
 		<tr>
+			<th scope="row"><?= __('Puissance fiscale véhicule') ?></th>
+			<td><?= h($membre->pf_vehicule) ?></td>
+		</tr>
+		<tr>
+			<th scope="row"><?= __('Carte Sncf') ?></th>
+			<td><?= h($membre->carte_sncf) ?></td>
+		</tr>
+
+		<tr>
 			<th scope="row"><?= __('Login Cas') ?></th>
 			<td><?= h($membre->login_cas) ?></td>
 		</tr>

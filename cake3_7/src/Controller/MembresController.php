@@ -209,7 +209,7 @@ class MembresController extends AppController
 		$equipes = $this->Membres->Equipes->find('list', ['limit' => 200]);
 
 		//	Si l'user actuel n'est pas admin, les équipes dans lesquelles il peut bouger le membre cible sont limitées (seulement l'equipe actuelle de la cible / les équipes que le user mène / dont il fait partie)
-		if ($this->Auth->user('role') != Membre::ADMIN) {
+		if ($this->Auth->user('role') != Membre::ADMIN && $this->Auth->user('role') != Membre::CHEFDEQUIPE) {
 			$equipes->where(['responsable_id' => $this->Auth->user('id')]);
 			$equipes->orWhere(['id' => $this->Auth->user('equipe_id')]);
 			$equipes->orWhere(['id' => $membre->equipe_id]);

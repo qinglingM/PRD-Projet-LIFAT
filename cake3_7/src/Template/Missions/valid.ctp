@@ -5,8 +5,9 @@
 
 <?php
 
-echo $this->Form->create('Mission',array('controller' => '', 'action'=> ''));
-echo $this->Form->input('id', array('type' => 'hidden'));
-echo $this->Form->end('valider');
+echo $this->Form->create($mission);
+echo $this->Form->control('id', array('type' => 'hidden'));
+echo $this->Form->button(__('Valider '));
+echo $this->Form->end();
 
 ?>

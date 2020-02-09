@@ -38,7 +38,7 @@
 			case "user" : 
 			$role = "utilisateur"; 
 			break;
-			case "secretary" : 
+			case "secretaire" : 
 			$role = "secrétaire"; 
 			break;
 		}

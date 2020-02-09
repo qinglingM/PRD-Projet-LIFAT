@@ -79,7 +79,7 @@ use App\Model\Entity\Membre;
 	<?php
 	//menu
 	echo $this->Html->div('',null, array('id' => 'menu')); 
-	
+
 	$connexion = $this->Html->link('Connexion',['controller' => 'membres', 'action' => 'login']);
 	$inscription = $this->Html->link('Inscription',['controller' => 'membres', 'action' => 'register']);
 	$menuDeconnecte = array(
@@ -91,8 +91,6 @@ use App\Model\Entity\Membre;
 			//   <!--	Si user non connecté : il ne peut faire que Connexion et Inscription	-->
 			if ($user['actif'] === true){
 
-				
-				
 		// Définition des liens à afficher
 		$accueil = $this->Html->link('Accueil',['controller' => 'pages', 'action' => 'home']);
 		$profil = $this->Html->link('Mon Profil', ['controller' => 'membres', 'action' => 'view', $user['id']]);
@@ -100,6 +98,7 @@ use App\Model\Entity\Membre;
 		$missionsAValider = $this->Html->link('Mission à Valider', ['controller' => 'missions', 'action' => 'needValidation']);
 		$missionsValides = $this->Html->link('Missions Validées', ['controller' => 'missions', 'action' => 'alreadyvalid']);
 		$administration = $this->Html->link('Administration', ['controller' => 'administration', 'action' => 'index']);
+		
 		$deconnexion = $this->Html->link('Deconnexion', ['controller' => 'membres', 'action' => 'logout']);
 		$connexion = $this->Html->link('Connexion',['controller' => 'membres', 'action' => 'login']);
 		$inscription = $this->Html->link('Inscription',['controller' => 'membres', 'action' => 'register']);
@@ -141,7 +140,6 @@ use App\Model\Entity\Membre;
 			);
 
 		$menuAdmin = array(
-			$accueil,
 			$missions,
 			$missionsAValider,
 			$missionsValides,
@@ -188,7 +186,7 @@ use App\Model\Entity\Membre;
 
 		// echo $user['id'];
 		if (!empty( $user['id'])) {
-			if ( $user['role'] === Membre::ADMIN) {
+			if ( $user['role'] === Membre::ADMIN || $user['role'] === Membre::CHEFDEQUIPE) {
 				echo $this->Html->nestedList($menuAdmin);
 			} else if ( $user['role'] == Membre::SECRETAIRE) {
 				echo $this->Html->nestedList($menuSecretary);
@@ -222,6 +220,7 @@ use App\Model\Entity\Membre;
 			<?= $this->fetch('content') ?>
 		</div>
 	</div>
+
 
 	<!-- Pied de page -->
 	<?php

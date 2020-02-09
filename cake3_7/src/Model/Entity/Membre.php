@@ -54,6 +54,14 @@ class Membre extends Entity
 	 */
 	const ADMIN = 'admin';
 
+
+
+	/**
+	 * Class constant for the 'Secretaire' role ($membre['role']).
+	 */
+	const CHEFDEQUIPE = 'chef d\'equipe';
+
+
 	/**
 	 * Class constant for the 'membre' role ($membre['role']).
 	 */

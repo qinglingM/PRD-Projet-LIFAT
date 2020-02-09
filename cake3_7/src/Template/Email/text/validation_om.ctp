@@ -1,6 +1,6 @@
 Bonjour,
 
-L’ordre de mission ci-joint a été saisi par <?php echo $first_name." ".$name; ?> et validé par le responsable d’équipe. Il s’agit d’un déplacement qui aura lieu du <?php echo $date_d." à ".$date_r; ?> et qui a comme intitulé « <?php echo $motif; ?> ».
+L’ordre de mission ci-joint a été saisi par <?php echo $nom." ".$prenom; ?> et validé par le responsable d’équipe . Il s’agit d’un déplacement qui aura lieu du <?php echo $date_depart." à ".$date_retour; ?> et qui a comme intitulé « <?php echo $motif; ?> ».
 
 L'auteur a apporté le commentaire suivant :
 "<?php echo $commentaire; ?>"

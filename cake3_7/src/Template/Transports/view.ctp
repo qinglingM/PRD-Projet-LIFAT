@@ -40,7 +40,7 @@ use App\View\AppView; ?>
 	<div class="related">
 		<h4><?= __('Related Missions') ?></h4>
 		<?php if (!empty($transport->missions)): ?>
-			<table cellpadding="0" cellspacing="0">
+			<table cellpadding="0" cellspacing="0" style="margin: auto">
 				<tr>
 					<th scope="col"><?= __('Id') ?></th>
 					<th scope="col"><?= __('Complement Motif') ?></th>

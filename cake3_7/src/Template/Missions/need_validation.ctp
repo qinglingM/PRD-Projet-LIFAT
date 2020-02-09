@@ -1,85 +1,75 @@
 <?php
-echo $this->Session->flash('email');
-echo $this->Session->flash(); 
-?>
+/**
+ * @var AppView $this
+ * @var Mission[]|CollectionInterface $missions
+ */
 
-<h2>Ordre de Missions à valider</h2>
-
-<div class="note"> En cliquant sur valider, la mission sera transmise au secrétariat du LI.</div>
-
-<table id="listMissionValidation" class="display cell-border">
-	<thead>
-		<tr>
-			<th>N°</th>
-			<th>Nom</th>
-			<th>Prénom</th>
-			<th>Motif</th>
-			<th>Lieu</th>
-			<th class="tableDate">Départ</th>
-			<th class="tableDate">Arrivée</th>
-			<th>Etat</th>
-			<th class="nosort">Editer</th>
-			<th class="nosort">Visualiser</th>
-			<th class="nosort">Valider</th>
-		</tr>
-	</thead>
+use App\Model\Entity\Membre;
+use App\Model\Entity\Mission;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface; ?>
+<!-- Barre de recherche -->
 <?php
-
-$i=0;
-foreach($missions as $mission) {
-	//line creation
-	$line = array(
-		$this->Html->link($mission['Mission']['id'], array('controller' => 'missions', 'action' => 'edit', $mission['Mission']['id'])),
-		$mission['User']['name'],
-		$mission['User']['first_name'],
-		$mission['Motif']['nom_motif'],
-		$mission['Lieu']['nom_lieu'],
-		date("d/m/Y", strtotime($mission['Mission']['date_d'])),
-		date("d/m/Y", strtotime($mission['Mission']['date_r']))
-		);
-
-	switch($mission['Mission']['etat']) {
-		case "en_cours":
-			array_push($line, 'En cours');
-			break;
-		case "soumis":
-			array_push($line, 'Soumis');
-			break;
-		case "valide":
-			array_push($line, 'Validé');
-			break;
-	}
-
-	array_push($line, $this->Html->link('Editer', array('controller' => 'missions', 'action' => 'edit', $mission['Mission']['id'])) ); 
-	array_push($line, $this->Html->link('Visualiser', array('controller' => 'missions', 'action' => 'generation', $mission['Mission']['id'] ), array('target' => '_blank')) );
-	array_push($line, $this->Html->link(
-		'Valider',
-		array('controller' => 'missions', 'action' => 'valid', $mission['Mission']['id']),
-		array('class' => 'open-popup',
-			'data-mfp-src' => '#popupValidation'.$mission['Mission']['id']
-			)
-		)
-	); 
-	echo $this->Html->tableCells($line);
-}
-
+echo $this->element('searchbar');
 ?>
-</table>
+<div class="col s12 m8 l4 offset-m4 offset-l8">
+	<h3><?= __('Ordre de Missions à valider') ?> <font size="+1">
+		</font></h3>
+	<div class="note"> En cliquant sur valider, la mission sera transmise au secrétariat du LI.</div>
 
-<?php foreach ($missions as $mission) {
-	?>
-	<div id="popupValidation<?php echo $mission['Mission']['id'] ?>" class="popup mfp-hide">
-		<p>Êtes vous sûr de vouloir valider cette mission ?</p>
-		<?php
-		echo $this->Form->create('Mission',array('controller' => 'missions', 'action'=> 'valid/'.$mission['Mission']['id']));
-		echo $this->Form->input('id', array('type' => 'hidden', 'value' => $mission['Mission']['id']));
-		echo $this->Form->end('Oui');
-		?>
-		<button class="button-non">Non</button>
+	<table cellpadding="0" cellspacing="0" style="margin: auto">
+		<thead>
+		<tr>
+			<th scope="col"><?= $this->Paginator->sort('N°') ?></th>
+			<th scope="col"><?= $this->Paginator->sort('Nom') ?></th>
+			<th scope="col"><?= $this->Paginator->sort('Prenom') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('Motif') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('Lieu') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('Date départ') ?></th>
+			<th scope="col"><?= $this->Paginator->sort('Date retour') ?></th>
+			<th scope="col"><?= $this->Paginator->sort('Etat') ?></th>
+
+			<th scope="col" class="actions"><?= __('Actions') ?></th>
+
+		</tr>
+		</thead>
+		<tbody>
+        <?php if(!empty($missions)){ ?>
+		<?php foreach ($missions as $mission): ?>
+			<tr>
+				<td><?= h($this->Number->format($mission->id) )?></td>
+                <td><?= $mission->has('membre') ? $mission->membre->nom : ''?></td>
+                <td><?= $mission->has('membre') ? $mission->membre->prenom : '' ?></td>
+				<td><?= $mission->has('motif') ? $mission->motif->nom_motif : '' ?></td>
+				<td><?= $mission->has('lieus') ? $mission->lieus->nom_lieu : ''?></td>
+				<td><?= h($mission->date_depart) ?></td>
+				<td><?= h($mission->date_retour) ?></td>
+				<td><?= h($mission->etat) ?></td>
+				<td class="actions">
+					<?= $this->Html->link(__('Editer'), ['action' => 'edit', $mission->id]) ?>
+					<?= $this->Html->link(__('Details'), ['action' => 'generation', $mission->id]) ?>
+					<?= $this->Form->postLink(__('Valider'), ['action' => 'valid', $mission->id], ['confirm' => __('Êtes vous sûr de vouloir valider cette mission # {0}?', $mission->id)]) ?>
+				</td>
+			</tr>
+			
+        <?php endforeach; ?>
+        <?php } ?>
+		</tbody>
+	</table>
+	<div class="paginator">
+		<ul class="pagination">
+			<!-- <?= $this->Paginator->first('<< ' . __('début')) ?>
+			<?= $this->Paginator->prev('< ' . __('précedente')) ?>
+			<?= $this->Paginator->numbers() ?>
+			<?= $this->Paginator->next(__('suivante') . ' >') ?>
+			<?= $this->Paginator->last(__('fin') . ' >>') ?> -->
+		</ul>
+		<!-- <p><?= $this->Paginator->counter(['format' => __('Page {{page}} sur {{pages}}, affiche {{current}} projet sur {{count}}')]) ?></p> -->
 	</div>
-	<?php
-	}
-	?>
+</div>
+
+
+
 
 <!--?php  echo $this->Html->link('nouvelle mission',array('controller' => 'missions', 'action' => 'edit')); ?-->
 

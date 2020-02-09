@@ -12,7 +12,7 @@ use Cake\Collection\CollectionInterface; ?>
 <?php
 echo $this->element('searchbar');
 ?>
-<div class="projets index large-9 medium-8 columns content">
+<div class="col s12 m8 l4 offset-m4 offset-l8">
 	<p><?= $this->Html->link('Liste des budgets annuels des projets', ['controller' => 'budgetsAnnuels', 'action' => 'index']) ?></p>
 	<h3><?= __('Projets du laboratoire') ?> <font size="+1">
 			<?php
@@ -22,7 +22,7 @@ echo $this->element('searchbar');
 			}
 			?>
 		</font></h3>
-	<table cellpadding="0" cellspacing="0">
+	<table cellpadding="0" cellspacing="0" style="margin: auto">
 		<thead>
 		<tr>
 			<th scope="col"><?= $this->Paginator->sort('titre') ?></th>
@@ -66,6 +66,6 @@ echo $this->element('searchbar');
 			<?= $this->Paginator->next(__('suivante') . ' >') ?>
 			<?= $this->Paginator->last(__('fin') . ' >>') ?>
 		</ul>
-		<p><?= $this->Paginator->counter(['format' => __('Page {{page}} sur {{pages}}, affiche {{current}} projet sur {{count}}')]) ?></p>
+		<!-- <p><?= $this->Paginator->counter(['format' => __('Page {{page}} sur {{pages}}, affiche {{current}} projet sur {{count}}')]) ?></p> -->
 	</div>
 </div>

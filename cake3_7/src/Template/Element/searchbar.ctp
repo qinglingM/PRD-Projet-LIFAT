@@ -1,4 +1,4 @@
-<div id="searchbar" class="large-9 medium-8">
+<div id="searchbar" class="large-12 medium-8">
 	<?php
 	if (!isset($searchLabelExtra)) {
 		$searchLabelExtra = 'nom';

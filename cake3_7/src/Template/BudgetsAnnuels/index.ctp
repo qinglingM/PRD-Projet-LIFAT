@@ -9,7 +9,7 @@ use App\View\AppView;
 use Cake\Collection\CollectionInterface; ?>
 <div class="budgetsAnnuels index large-9 medium-8 columns content">
 	<h3><?= __('Budgets Annuels') ?></h3>
-	<table cellpadding="0" cellspacing="0">
+	<table cellpadding="0" cellspacing="0" style="margin: auto" >
 		<thead>
 		<tr>
 			<th scope="col"><?= $this->Paginator->sort('projet_id') ?></th>
@@ -40,6 +40,6 @@ use Cake\Collection\CollectionInterface; ?>
 			<?= $this->Paginator->next(__('suivant') . ' >') ?>
 			<?= $this->Paginator->last(__('dernier') . ' >>') ?>
 		</ul>
-		<p><?= $this->Paginator->counter(['format' => __('Page {{page}} sur {{pages}}, {{current}} entrée(s) sur {{count}} au total')]) ?></p>
+		<!-- <p><?= $this->Paginator->counter(['format' => __('Page {{page}} sur {{pages}}, {{current}} entrée(s) sur {{count}} au total')]) ?></p> -->
 	</div>
 </div>

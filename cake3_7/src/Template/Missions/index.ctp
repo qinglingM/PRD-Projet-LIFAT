@@ -19,18 +19,16 @@ echo $this->element('searchbar');
 ?>
 
 
-<div class="projets index large-9 medium-8 columns content">
+<div class="projets index large-12 medium-8 columns content">
 	<h3><?= __('Mes missions') ?> <font size="+1">
 			<?php
 			if ($user['permanent'] === true || $user['role'] === Membre::ADMIN) {
 				//	Seuls les membres permanents (& admins) peuvent ajouter des projets
-				// echo '[' . $this->Html->link(__('Nouveau mission'), ['action' => 'edit']) . ']';	
 				echo '[' . $this->Html->link(__('Nouveau mission'), ['action' => 'add']) . ']';
-
 			}
 			?>
 		</font></h3>
-	<table cellpadding="0" cellspacing="0">
+	<table cellpadding="0" cellspacing="0" style="margin: auto">
 		<thead>
 		<tr>
 			<th scope="col"><?= $this->Paginator->sort('id') ?></th>
@@ -45,14 +43,10 @@ echo $this->element('searchbar');
 		</thead>
 		<tbody>
 		<?php if(!empty($missions)){ ?>
-
-		
 		<?php foreach ($missions as $mission): 
 			// echo $mission;
 			?>
-			
 			<tr>
-
 				<td><?= $this->Number->format($mission->id) ?></td>
 				<td><?= $mission->has('motif') ? $this->Html->link($mission->motif->nom_motif, ['controller' => 'Motifs', 'action' => 'view', $mission->motif->id]) : '' ?></td>
 				<td><?= $mission->has('lieus') ? $this->Html->link($mission->lieus->nom_lieu, ['controller' => 'Lieus', 'action' => 'view', $mission->lieus->id]) : '' ?></td>
@@ -73,13 +67,13 @@ echo $this->element('searchbar');
 	</table>
 	<div class="paginator">
 		<ul class="pagination">
-			<?= $this->Paginator->first('<< ' . __('début')) ?>
+			
+			 <?= $this->Paginator->first('<< ' . __('début')) ?>
 			<?= $this->Paginator->prev('< ' . __('précedente')) ?>
 			<?= $this->Paginator->numbers() ?>
 			<?= $this->Paginator->next(__('suivante') . ' >') ?>
 			<?= $this->Paginator->last(__('fin') . ' >>') ?>
 		</ul>
-		<p><?= $this->Paginator->counter(['format' => __('Page {{page}} sur {{pages}}, affiche {{current}} projet sur {{count}}')]) ?></p>
 	</div>
 </div>
 

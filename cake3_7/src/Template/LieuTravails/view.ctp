@@ -7,7 +7,7 @@
 use App\Model\Entity\LieuTravail;
 use App\Model\Entity\Membre;
 use App\View\AppView; ?>
-<div class="lieuTravails view large-9 medium-8 columns content">
+<div class="col s12 m8 l4 offset-m4 offset-l8">
 	<h3><?= h("Lieu de travail") ?> <font size="+1">
 			<?php
 			if ($user['role'] === Membre::ADMIN) {
@@ -16,7 +16,7 @@ use App\View\AppView; ?>
 			}
 			?>
 		</font></h3>
-	<table class="vertical-table">
+	<table class="vertical-table" style="margin: auto">
 		<tr>
 			<th scope="row"><?= __('Nom du lieu de travail') ?></th>
 			<td><?= h($lieuTravail->nom_lieu) ?></td>
@@ -29,7 +29,7 @@ use App\View\AppView; ?>
 	<div class="related">
 		<h4><?= __('Membres associés') ?></h4>
 		<?php if (!empty($lieuTravail->membres)): ?>
-			<table cellpadding="0" cellspacing="0">
+			<table cellpadding="0" cellspacing="0" style="margin: auto">
 				<tr>
 					<th scope="col"><?= __('Role') ?></th>
 					<th scope="col"><?= __('Nom') ?></th>

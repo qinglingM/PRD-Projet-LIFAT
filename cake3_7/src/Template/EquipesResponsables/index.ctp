@@ -19,7 +19,7 @@ use Cake\Collection\CollectionInterface; ?>
 </nav>
 <div class="equipesResponsables index large-9 medium-8 columns content">
 	<h3><?= __('Equipes Responsables') ?></h3>
-	<table cellpadding="0" cellspacing="0">
+	<table cellpadding="0" cellspacing="0" style="margin: auto">
 		<thead>
 		<tr>
 			<th scope="col"><?= $this->Paginator->sort('equipe_id') ?></th>
@@ -49,6 +49,6 @@ use Cake\Collection\CollectionInterface; ?>
 			<?= $this->Paginator->next(__('next') . ' >') ?>
 			<?= $this->Paginator->last(__('last') . ' >>') ?>
 		</ul>
-		<p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+		<!-- <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p> -->
 	</div>
 </div>

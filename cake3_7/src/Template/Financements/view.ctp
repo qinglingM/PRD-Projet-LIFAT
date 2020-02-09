@@ -7,7 +7,7 @@
 use App\Model\Entity\Financement;
 use App\Model\Entity\Membre;
 use App\View\AppView; ?>
-<div class="financements view large-9 medium-8 columns content">
+<div class="col s12 m8 l4 offset-m4 offset-l8"">
 	<h3><?= h('Financement') ?> <font size="+1">
 			<?php
 			if ($user['role'] === Membre::ADMIN) {
@@ -16,7 +16,7 @@ use App\View\AppView; ?>
 			}
 			?>
 		</font></h3>
-	<table class="vertical-table">
+	<table class="vertical-table" style="margin: auto">
 		<tr>
 			<th scope="row"><?= __('Nationalite Financement') ?></th>
 			<td><?= h($financement->nationalite_financement) ?></td>
@@ -41,7 +41,7 @@ use App\View\AppView; ?>
 	<div class="related">
 		<h4><?= __('Projets financés') ?></h4>
 		<?php if (!empty($financement->projets)): ?>
-			<table cellpadding="0" cellspacing="0">
+			<table cellpadding="0" cellspacing="0" style="margin: auto">
 				<tr>
 					<th scope="col"><?= __('Id') ?></th>
 					<th scope="col"><?= __('Titre') ?></th>

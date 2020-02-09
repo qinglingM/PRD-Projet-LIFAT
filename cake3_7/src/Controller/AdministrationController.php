@@ -1,21 +1,26 @@
 <?php
+namespace App\Controller;
+
+use App\Model\Entity\Membre;
 
 class AdministrationController extends AppController {
 	var $uses = array();
 
 	// Affiche la page d'accueil de l'administration, qui mène vers les autres pages d'administration
 	function index() {
-		if ($this->Auth->user('role') == 'admin' || $this->Auth->user('role') == 'secretary') {
+		if ($this->Auth->user('role') == 'admin' || $this->Auth->user('role') == 'secretaire' || $this->Auth->user('role') == 'chef d\'equipe') {
 			
 		} else {
-			$this->Session->setFlash('Administration impossible : Permission insuffisante','flash_failure');
-			$this->redirect(array('controller' => 'users', 'action' => 'listMissions'));
+			$this->Flash->error(__('Administration impossible : Permission insuffisante.'));
+
+			// $this->Session->setFlash('Administration impossible : Permission insuffisante','flash_failure');
+			$this->redirect(['action' => 'index']);
 		}
 	}
 
 	// Page de gestion des paramètre mail
 	function mail() {
-		if ($this->Auth->user('role') == 'admin' || $this->Auth->user('role') == 'secretary') {
+		if ($this->Auth->user('role') == 'admin' || $this->Auth->user('role') == 'secretarire' || $this->Auth->user('role') == 'chef d\'equipe') {
 			if (! empty($this->data) ) {
 				$fp = @fopen("config.txt", "w+");
 				foreach ($this->data as $param) {

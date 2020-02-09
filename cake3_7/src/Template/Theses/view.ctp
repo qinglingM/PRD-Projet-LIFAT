@@ -15,7 +15,7 @@ use App\View\AppView; ?>
 				echo '[' . $this->Html->link(__('Editer'), ['action' => 'edit', $theses->id]) . ']';
 			}
 			?></font size></h3>
-	<table class="vertical-table">
+	<table class="vertical-table"  style="margin: auto">
 		<tr>
 			<th scope="row"><?= __('Sujet') ?></th>
 			<td><?= h($theses->sujet) ?></td>
@@ -48,7 +48,7 @@ use App\View\AppView; ?>
 	<div class="related">
 		<h4><?= __('Dirigeant(s)') ?></h4>
 		<?php if (!empty($theses->dirigeants)): ?>
-			<table cellpadding="0" cellspacing="0">
+			<table cellpadding="0" cellspacing="0" style="margin: auto">
 				<?php foreach ($theses->dirigeants as $dirigeants): ?>
 					<tr>
 						<td class="actions">
@@ -62,7 +62,7 @@ use App\View\AppView; ?>
 	<div class="related">
 		<h4><?= __('Encadrant(s)') ?></h4>
 		<?php if (!empty($theses->encadrants)): ?>
-			<table cellpadding="0" cellspacing="0">
+			<table cellpadding="0" cellspacing="0" style="margin: auto">
 				<?php foreach ($theses->encadrants as $encadrants): ?>
 					<tr>
 						<td class="actions">

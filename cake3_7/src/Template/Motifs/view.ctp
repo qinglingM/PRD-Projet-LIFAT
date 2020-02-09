@@ -6,37 +6,29 @@
 
 use App\Model\Entity\Motif;
 use App\View\AppView; ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-	<ul class="side-nav">
-		<li class="heading"><?= __('Actions') ?></li>
-		<li><?= $this->Html->link(__('Edit Motif'), ['action' => 'edit', $motif->id]) ?> </li>
-		<li><?= $this->Form->postLink(__('Delete Motif'), ['action' => 'delete', $motif->id], ['confirm' => __('Are you sure you want to delete # {0}?', $motif->id)]) ?> </li>
-		<li><?= $this->Html->link(__('List Motifs'), ['action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Motif'), ['action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Missions'), ['controller' => 'Missions', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Mission'), ['controller' => 'Missions', 'action' => 'add']) ?> </li>
-	</ul>
-</nav>
-<div class="motifs view large-9 medium-8 columns content">
+<!-- <nav class="large-3 medium-4 columns" id="actions-sidebar">
+	
+</nav> -->
+<div class="col s12 m8 l4 offset-m4 offset-l8">
 	<h3><?= h($motif->id) ?></h3>
-	<table class="vertical-table">
+	<table class="vertical-table" style="margin: auto">
 		<tr>
-			<th scope="row"><?= __('Nom Motif') ?></th>
+			<th scope="col"><?= __('Nom Motif') ?></th>
 			<td><?= h($motif->nom_motif) ?></td>
 		</tr>
 		<tr>
-			<th scope="row"><?= __('Id') ?></th>
+			<th scope="col"><?= __('Id') ?></th>
 			<td><?= $this->Number->format($motif->id) ?></td>
 		</tr>
 		<tr>
-			<th scope="row"><?= __('Est Dans Liste') ?></th>
+			<th scope="col"><?= __('Est Dans Liste') ?></th>
 			<td><?= $motif->est_dans_liste ? __('Yes') : __('No'); ?></td>
 		</tr>
 	</table>
 	<div class="related">
 		<h4><?= __('Related Missions') ?></h4>
 		<?php if (!empty($motif->missions)): ?>
-			<table cellpadding="0" cellspacing="0">
+			<table cellpadding="0" cellspacing="0" style="margin: auto">
 				<tr>
 					<th scope="col"><?= __('Id') ?></th>
 					<th scope="col"><?= __('Complement Motif') ?></th>

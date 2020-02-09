@@ -23,7 +23,7 @@ echo $this->element('searchbar');
 			}
 			?>
 		</font></h3>
-	<table cellpadding="0" cellspacing="0">
+	<table cellpadding="0" cellspacing="0" style="margin: auto">
 		<thead>
 		<tr>
 			<th scope="col"><?= $this->Paginator->sort('Sujet') ?></th>
@@ -67,6 +67,6 @@ echo $this->element('searchbar');
 			<?= $this->Paginator->next(__('suivant') . ' >') ?>
 			<?= $this->Paginator->last(__('dernier') . ' >>') ?>
 		</ul>
-		<p><?= $this->Paginator->counter(['format' => __('Page {{page}} sur {{pages}}, {{current}} entrée(s) sur {{count}} au total')]) ?></p>
+		<!-- <p><?= $this->Paginator->counter(['format' => __('Page {{page}} sur {{pages}}, {{current}} entrée(s) sur {{count}} au total')]) ?></p> -->
 	</div>
 </div>

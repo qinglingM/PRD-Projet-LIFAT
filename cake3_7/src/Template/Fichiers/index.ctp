@@ -17,7 +17,7 @@ use Cake\Collection\CollectionInterface; ?>
 			}
 			?>
 		</font></h3>
-	<table cellpadding="0" cellspacing="0">
+	<table cellpadding="0" cellspacing="0" style="margin: auto">
 		<thead>
 		<tr>
 			<th scope="col"><?= $this->Paginator->sort('nom') ?></th>
@@ -57,6 +57,6 @@ use Cake\Collection\CollectionInterface; ?>
 			<?= $this->Paginator->next(__('suivant') . ' >') ?>
 			<?= $this->Paginator->last(__('dernier') . ' >>') ?>
 		</ul>
-		<p><?= $this->Paginator->counter(['format' => __('Page {{page}} sur {{pages}}, {{current}} entrée(s) sur {{count}} au total')]) ?></p>
+		<!-- <p><?= $this->Paginator->counter(['format' => __('Page {{page}} sur {{pages}}, {{current}} entrée(s) sur {{count}} au total')]) ?></p> -->
 	</div>
 </div>

@@ -7,7 +7,7 @@
 use App\Model\Entity\Equipe;
 use App\Model\Entity\Membre;
 use App\View\AppView; ?>
-<div class="equipes view large-9 medium-8 columns content">
+<div class="col s12 m8 l4 offset-m4 offset-l8">
 	<h3><?= h($equipe->nom_equipe) ?><font size="+1">
 			<?php
 			if ($user['role'] === Membre::ADMIN) {
@@ -16,7 +16,7 @@ use App\View\AppView; ?>
 			}
 			?>
 		</font size></h3>
-	<table class="vertical-table">
+	<table class="vertical-table" style="margin: auto">
 		<h4><?= __('Membres') ?></h4>
 		<?php foreach ($equipe->membres as $membre): ?>
 			<tr>
@@ -27,7 +27,7 @@ use App\View\AppView; ?>
 	<div class="related">
 		<h4><?= __('Projets associés') ?></h4>
 		<?php if (!empty($equipe->projets)): ?>
-			<table cellpadding="0" cellspacing="0">
+			<table cellpadding="0" cellspacing="0" style="margin: auto">
 				<tr>
 					<th scope="col"><?= __('Titre') ?></th>
 					<th scope="col"><?= __('Type') ?></th>
@@ -51,7 +51,7 @@ use App\View\AppView; ?>
 	</div>
 	<div class="related">
 		<h4><?= __('Responsable d\'équipe') ?></h4>
-		<table cellpadding="0" cellspacing="0">
+		<table cellpadding="0" cellspacing="0" style="margin: auto">
 			<tr>
 				<td><?= $this->Html->link($equipe->equipes_responsables['nom'] . ' ' . $equipe->equipes_responsables['prenom'], ['controller' => 'Membres', 'action' => 'view', $equipe->equipes_responsables['id']]) ?></td>
 			</tr>

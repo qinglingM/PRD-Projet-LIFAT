@@ -7,17 +7,15 @@
 use App\Model\Entity\Motif;
 use App\View\AppView;
 use Cake\Collection\CollectionInterface; ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-	<ul class="side-nav">
-		<li class="heading"><?= __('Actions') ?></li>
-		<li><?= $this->Html->link(__('New Motif'), ['action' => 'add']) ?></li>
-		<li><?= $this->Html->link(__('List Missions'), ['controller' => 'Missions', 'action' => 'index']) ?></li>
-		<li><?= $this->Html->link(__('New Mission'), ['controller' => 'Missions', 'action' => 'add']) ?></li>
-	</ul>
-</nav>
-<div class="motifs index large-9 medium-8 columns content">
-	<h3><?= __('Motifs') ?></h3>
-	<table cellpadding="0" cellspacing="0">
+<!-- Barre de recherche -->
+<?php
+echo $this->element('searchbar');
+?>
+<!-- <div class="motifs index columns content "> -->
+<div class = 'col s12 m8 l4 offset-m4 offset-l8'>
+	<h3><?= __('Motifs') ?><font size="+1">
+		</font></h3>
+	<table cellpadding="0" cellspacing="0" style="margin: auto">
 		<thead>
 		<tr>
 			<th scope="col"><?= $this->Paginator->sort('id') ?></th>
@@ -49,6 +47,6 @@ use Cake\Collection\CollectionInterface; ?>
 			<?= $this->Paginator->next(__('next') . ' >') ?>
 			<?= $this->Paginator->last(__('last') . ' >>') ?>
 		</ul>
-		<p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+		<!-- <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p> -->
 	</div>
 </div>
