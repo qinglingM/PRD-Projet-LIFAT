@@ -73,7 +73,7 @@ class MissionsTable extends Table
 		// Setup search filter using search manager
 		$this->searchManager()
 			/*	Here we will alias the 'id' query param to search the `Membres.nom` and `Membres.prenom` fields, using a LIKE match, with `%` both before and after.	*/
-			->add('Recherche', 'Search.Like', [
+			->add('Recherche', 'Search.LIKE', [
 				'before' => true,
 				'after' => true,
 				'multiValue' => true,
@@ -81,9 +81,9 @@ class MissionsTable extends Table
 				'valueMode' => 'OR',
 				'comparison' => 'LIKE',
 				'fieldMode' => 'OR',
-				'field' => ['id']
+				'colType' => ['id' => 'string'],
+				'field' => ['id','etat']
 			]);
-
 	}
 
 	/**

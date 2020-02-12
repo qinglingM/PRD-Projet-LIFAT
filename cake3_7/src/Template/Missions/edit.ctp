@@ -8,7 +8,7 @@ use App\Model\Entity\Mission;
 use App\View\AppView; ?>
 
 
-<div class="missions form large-9 medium-8 columns content">
+<div class="missions form large-12 medium-8 columns content">
 	<?= $this->Form->create($mission) ?>
 	<fieldset>
 		<legend><?= __('Mission') ?></legend>
@@ -69,7 +69,7 @@ use App\View\AppView; ?>
 		<?php	
 		$i = 1;
 		// Affichage des transports enregistrés, lors de l'édition d'une mission déjà existante
-		if (isset($transport)) {
+		if (isset($this->request->getData()['mul'])) {
 			foreach ($transport as $transport1) {
 				switch ($transport1->type_transport) {
 					case "Train" :

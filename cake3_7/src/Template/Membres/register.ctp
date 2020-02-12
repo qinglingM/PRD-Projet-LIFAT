@@ -12,6 +12,14 @@ $optionsGenre = [
 	'H' => 'Homme',
 	'F' => 'Femme'
 ];
+
+$optionTypePresonnel = [
+	'PU' => 'Personnel de l\'université',
+	'PE' => 'Personnel Exterieur',
+	'DO' => 'Doctorant'
+
+];
+
 ?>
 <div class="membres form large-9 medium-8 columns content">
 	<div class="note">
@@ -32,7 +40,7 @@ $optionsGenre = [
 		echo $this->Form->control('adresse_agent_2');
 		echo $this->Form->control('residence_admin_1');
 		echo $this->Form->control('residence_admin_2');
-		echo $this->Form->control('type_personnel');
+		echo $this->Form->select('type_personnel',$optionTypePresonnel);
 		echo $this->Form->control('intitule');
 		echo $this->Form->control('grade');
 		echo $this->Form->control('im_vehicule');

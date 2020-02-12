@@ -42,11 +42,12 @@ class MembresController extends AppController
 	public function index()
 	{
 		$this->set('searchLabelExtra', 'nom et/ou prénom');
-
+		// print_r($this->request->getQueryParams());
 		$query = $this->Membres
 			// Use the plugins 'search' custom finder and pass in the
 			// processed query params
 			->find('search', ['search' => $this->request->getQueryParams()]);
+		// print_r($query);
 
 		$this->paginate = [
 			'contain' => ['LieuTravails', 'Equipes']

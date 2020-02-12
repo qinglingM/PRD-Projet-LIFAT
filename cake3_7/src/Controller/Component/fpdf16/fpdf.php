@@ -1228,7 +1228,7 @@ function _parsepng($file)
 	if(!$f)
 		$this->Error('Can\'t open image file: '.$file);
 	//Check signature
-	print_r($this->_readstream($f,8));
+	// print_r($this->_readstream($f,8));
 	if($this->_readstream($f,8)!=chr(137).'PNG'.chr(13).chr(10).chr(26).chr(10))
 		$this->Error('Not a PNG file: '.$file);
 	//Read header chunk
