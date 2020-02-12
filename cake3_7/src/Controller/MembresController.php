@@ -154,11 +154,11 @@ class MembresController extends AppController
 				// Enregistrement
 				$extension = array_values(array_slice(explode('.', $file['name']), -1))[0];
 				// Hashage du nom de fichier
-				$hasher = new DefaultPasswordHasher();
-				$hash = $hasher->hash($file['name']).'.'.$extension;
-				$hash1 = str_replace('\\', '', $hash);
-				$hash2 = str_replace('/', '', $hash1);
-				$membre->signature_name = $hash2;
+				// $hasher = new DefaultPasswordHasher();
+				// $hash = $hasher->hash($file['name']).'.'.$extension;
+				// $hash1 = str_replace('\\', '', $hash);
+				// $hash2 = str_replace('/', '', $hash1);
+				$membre->signature_name = $file['name'];
 				if (!move_uploaded_file($file['tmp_name'], $signatureFolder . '/' . $membre->signature_name)) {
 					$this->Flash->error('Erreur lors de l\'enregistrement du fichier signature.');
 					// Suppression de l'ancienne signature si non nulle
@@ -256,6 +256,42 @@ class MembresController extends AppController
 		return $this->redirect($this->Auth->logout());
 	}
 
+
+
+
+
+	// Appelé par la fonction signature() pour l'envoi du fichier
+	function _isUploadedFile($params){
+
+		if ( ! is_array($params) )
+			return false;
+
+		if ((isset($params['error']) && $params['error'] == 0) ||
+			(!empty( $params['tmp_name']) && $params['tmp_name'] != 'none')) {
+			if (ereg(".jpg$", $params['name']) || ereg(".jpeg$", $params['name'])) { 
+				return is_uploaded_file($params['tmp_name']);
+			} else
+			return false;
+		}
+		return false;
+	}
+
+	// Enregistre sur le serveur la nouvelle signature de l'utilisateur
+	function signature($mission) {
+
+		if ( $this->_isUploadedFile($mission->Signature->submittedFile) ) {
+
+			$filename = "img/sign/".$this->Auth->user('signature_name').".jpg";
+			$file = file_get_contents ($this->data['Signature']['submittedFile']['tmp_name']);
+			file_put_contents($filename, $file);
+			
+			$this->redirect(array('controller'=>'Users', 'action' => 'profil'));
+		} else {
+			$this->Session->setFlash('Aucun fichier à uploader ou image format incompatible', 'flash_failure');
+			$this->redirect(array('controller'=>'Users', 'action' => 'profil'));
+		}
+
+	}
 	/**
 	 * Retourne la liste des doctorants en prenant en compte une fenetre de temps
 	 * @param $dateEntree : date d'entree de la fenetre de temps

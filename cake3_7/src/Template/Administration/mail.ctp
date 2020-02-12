@@ -4,7 +4,7 @@
 
 <?php
 
-echo $this->Form->create(false, array( 'method' => "post", 'action' => "/mail"));
+echo $this->Form->create(false, array( 'method' => "post", 'action' => "mail"));
 echo $this->Form->control('port');
 echo $this->Form->control('timeout');
 echo $this->Form->control('host');

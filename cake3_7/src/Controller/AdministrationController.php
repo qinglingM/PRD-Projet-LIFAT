@@ -12,7 +12,6 @@ class AdministrationController extends AppController {
 			
 		} else {
 			$this->Flash->error(__('Administration impossible : Permission insuffisante.'));
-
 			// $this->Session->setFlash('Administration impossible : Permission insuffisante','flash_failure');
 			$this->redirect(['action' => 'index']);
 		}

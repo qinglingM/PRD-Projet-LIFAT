@@ -8,7 +8,7 @@ use App\Model\Entity\Mission;
 use App\View\AppView; ?>
 
 
-<div class="missions form large-9 medium-8 columns content">
+<div class="missions form large-12 medium-8 columns content">
 	<?= $this->Form->create($mission) ?>
 	<fieldset>
 		<legend><?= __('Mission') ?></legend>

@@ -18,7 +18,7 @@ $optionsGenre = [
 	'F' => 'Femme'
 ];
 ?>
-<div class="membres form large-9 medium-8 columns content">
+<div class="membres form large-12 medium-8 columns content">
 	<?php $membre->passwd = "" ?>
 	<?= $this->Form->create($membre, ['type' => 'file']) ?>
 	<fieldset>
@@ -47,24 +47,33 @@ $optionsGenre = [
 			echo $this->Form->control('im_vehicule');
 			echo $this->Form->control('pf_vehicule');
 
-			// $signaturePath = "sign/".$this->data['Membre']['signature_name'].".jpg";
-			$signaturePath = "sign/".$membre->signature_name.".jpg";
-			$fullSignaturePath ='./img/'.$signaturePath;
-			$verifSignature = file_exists($fullSignaturePath);
+			// $RootDir = $_SERVER['DOCUMENT_ROOT']; $RootDir.'/PRD-Porjet-LIFAT/cake3_7/webroot
+			// $signaturePath = '/Signatures/'.$membre->signature_name;
+			$signaturePath = $_SERVER['DOCUMENT_ROOT'].'/PRD-Projet-LIFAT/cake3_7/webroot/Signatures/'.$membre->signature_name;
+			
+			// $verifSignature = file_exists($signaturePath);
 			// echo $this->Form->control();
 			echo $this->Form->control('signature_name', ['required' => false,'label' => 'Fichier signature (jpg,png | 10Mo max)', 'type' => 'file', 'accept' => 'image/png, image/jpeg, image/jpg']);
 			//echo $this->Form->control('signature',['required' => true,'lable' => 'Aperçu de la signature actuelle :', 'type' => 'image']);
 
 			//affichage de la signature ou d'un message d'erreur
-			if (!$verifSignature) {
-				echo '<div class="note">Merci de bien vouloir ajouter votre signature éléctronique.<br/>
-				Sans cette signature vous devrez aller signer l\'OdM au secrétariat.</div>';
-			}
-			if ($verifSignature) {
+			// if ($verifSignature == false) {
+			// 	echo $signaturePath;
+			// 	echo '<div class="note">Merci de bien vouloir ajouter votre signature éléctronique.<br/>
+			// 	Sans cette signature vous devrez aller signer l\'OdM au secrétariat.</div>';
+			// }
+			if ($membre->signature_name != null) {
+				// print_r($membre);
+				//  print_r($signaturePath);
 				echo $this->Html->div('signature_name',
 					'<p>Aperçu de la signature actuelle : </p>'.
-					$this->Html->image($signaturePath,array('alt' => 'signature', 'width' => '235', 'height' => '50', 'class' => 'signature_img'))
+					$this->Html->image('/Signatures/'.$membre->signature_name,['alt' => 'signature', 'width' => '235', 'height' => '50', 'class' => 'signature_img'])
 					);
+			}else {
+				// echo file_exists($signaturePath);
+				// print_r( $signaturePath);
+				echo '<div class="note">Merci de bien vouloir ajouter votre signature éléctronique.<br/>
+				Sans cette signature vous devrez aller signer l\'OdM au secrétariat.</div>';
 			}
 
 			echo $this->Form->control('login_cas');

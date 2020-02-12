@@ -144,7 +144,9 @@ Certifié exact par l'interessé(e)                                   A Tours , 
 	$this->MultiCell(0,5,utf8_decode($certifieExact));
 	$this->rect(10,95,190,27);
 	
-	$signature = "./img/sign/$signature_path.jpg";
+	// $signature = "/Signatures/$signature_path.jpg";
+	$signature = $_SERVER['DOCUMENT_ROOT'].'/PRD-Projet-LIFAT/cake3_7/webroot'.$signature_path;
+
 	if (file_exists($signature) && filesize($signature) != 0)
 	  $this->Image($signature, 135, 111, 57, 10);
   }
