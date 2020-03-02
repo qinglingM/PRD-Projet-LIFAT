@@ -43,10 +43,26 @@ use App\View\AppView; ?>
 		?>
 	</fieldset>
 
-	<!-- <fieldset>
+
+<!-- 
+	<fieldset>
 		<legend><?= __('Transport') ?></legend>
-		 -->
 		<?php
+		echo $this->Form->control('transport_id', ['options' => $transports, 'multiple' => true,'empty' => true]);
+		
+		?>
+		<hr>
+		<div id="aucunPassager">
+		Aucun nouveau passager n'a été ajouté. Veuillez maintenir ‘Ctrl’ pour en ajouter un.
+		</div>
+
+		<div id="passagerAffichage"></div>
+	</fieldset> -->
+
+<!-- <fieldset>  -->
+		<!-- <legend><?= __('Transport') ?></legend> -->
+		 
+		 <?php
 		$options = [
 			'Transport' => [
 			'Value1' => ' Train',
@@ -56,71 +72,37 @@ use App\View\AppView; ?>
 			'Value5' => ' Autre'
 			]
 		];
-		echo $this->Form->select('mul', $options, [
-			'multiple' => 'checkbox'
-		]);
-		// echo $this->Form->control('transports.type_transports', ['options' => $transports]);
-		// echo $this->Form->control('missions._ids', ['options' => $missions]);
-		// echo $this->Form->control('transports', ['options' => $transports],['multiple' => 'checkbox']);
-		
 		?>
-
-		<div id="transportAffichage">
+	
+	<div id="transportAffichage">
 		<?php	
-		$i = 1;
+		$selected_type = array();
 		// Affichage des transports enregistrés, lors de l'édition d'une mission déjà existante
-		if (isset($this->request->getData()['mul'])) {
-			foreach ($transport as $transport1) {
-				switch ($transport1->type_transport) {
-					case "Train" :
-						echo $this->Form->select('mul', $options, ['checked' => ['Value1']]);
-						break;
-					case "Value2" :
-						echo $this->Form->select('mul', $options, ['checked' => ['Value2']]);
-						// $textTransport = "Avion";
-						break;
-					case "Vehicule_service" :
-						echo $this->Form->select('mul', $Value3, ['checked' => true]);
-						break;
-					case "Vehicule_personnel":
-						$textTransport = "Véhicule_Personnel";
-						break;
-					case "Autre":
-						$textTransport = "Autre";
-						break;
-					default:
-						$textTransport = "Autre";
-						break;
-				}
-
-				echo '<div class="transport">';
-				echo $this->Form->select('textTransport', $textTransport, ['checked' => 'true']);
-				echo '<span class="removeButton">×</span>';
-				echo '<input id="Transport';
-				echo $i;
-				echo 'type_transport" type="hidden" name="data[Transport][';
-				echo $i;
-				echo '][type_transport]" value="';
-				echo $transport['type_transport'];
-				echo '"></input>';
-				echo '<input id="Transport';
-				echo $i;
-				echo 'type_transport" type="hidden" name="data[Transport][';
-				echo $i;
-				echo '][id]" value="';
-				if (isset($transport['id'])){
-					echo $transport['id'];
-				}
-				echo '"/>';
-				echo '</div>';
-				$i++;
+		// echo $mission_trans_type;
+		if (isset($mission_trans_type)) {
+			foreach ($mission_trans_type as $transport1) {
+				if ($transport1 === 'train'):
+					array_push($selected_type,'Value1');		
+				elseif($transport1 ==='avion'):
+					array_push($selected_type,'Value2');
+				elseif($transport1 === 'vehicule_personnel'):
+					array_push($selected_type,'Value3');
+				elseif($transport1 === 'vehicule_service'):
+					array_push($selected_type,'Value4');
+				elseif($transport1 === 'autre'):
+					array_push($selected_type,'Value5');
+				endif;
 			}
 		}
+		echo $this->Form->select('mul', $options, [
+			'multiple' => 'checkbox',
+			// 'multiple' => true,
+			'default' => $selected_type,
+		]);	
 	?>
 	</div>
-
-
 	<!-- </fieldset> -->
+	
 
 	<fieldset>
 		<legend><?= __('Autres Passagers') ?></legend>
@@ -131,14 +113,16 @@ use App\View\AppView; ?>
 			'multiple' => true,
 			'empty' => true
 			]);
-		?>
-		<hr>
+		?> 
+	<hr>
 
-		<div id="aucunPassager">
-		Aucun nouveau passager n'a été ajouté. Veuillez maintenir ‘Ctrl’ pour en ajouter un.
-		</div>
+	<div id="aucunPassager">
+	Aucun nouveau passager n'a été ajouté. Veuillez maintenir ‘Ctrl’ pour en ajouter un.
+	</div>
 
-		<div id="passagerAffichage"></div>
+
+
+
 	</fieldset>
 
 	<fieldset>
@@ -153,17 +137,24 @@ use App\View\AppView; ?>
 		<legend><?= __('Si utilisation d\'un véhicule') ?></legend>
 		<?php
 		// TODO : si utilisation d'un véhicule, utiliser ces valeurs pour la génération de la mission
-		echo $this->Form->label('im_vehicule', 'Immatriculation véhicule');
-		echo $this->Form->text('im_vehicule'); ?>
+		if(isset($im_vehicule) && isset($pf_vehicule)){
+			echo $this->Form->control('im_vehicule',  ['label' =>'Immatriculation véhicule','type' => 'text','default'=> $im_vehicule]);
+			echo $this->Form->control('pf_vehicule', ['label' =>'Puissance fiscale véhicule','type' => 'number','default'=> $pf_vehicule]);
+
+		}else{
+			echo $this->Form->control('im_vehicule',  ['label' =>'Immatriculation véhicule','type' => 'text', 'empty' => true]);
+			echo $this->Form->control('pf_vehicule', ['label' =>'Puissance fiscale véhicule','type' => 'number', 'empty' => true]);
+		}
+		 ?>
 	
-
-		<?php echo $this->Form->label('pf_vehicule', 'Puissance fiscale véhicule');
-		echo $this->Form->number('pf_vehicule');
 		
-
+		<?php 
 		// TODO : Enregistrement de ces infos dans le membre si coché
+		// echo $this->Form->number('pf_vehicule');
 		echo $this->Form->control('er_vehicule', ['label' => 'Enregistrer le véhicule dans mon profil (En remplacement de l\'ancien véhicule)', 'type' => 'checkbox', 'checked' => false]);
 		?>
+
+
 	</fieldset>
 
 	<fieldset>

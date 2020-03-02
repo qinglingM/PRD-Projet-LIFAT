@@ -81,11 +81,17 @@
       <path value="$PROJECT_DIR$/cake3_7/vendor/aura/intl" />
       <path value="$PROJECT_DIR$/cake3_7/vendor/phpspec/prophecy" />
       <path value="$PROJECT_DIR$/cake3_7/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/cake3_7/vendor/symfony/polyfill-php73" />
+      <path value="" />
+      <path value="" />
+      <path value="$PROJECT_DIR$/../../bin/php/php7.4.1/bin" />
     </include_path>
   </component>
   <component name="PhpUnit">
     <phpunit_settings>
-      <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/cake3_7/vendor/autoload.php" />
+      <PhpUnitSettings load_method="PHPUNIT_PHAR" configuration_file_path="$PROJECT_DIR$/../../../cake3_7/phpunit.xml.dist" custom_loader_path="$PROJECT_DIR$/cake3_7/vendor/autoload.php" phpunit_phar_path="$PROJECT_DIR$/../../bin/php/php7.4.1/bin/phpunit" use_configuration_file="true" />
     </phpunit_settings>
   </component>
 </project>

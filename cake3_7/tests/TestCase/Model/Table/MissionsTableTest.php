@@ -5,6 +5,8 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Table\MissionsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+// use PHPUnit\Framework\TestCase;
+
 
 /**
  * App\Model\Table\MissionsTable Test Case
@@ -28,7 +30,6 @@ class MissionsTableTest extends TestCase
 		'app.Projets',
 		'app.Lieus',
 		'app.Motifs',
-		'app.Transports'
 	];
 
 	/**
@@ -50,9 +51,11 @@ class MissionsTableTest extends TestCase
 	 */
 	public function tearDown()
 	{
+		
+		parent::tearDown();
 		unset($this->Missions);
 
-		parent::tearDown();
+	
 	}
 
 	/**

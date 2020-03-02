@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Test\TestCase\Controller;
-
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
@@ -29,6 +29,10 @@ class MembresControllerTest extends TestCase
 	 */
 	public function testIndex()
 	{
+		// debug_to_console("testfhgfhfvvvv");
+		// $this->get('/membres/index');
+		// $this->assertResponseOk();
+
 		$this->markTestIncomplete('Not implemented yet.');
 	}
 

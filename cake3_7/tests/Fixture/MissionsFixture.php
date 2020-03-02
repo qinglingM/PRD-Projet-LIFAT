@@ -9,6 +9,8 @@ use Cake\TestSuite\Fixture\TestFixture;
  */
 class MissionsFixture extends TestFixture
 {
+
+	public $connection = 'test';
 	/**
 	 * Fields
 	 *

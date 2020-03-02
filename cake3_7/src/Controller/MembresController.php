@@ -259,8 +259,6 @@ class MembresController extends AppController
 
 
 
-
-
 	// Appelé par la fonction signature() pour l'envoi du fichier
 	function _isUploadedFile($params){
 

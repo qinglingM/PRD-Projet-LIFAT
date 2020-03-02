@@ -116,10 +116,6 @@ class MyGenerator {
 		$this->_transport = $transport;
 	}
 
-	// function getTransport(){
-	// 	return $this->_transport;
-	// }
-
 	function setTransportBis($immatriculation, $puissance, $commentaire, $reducSncf, $billetAgence) {
 		$this->_puissance = $puissance;
 		$this->_immatriculation = $immatriculation;

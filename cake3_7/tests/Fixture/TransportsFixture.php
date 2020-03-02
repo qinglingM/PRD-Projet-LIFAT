@@ -20,8 +20,14 @@ class TransportsFixture extends TestFixture
 		'type_transport' => ['type' => 'string', 'length' => null, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
 		'im_vehicule' => ['type' => 'string', 'length' => 10, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
 		'pf_vehicule' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+		'mission_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+		'_indexes' => [
+			'mission_id' => ['type' => 'index', 'columns' => ['mission_id'], 'length' => []],
+		],
 		'_constraints' => [
 			'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
+			'keyy1' => ['type' => 'foreign', 'columns' => ['mission_id'], 'references' => ['missions', 'id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+
 		],
 		'_options' => [
 			'engine' => 'InnoDB',
@@ -42,7 +48,8 @@ class TransportsFixture extends TestFixture
 				'id' => 1,
 				'type_transport' => 'Lorem ipsum dolor sit amet',
 				'im_vehicule' => 'Lorem ip',
-				'pf_vehicule' => 1
+				'pf_vehicule' => 1,
+				'mission_id' => 1
 			],
 		];
 		parent::init();
