@@ -51,11 +51,12 @@ echo $this->element('searchbar');
 	</table>
 	<div class="paginator">
 		<ul class="pagination">
-			<!-- <?= $this->Paginator->first('<< ' . __('début')) ?>
+			
+			 <?= $this->Paginator->first('<< ' . __('début')) ?>
 			<?= $this->Paginator->prev('< ' . __('précedente')) ?>
 			<?= $this->Paginator->numbers() ?>
 			<?= $this->Paginator->next(__('suivante') . ' >') ?>
-			<?= $this->Paginator->last(__('fin') . ' >>') ?> -->
+			<?= $this->Paginator->last(__('fin') . ' >>') ?>
 		</ul>
 	</div>
 </div>

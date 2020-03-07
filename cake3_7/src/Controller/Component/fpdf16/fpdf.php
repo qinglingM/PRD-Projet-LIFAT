@@ -9,6 +9,7 @@
 *******************************************************************************/
 
 define('FPDF_VERSION','1.6');
+if (!class_exists('FPDF')){
 
 class FPDF {
 	
@@ -438,6 +439,17 @@ function Line($x1, $y1, $x2, $y2)
 	//Draw a line
 	$this->_out(sprintf('%.2F %.2F m %.2F %.2F l S',$x1*$this->k,($this->h-$y1)*$this->k,$x2*$this->k,($this->h-$y2)*$this->k));
 }
+
+function SetLineColor($r, $g=null, $b=null)
+{
+	//Set color for text
+	if(($r==0 && $g==0 && $b==0) || $g===null)
+		$this->TextColor=sprintf('%.3F g',$r/255);
+	else
+		$this->TextColor=sprintf('%.3F %.3F %.3F rg',$r/255,$g/255,$b/255);
+	$this->ColorFlag=($this->FillColor!=$this->TextColor);
+}
+
 
 function Rect($x, $y, $w, $h, $style='')
 {
@@ -1722,6 +1734,7 @@ function _enddoc()
 	$this->state=3;
 }
 //End of class
+}
 }
 
 //Handle special IE contype request

@@ -125,16 +125,14 @@ use App\View\AppView; ?>
 			<td><?= $membre->actif ? __('Oui') : __('Non'); ?></td>
 		</tr>
 		<tr>
+
 		<?php
-			if ($user['role'] === Membre::ADMIN && $membre->signature_name != null) {
+			if ($membre->signature_name != null) {
 				echo "<tr><th>Signature</th><td>";
 				// echo $this->Html->link('Télécharger', '/Signatures/'.$membre->signature_name);
 				echo $this->Html->image('/Signatures/'.$membre->signature_name,['alt' => 'signature', 'width' => '235', 'height' => '50', 'class' => 'signature_img']);
 				
 				echo "</td></tr>"; 
-
-
-
 				
 			}
 		?>

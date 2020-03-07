@@ -11,10 +11,6 @@ use Cake\TestSuite\Fixture\FixtureManager;
 class MissionsControllerTest extends TestCase
 {
 	use IntegrationTestTrait;
-
-
-
-
 	/**
 	 * Fixtures
 	 *

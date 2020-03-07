@@ -61,7 +61,7 @@
 	// 		$mail)
 	// 	);
 
-	if ($user['role'] == 'admin' || $user['role'] == 'chef d\'equipe' || $user['role'] == 'secretaire') {
+	if ($user['role'] == 'admin' || $user['role'] == 'chef_equipe' || $user['role'] == 'secretaire') {
 		echo $this->Html->nestedList($listAdmin);
 	}
 ?>

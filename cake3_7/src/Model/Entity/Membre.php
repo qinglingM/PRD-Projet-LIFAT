@@ -59,7 +59,7 @@ class Membre extends Entity
 	/**
 	 * Class constant for the 'Secretaire' role ($membre['role']).
 	 */
-	const CHEFDEQUIPE = 'chef d\'equipe';
+	const CHEFDEQUIPE = 'chef_equipe';
 
 
 	/**

@@ -28,9 +28,7 @@ echo $this->element('searchbar');
             <th scope="col"><?= $this->Paginator->sort('Date départ') ?></th>
 			<th scope="col"><?= $this->Paginator->sort('Date retour') ?></th>
 			<th scope="col"><?= $this->Paginator->sort('Etat') ?></th>
-
 			<th scope="col" class="actions"><?= __('Actions') ?></th>
-
 		</tr>
 		</thead>
 		<tbody>
@@ -49,6 +47,7 @@ echo $this->element('searchbar');
 					<?= $this->Html->link(__('Editer'), ['action' => 'edit', $mission->id]) ?>
 					<?= $this->Html->link(__('Details'), ['action' => 'generation', $mission->id]) ?>
 					<?= $this->Form->postLink(__('Valider'), ['action' => 'valid', $mission->id], ['confirm' => __('Êtes vous sûr de vouloir valider cette mission # {0}?', $mission->id)]) ?>
+					<?= $this->Html->link(__('ValidPDF'), ['action' => 'generationValid', $mission->id]) ?>
 				</td>
 			</tr>
 			
@@ -58,13 +57,13 @@ echo $this->element('searchbar');
 	</table>
 	<div class="paginator">
 		<ul class="pagination">
-			<!-- <?= $this->Paginator->first('<< ' . __('début')) ?>
+			
+			 <?= $this->Paginator->first('<< ' . __('début')) ?>
 			<?= $this->Paginator->prev('< ' . __('précedente')) ?>
 			<?= $this->Paginator->numbers() ?>
 			<?= $this->Paginator->next(__('suivante') . ' >') ?>
-			<?= $this->Paginator->last(__('fin') . ' >>') ?> -->
+			<?= $this->Paginator->last(__('fin') . ' >>') ?>
 		</ul>
-		<!-- <p><?= $this->Paginator->counter(['format' => __('Page {{page}} sur {{pages}}, affiche {{current}} projet sur {{count}}')]) ?></p> -->
 	</div>
 </div>
 

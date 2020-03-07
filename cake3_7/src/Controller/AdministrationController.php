@@ -8,7 +8,7 @@ class AdministrationController extends AppController {
 
 	// Affiche la page d'accueil de l'administration, qui mène vers les autres pages d'administration
 	function index() {
-		if ($this->Auth->user('role') == 'admin' || $this->Auth->user('role') == 'secretaire' || $this->Auth->user('role') == 'chef d\'equipe') {
+		if ($this->Auth->user('role') == 'admin' || $this->Auth->user('role') == 'secretaire' || $this->Auth->user('role') == 'chef_equipe') {
 			
 		} else {
 			$this->Flash->error(__('Administration impossible : Permission insuffisante.'));
@@ -19,7 +19,7 @@ class AdministrationController extends AppController {
 
 	// Page de gestion des paramètre mail
 	function mail() {
-		if ($this->Auth->user('role') == 'admin' || $this->Auth->user('role') == 'secretarire' || $this->Auth->user('role') == 'chef d\'equipe') {
+		if ($this->Auth->user('role') == 'admin' || $this->Auth->user('role') == 'secretarire' || $this->Auth->user('role') == 'chef_equipe') {
 			if (! empty($this->data) ) {
 				$fp = @fopen("config.txt", "w+");
 				foreach ($this->data as $param) {
