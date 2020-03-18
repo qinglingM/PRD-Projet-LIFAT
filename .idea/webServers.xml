@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="4590bd80-f6b5-4949-99a5-8e3a5c65a02e" name="serveurPolytechTours" url="http://10.236.5.39/PRD-Projet-LIFAT">
+        <fileTransfer host="10.236.5.39" port="22" rootFolder="/var/www/html/PRD-Projet-LIFAT" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

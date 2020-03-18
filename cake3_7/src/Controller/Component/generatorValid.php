@@ -154,7 +154,6 @@ class MyValidGenerator {
 			// $pdf->Output($fileName,"I");
 			$pdf->Output($fileName,"F");
 			// $pdf->Output(dirname(__DIR__).'/pdf/'.$fileName.'.pdf',"F");
-			// $pdf->Output(dirname(__DIR__).'/Desktop/'.$fileName.'.pdf', 'F');
 		}
 		ob_end_flush();
 	}

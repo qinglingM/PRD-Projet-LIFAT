@@ -18,8 +18,9 @@ class pdfValid extends FPDF
 	$Lifat = 'Lifat';
 
 	$this->Image(dirname(__FILE__)  .'/universite.jpg',10,15,60); //x，上边距，下边距
-	// $this->Image(dirname(__FILE__)  .'/li.jpg',10,2,20);
 	$this->Image(dirname(__FILE__)  .'/lifat.jpg',155,12,40); //x,上边距，下边距
+
+	// $this->Image( $_SERVER['DOCUMENT_ROOT'].'/PRD-Projet-LIFAT/cake3_7/webroot'.'/universite.jpg',10,15,60);
 	$this->SetTextColor(33,74,123);
 
 	$title = 'AUTORISATION DE DEPLACEMENT';
@@ -411,9 +412,12 @@ France hors métropole et à l\'étranger**';
 	$this->rect(10,253,47.5,25);
 	// $signature = "/Signatures/$signature_path.jpg";
 	$signature = $_SERVER['DOCUMENT_ROOT'].'/PRD-Projet-LIFAT/cake3_7/webroot'.$signature_path;
-
+	// print_r($signature);
 	if (file_exists($signature) && filesize($signature) != 0)
+	//   print_r("----");
 	  $this->Image($signature, 11,254,45,23);
+	//   print_r($signature);
+
 		
 	//Signature du directeur
 	$this->setFont('Times','B',14);
@@ -422,6 +426,8 @@ France hors métropole et à l\'étranger**';
 	$cheifSignaturePath = $_SERVER['DOCUMENT_ROOT'].'/PRD-Projet-LIFAT/cake3_7/webroot'.$cheifSignaturePath;
 	if (file_exists($cheifSignaturePath) && filesize($cheifSignaturePath) != 0)
 	  $this->Image($cheifSignaturePath, 58.5,254,45,23);
+	//   print_r($cheifSignaturePath);
+
 
 	//Visa du directeur des affaires juridiques
 	$this->setFont('Times','B',14);
@@ -429,6 +435,8 @@ France hors métropole et à l\'étranger**';
 	$juridiqueSignaturePath = $_SERVER['DOCUMENT_ROOT'].'/PRD-Projet-LIFAT/cake3_7/webroot'.$juridiqueSignaturePath;
 	if (file_exists($juridiqueSignaturePath) && filesize($juridiqueSignaturePath) != 0)
 	  $this->Image($juridiqueSignaturePath, 106,254,45,23);
+	//   print_r($juridiqueSignaturePath);
+
 
 	//Signature du Président de l’université
 	$this->setFont('Times','B',14);
@@ -436,7 +444,7 @@ France hors métropole et à l\'étranger**';
 	$presidentSignaturePath = $_SERVER['DOCUMENT_ROOT'].'/PRD-Projet-LIFAT/cake3_7/webroot'.$presidentSignaturePath;
 	if (file_exists($presidentSignaturePath) && filesize($presidentSignaturePath) != 0)
 	  $this->Image($presidentSignaturePath, 153.5,254,45,23);
-
+	//   print_r($presidentSignaturePath);
 
 	// signature de gauche
 // 	$this->setXY(12,233);

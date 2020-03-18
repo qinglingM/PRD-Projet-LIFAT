@@ -920,6 +920,7 @@ function Image($file, $x=null, $y=null, $w=0, $h=0, $type='', $link='')
 			if(!$pos)
 				$this->Error('Image file has no extension and no type was specified: '.$file);
 			$type=substr($file,$pos+1);
+			
 		}
 		$type=strtolower($type);
 		if($type=='jpeg')
@@ -927,6 +928,7 @@ function Image($file, $x=null, $y=null, $w=0, $h=0, $type='', $link='')
 		$mtd='_parse'.$type;
 		if(!method_exists($this,$mtd))
 			$this->Error('Unsupported image type: '.$type);
+			// print_r($type);
 		$info=$this->$mtd($file);
 		$info['i']=count($this->images)+1;
 		$this->images[$file]=$info;
