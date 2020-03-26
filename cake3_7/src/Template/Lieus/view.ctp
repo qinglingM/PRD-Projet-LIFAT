@@ -23,6 +23,10 @@ use App\View\AppView; ?>
 			<td><?= h($lieus->nom_lieu) ?></td>
 		</tr>
 		<tr>
+			<th scope="row"><?= __('Nom Lieu') ?></th>
+			<td><?= h($lieus->pays) ?></td>
+		</tr>
+		<tr>
 			<th scope="row"><?= __('Id') ?></th>
 			<td><?= $this->Number->format($lieus->id) ?></td>
 		</tr>

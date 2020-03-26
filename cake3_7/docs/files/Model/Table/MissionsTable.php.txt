@@ -81,6 +81,13 @@ class MissionsTable extends Table
             ->allowEmptyDateTime('date_retour');
 
         $validator
+            ->dateTime('date_depart_arrive')
+            ->allowEmptyDateTime('date_depart_arrive');
+        $validator
+            ->dateTime('date_retour_arrive')
+            ->allowEmptyDateTime('date_retour_arrive');
+
+        $validator
             ->boolean('sans_frais')
             ->allowEmptyString('sans_frais');
 

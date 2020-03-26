@@ -58,6 +58,10 @@ class LieusTable extends Table
 			->boolean('est_dans_liste')
 			->allowEmptyString('est_dans_liste');
 
+			$validator
+			->boolean('pays')
+			->allowEmptyString('pays');	
+			
 		return $validator;
 	}
 }

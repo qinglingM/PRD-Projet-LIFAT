@@ -155,7 +155,10 @@ class ExportController extends AppController
             else if ($typeListe == "EPr4"){//OK
                 $this->tableauBudgetsParProjet();
             }
-
+            else if ($typeListe == "EMi1"){
+                $annee = $export->getData('annee');
+                $this->tableauTouteMissionsAnnne($annee['year']);
+            }   
         }
         $this->set("boolGraphe", $boolGraph);
         $this->set("boolTableau", $boolTableau);
@@ -1009,6 +1012,55 @@ class ExportController extends AppController
         $this->set("tableau", $listeBudgetsParAnnee);
         $this->set("nomFichier", $fichier);
     }
+
+    /**
+     * Créer la liste des missions pour une année donnée
+     * @param $annee
+     */
+    public function tableauTouteMissionsAnnne($annee){
+        $controlInstance = new MissionsController();
+        $tableau = $controlInstance->listeMissionsParAnnee($annee);
+
+        $entetes = ["id","motif","lieu","date départ","date retour","etat"];
+        $fichier = "listeMissionParAnnee.csv";
+        if (file_exists($fichier)){
+            //si il existe
+            unlink($fichier);
+            $fp = fopen($fichier,'w');
+        }else{
+            $fp = fopen($fichier, 'w');
+        }
+        fputcsv($fp, $entetes, ";");
+
+        $listeMissionParAnnee = array();
+        foreach($tableau as $key => $row){
+            $listeMissionParAnnee[$key] =  array(
+                $tableau[$key]->id,
+                $tableau[$key]->motif_id,
+                $tableau[$key]->lieu_id,
+                $tableau[$key]->date_depart,
+                $tableau[$key]->date_retour,
+                $tableau[$key]->etat
+            );
+            fputcsv($fp, array(
+                $tableau[$key]->id,
+                $tableau[$key]->motif_id,
+                $tableau[$key]->lieu_id,
+                $tableau[$key]->date_depart,
+                $tableau[$key]->date_retour,
+                $tableau[$key]->etat,
+            ), ";");
+
+        }
+        fclose($fp);
+
+        $this->set("entetes", $entetes);
+        $this->set("tableau", $listeMissionParAnnee);
+        $this->set("nomFichier", $fichier);
+    }
+
+
+
 
     /**
      * Créer le graphique des effectifs par nationalité et par sexe

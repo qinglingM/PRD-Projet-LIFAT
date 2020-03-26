@@ -39,7 +39,11 @@ use App\View\AppView; ?>
 		<legend><?= __('Dates') ?></legend>
 		<?php
 		echo $this->Form->control('date_depart', ['label' => 'Date et heure du départ', 'type' => 'datetime', 'empty' => true]);
+		echo $this->Form->control('date_depart_arrive', ['label' => 'Date et heure arrivée du départ', 'type' => 'datetime', 'empty' => true]);
+
 		echo $this->Form->control('date_retour', ['label' => 'Date et heure du retour', 'type' => 'datetime', 'empty' => true]);
+		echo $this->Form->control('date_retour_arrive', ['label' => 'Date et heure arrivée du retour', 'type' => 'datetime', 'empty' => true]);
+
 		?>
 	</fieldset>
 

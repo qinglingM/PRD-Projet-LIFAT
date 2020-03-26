@@ -47,7 +47,7 @@ echo $this->element('searchbar');
 					<?= $this->Html->link(__('Editer'), ['action' => 'edit', $mission->id]) ?>
 					<?= $this->Html->link(__('Details'), ['action' => 'generation', $mission->id]) ?>
 					<?= $this->Form->postLink(__('Valider'), ['action' => 'valid', $mission->id], ['confirm' => __('Êtes vous sûr de vouloir valider cette mission # {0}?', $mission->id)]) ?>
-					<?= $this->Html->link(__('ValidPDF'), ['action' => 'generationValid', $mission->id]) ?>
+					<!-- <?= $this->Html->link(__('ValidPDF'), ['action' => 'generationValid', $mission->id]) ?> -->
 				</td>
 			</tr>
 			

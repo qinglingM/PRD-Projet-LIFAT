@@ -7,7 +7,7 @@
 		// $equipes = $this->Html->link('Equipes', array('controller' => 'equipes', 'action' => 'index'));
 		// $motifs = $this->Html->link('Motifs', array('controller' => 'motifs', 'action' => 'index'));
 		// $matricules = $this->Html->link('Matricules', array('controller' => 'users', 'action' => 'editMatricule'));
-		// $loginCas = $this->Html->link('Identifiant CAS/ENT', array('controller' => 'users', 'action' => 'editLoginCas'));
+		// $loginCas = $this->Html->link('Identifiant CAS/ENT', array('controller' => 'membres', 'action' => 'loginCas'));
 		// $lieux = $this->Html->link('Lieux', array('controller' => 'lieux', 'action' => 'index'));
 		// $mail = $this->Html->link('Configuration mail', array('controller' => 'administration', 'action' => 'mail'));
 		// $utilisateurs = $this->Html->link('Utilisateurs', array('controller' => 'users', 'action' => 'administration'));

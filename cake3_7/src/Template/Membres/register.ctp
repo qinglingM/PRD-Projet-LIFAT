@@ -21,7 +21,7 @@ $optionTypePresonnel = [
 ];
 
 ?>
-<div class="membres form large-9 medium-8 columns content">
+<div class="membres form large-12 medium-12 columns content">
 	<div class="note">
 		Votre compte utilisateur devra être validé par un administrateur avant d'être utilisé.
 	</div>

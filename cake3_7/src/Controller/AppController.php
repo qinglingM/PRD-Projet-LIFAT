@@ -50,10 +50,11 @@ class AppController extends Controller
 		//charge le composant flash de cake php
 		$this->loadComponent('Flash');
 
-		// $this->loadComponent('Email');
+		$this->loadComponent('Cas');
 
 		//charge le composant d'authentification de cakephp
-		$this->loadComponent('Auth', [
+		$this->loadComponent('Auth'
+		, [
 			'authorize' => 'Controller',
 			'authenticate' => [
 				'Form' => [
@@ -62,12 +63,22 @@ class AppController extends Controller
 				]
 			],
 			'loginAction' => [
+				// implode(' ',['controller' => 'Membres',
+				// 'action' => 'login']),
+				// implode(' ',['controller' => 'Membres',
+				// 'action' => 'caslogin'])
+				'controller' => 'Membres',
+				'action' => 'login'
+
+			],
+			'logoutRedirect' => [
 				'controller' => 'Membres',
 				'action' => 'login'
 			],
 			// Si pas autorisé, on renvoie sur la page précédente
 			'unauthorizedRedirect' => $this->referer()
-		]);
+		]
+	);
 
 		//	la page de garde est accessible publiquement (mais que cette page)
 		$this->Auth->allow(array('controller' => 'pages', 'action' => 'display'));
@@ -86,6 +97,7 @@ class AppController extends Controller
 			// the PRG component work only for specified methods.
 			'actions' => ['index']
 		]);
+
 	}
 
 	/**

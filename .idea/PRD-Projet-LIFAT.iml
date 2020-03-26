@@ -7,6 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/cake3_7/src" isTestSource="false" packagePrefix="App\" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/CAS/CAS" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/JPGraph/Examples" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/JPGraph/barcode" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/JPGraph/fonts" />
@@ -23,25 +24,42 @@
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/cakephp/debug_kit" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/cakephp/migrations" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/cakephp/plugin-installer" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/cilex/cilex" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/cilex/console-service-provider" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/container-interop/container-interop" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/dnoegel/php-xdg-base-dir" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/doctrine/annotations" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/doctrine/instantiator" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/doctrine/lexer" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/erusev/parsedown" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/friendsofcake/search" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/jakub-onderka/php-console-color" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/jakub-onderka/php-console-highlighter" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/jasig/phpcas" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/jasny/twig-extensions" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/jdorn/sql-formatter" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/jms/metadata" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/jms/parser-lib" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/jms/serializer" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/josegonzalez/dotenv" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/justinrainbow/json-schema" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/m1/env" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/mobiledetect/mobiledetectlib" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/monolog/monolog" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/myclabs/deep-copy" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/nikic/php-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/padraic/humbug_get_contents" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/padraic/phar-updater" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/phar-io/manifest" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/phar-io/version" />
-      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/phpdocumentor/reflection-common" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/phpcollection/phpcollection" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/phpdocumentor/fileset" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/phpdocumentor/graphviz" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/phpdocumentor/phpdocumentor" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/phpdocumentor/reflection" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/phpdocumentor/reflection-docblock" />
-      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/phpdocumentor/type-resolver" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/phpoption/phpoption" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/phpspec/prophecy" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/phpunit/php-code-coverage" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/phpunit/php-file-iterator" />
@@ -50,6 +68,8 @@
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/phpunit/php-token-stream" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/phpunit/phpunit" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/phpunit/phpunit-mock-objects" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/pimple/pimple" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/psr/cache" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/psr/container" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/psr/http-message" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/psr/log" />
@@ -73,14 +93,17 @@
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/symfony/config" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/symfony/console" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/symfony/contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/symfony/debug" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/symfony/event-dispatcher" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/symfony/filesystem" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/symfony/finder" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/symfony/polyfill-ctype" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/symfony/polyfill-mbstring" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/symfony/polyfill-php72" />
-      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/symfony/polyfill-php73" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/symfony/process" />
-      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/symfony/service-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/symfony/stopwatch" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/symfony/translation" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/symfony/validator" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/symfony/var-dumper" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/symfony/yaml" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/theseer/tokenizer" />
@@ -88,7 +111,19 @@
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/umpirsky/twig-php-function" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/webmozart/assert" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/wyrihaximus/twig-view" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/zendframework/zend-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/zendframework/zend-config" />
       <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/zendframework/zend-diactoros" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/zendframework/zend-eventmanager" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/zendframework/zend-filter" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/zendframework/zend-hydrator" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/zendframework/zend-i18n" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/zendframework/zend-json" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/zendframework/zend-serializer" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/zendframework/zend-servicemanager" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/zendframework/zend-stdlib" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/zetacomponents/base" />
+      <excludeFolder url="file://$MODULE_DIR$/cake3_7/vendor/zetacomponents/document" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -37,6 +37,9 @@ class AppView extends View
 	 */
 	public function initialize()
 	{
+		parent::initialize();
 		$this->loadHelper('Search.Search');
+		$this->loadHelper('Session');
+
 	}
 }

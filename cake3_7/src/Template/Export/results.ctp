@@ -9,7 +9,7 @@ $boolTableau = $this->get("boolTableau");
 
 <?php if ($boolGraph == true) { ?>
 	<a style="color:white;text-decoration:none;"
-	   href=<?php echo '/Projet-LIFAT/cake3_7/img/' . $fichierPNG; ?> download>
+	   href=<?php echo '/PRD-PROJET-LIFAT/cake3_7/img/' . $fichierPNG; ?> download>
 		<button>Export Image</button>
 	</a>
 <?php } ?>
@@ -20,7 +20,7 @@ $boolTableau = $this->get("boolTableau");
 ?>
 
 <?php if ($boolTableau == true) { ?>
-	<form method="get" action=<?php echo '/Projet-LIFAT/cake3_7/' . $fichier; ?>>
+	<form method="get" action=<?php echo '/PRD-PROJET-LIFAT/cake3_7/' . $fichier; ?>>
 		<button type="submit">Export CSV</button>
 	</form>
 

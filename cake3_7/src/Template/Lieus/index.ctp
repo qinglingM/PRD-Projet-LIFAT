@@ -20,6 +20,8 @@ use Cake\Collection\CollectionInterface; ?>
 		<tr>
 			<th scope="col"><?= $this->Paginator->sort('id') ?></th>
 			<th scope="col"><?= $this->Paginator->sort('nom_lieu') ?></th>
+			<th scope="col"><?= $this->Paginator->sort('pays') ?></th>
+
 			<th scope="col"><?= $this->Paginator->sort('est_dans_liste') ?></th>
 			<th scope="col" class="actions"><?= __('Actions') ?></th>
 		</tr>

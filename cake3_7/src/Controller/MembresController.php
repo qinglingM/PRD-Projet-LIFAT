@@ -12,6 +12,8 @@ use Cake\Event\Event;
 use Cake\Http\Response;
 use Cake\I18n\Time;
 use Cake\ORM\Query;
+use Cake\View\Helper\SessionHelper;
+use Cake\View\View;
 
 /**
  * Membres Controller
@@ -22,6 +24,11 @@ use Cake\ORM\Query;
  */
 class MembresController extends AppController
 {
+
+	var $components = ['Cas', 'Profil'];
+	
+	var $helpers = ['Session'];
+	
 	/**
 	 * Makes the /membres/register action public.
 	 *
@@ -30,6 +37,8 @@ class MembresController extends AppController
 	 */
 	public function beforeFilter(Event $event)
 	{
+		// App::Import("Session");
+		// $session = new CakeSession();
 		$this->Auth->allow('register');
 		return parent::beforeFilter($event);
 	}
@@ -239,6 +248,33 @@ class MembresController extends AppController
 		return $this->redirect(['action' => 'index']);
 	}
 
+	// Connexion par la plateforme CAS
+	public function caslogin() {
+		print_r('loginCAS');
+		$this->Cas->login();
+		$session = $this->request->getSession();
+
+		$this->caslogin = $session->read('phpCAS');
+
+		$this->membre = $this->Membres->findByLoginCas($this->caslogin['membre']);
+		if ($this->membre != null) {
+			if ($this->Auth->login($this->membre)) {
+				$this->redirect($this->Auth->redirectUrl());
+			} else {
+				$this->redirect(['action' => 'login']);
+				$this->Flash->error('Erreur pendant la connexion');
+			}
+		} else {
+			$this->Flash->error('Cet identifiant n\'a pas été associé');
+			$this->redirect(['action' => 'login']);
+		}
+	}
+
+	// Déconnexion de CAS uniquement
+	public function logoutCas() {
+		$this->Cas->logout();
+	}
+
 	public function login()
 	{
 		if ($this->request->is('post')) {
@@ -248,6 +284,25 @@ class MembresController extends AppController
 				return $this->redirect($this->Auth->redirectUrl());
 			}
 			$this->Flash->error('Votre identifiant ou votre mot de passe est incorrect.');
+		}
+		else {
+			$compteExistant = false;
+			$session = $this->getRequest()->getSession();
+			// print_r($this->getRequest()->getSession());
+			// print_r($this->request->getSession());
+			if ($session->read('phpCAS') != null) {
+				$phpCAS = $session->read('phpCAS');
+
+				if ($this->Membres->findByLoginCas($phpCAS) != null){
+					$compteExistant = true;
+				}
+			}
+			// print_r($session->read('phpCAS'));
+			// print_r('login');
+			$this->set('compteExistant', $compteExistant);
+
+			// $this->caslogin();
+
 		}
 	}
 

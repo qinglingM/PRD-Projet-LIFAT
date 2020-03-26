@@ -12,7 +12,7 @@ $optionsGraphes = ['DEFAULT' => 'Aucun', 'EM5' => 'Graphique des effectifs par t
 	'EP1' => 'Graphique le nombre Publications de YY a YY',
 	'EPA1' => 'Graphique Top 10 du nombre de projets associés à chaque mission par Année',
 	'EMM1' => 'Graphique pourcentage du motif de mission par année',
-	'ETEN1' => 'graphique tendance de recherche en 2010-2019 par domaine recherche'
+	'ETEN1' => 'Graphique tendance de recherche en 2010-2019 par domaine recherche'
 	
 ];
 
@@ -29,7 +29,7 @@ $optionsListes = ['DEFAULT' => 'Aucun', 'EM1' => 'Liste des thèses pour un enc
 
 ];
 
-$optionsRapportAnnuel = ['DEFAULT' => '2019'];
+$optionsRapportAnnuel = ['DEFAULT' => '2020'];
 
 $optionsEncadrants = array();
 foreach ($encadrants as $encadrant) {

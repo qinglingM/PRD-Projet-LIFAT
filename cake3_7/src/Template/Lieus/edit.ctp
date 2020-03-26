@@ -24,6 +24,8 @@ use App\View\AppView; ?>
 		<legend><?= __('Edit Lieus') ?></legend>
 		<?php
 		echo $this->Form->control('nom_lieu');
+		echo $this->Form->control('pays');
+
 		echo $this->Form->control('est_dans_liste');
 		?>
 	</fieldset>

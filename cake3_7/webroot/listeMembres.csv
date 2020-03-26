@@ -1,0 +1,24 @@
+id;role;nom;prenom;email;pass;adresse_agent_1;adresse_agent_2;residence_admin_1;residence_admin_2;type_personnel;intitule;grade;im_vehicule;pf_vehicule;signature_name;login_cas;carte_sncf;matricule;date_naissance;actif;lieu_travail_id;equipe_id;nationalite;est_francais;genre;hdr;permanent;est_porteur;date_creation;date_sortie
+1;admin;Admin;Admin;admin@admin.fr;;;;;;PU;;;A99;99;signatu.jpg;;;;11/02/2019;1;2;1;;1;F;;1;;"12/02/2020 11:14";
+2;chef_equipe;nomUser2;prenomUser2;qingling.meng@etu.univ-tours.fr;;adresse2;;residence2;;Do;intitule2;"Chef d equipe";imatricula;2;lifat.jpg;qingling;carteSncf2;101010102;07/06/1997;1;1;1;Français;1;H;;1;1;"07/03/2020 14:03";
+3;membre;nomUser2;prenomUser3;mql951002@gmail.com;;adress3;;residence3;;PU;intitule3;"Chef d equipe";imatricula;3;$2y$10$BJtRl3rtGifpFT6rNegn1exCNXM9ba1Ga2rEEfA15e2iaxaOMguIm.jpeg;;carteSncf3;101010103;20/10/1990;1;2;2;Français;1;H;;1;;"11/02/2020 19:57";
+4;membre;nomUser3;prenomUser4;1339733455@qq.com;;adresse4;;residence4;;PU;intitule4;Chercheur;imatricula;4;;;carteSncf4;101010104;25/12/1999;1;1;1;Allemand;;h;;;;"01/05/2019 16:15";
+5;;nomUser4;prenomUser5;user5@email.fr;;adresse5;;residence5;;PE;intitule5;Chercheur;imatricula;5;;;;101010105;01/02/1987;1;1;1;Americain;;h;;1;;"01/05/2019 16:15";
+6;;nomUser6;prenomUser6;user6@email.fr;;adresse6;;residence6;;PU;intitule6;Chercheur;imatricula;6;;;carteSncf6;101010106;24/02/1986;1;2;2;Allemand;;f;;1;;"01/05/2019 16:15";
+7;;nomUser7;prenomUser7;user7@email.fr;;adresse7;;residence7;;PE;intitule7;Chercheur;imatricula;7;;;;101010107;01/07/1986;1;2;2;Americain;;h;;1;;"01/05/2019 16:15";
+8;;nomUser8;prenomUser8;user8@email.fr;;adresse8;;residence8;;PE;intitule8;Chercheur;imatricula;8;;;;101010108;18/03/1979;1;2;2;Français;1;h;;1;;"01/05/2019 16:15";
+9;;nomUser9;prenomUser9;user9@email.fr;;adresse9;;residence9;;Do;intitule9;Chercheur;imatricula;9;;;carteSncf9;101010109;06/07/1992;1;1;3;Français;1;f;;;;"01/05/2019 16:15";
+10;;nomUser10;prenomUser10;user10@email.fr;;adresse10;;residence10;;PU;intitule10;Chercheur;imatricula;10;;;carteSncf10;101010110;24/11/1992;1;1;3;Anglais;;h;;1;;"01/05/2019 16:15";
+11;;nomUser11;prenomUser11;user11@email.fr;;adresse11;;residence11;;PU;intitule11;Chercheur;imatricula;11;;;carteSncf11;101010111;21/05/1993;1;2;2;Français;1;f;;1;;"01/05/2019 16:15";
+12;;nomUser12;prenomUser12;user12@email.fr;;adresse12;;residence12;;Do;intitule12;Chercheur;imatricula;12;;;carteSncf12;101010112;16/04/1994;1;1;1;Français;1;h;;;;"01/05/2019 16:15";
+13;;nomUser13;prenomUser13;user13@email.fr;;adresse13;;residence13;;Do;intitule13;Chercheur;imatricula;13;;;carteSncf13;101010113;09/07/1993;1;1;3;Espagnol;;f;;1;;"01/05/2019 16:15";
+14;;nomUser14;prenomUser14;user14@email.fr;;adresse14;;residence14;;Do;intitule14;Chercheur;imatricula;14;;;carteSncf14;101010114;27/11/1995;1;2;2;Français;1;h;;1;;"01/05/2019 16:15";
+15;;nomUser15;prenomUser15;user15@email.fr;;adresse15;;residence15;;Do;intitule15;Chercheur;imatricula;15;;;carteSncf15;101010115;13/06/1994;1;1;3;Anglais;;f;;;;"01/05/2019 16:15";
+16;;nomUser16;prenomUser16;user16@email.fr;;adresse16;;residence16;;PU;intitule16;"Chef d equipe";imatricula;16;;;carteSncf16;101010116;21/05/1993;1;3;4;Français;1;h;;1;;"01/05/2019 16:15";
+17;secretaire;nomUser17;prenomUser17;user17@email.fr;;adresse17;;residence17;;PU;intitule17;"Chef d equipe";imatricula;17;;;carteSncf17;101010117;16/04/1994;1;2;;Français;1;f;;;;"01/05/2019 16:15";
+18;;nomUser18;prenomUser18;user18@email.fr;;adresse18;;residence18;;PU;intitule18;"Chef d equipe";imatricula;18;;;carteSncf18;101010118;09/07/1993;1;3;6;Espagnol;;h;;1;;"01/05/2019 16:15";
+19;;nomUser19;prenomUser19;user19@email.fr;;adresse19;;residence19;;PU;intitule19;"Chef d equipe";imatricula;19;;;carteSncf19;101010119;27/11/1995;1;3;7;Français;1;f;;1;;"01/05/2019 16:15";
+20;;nomUser20;prenomUser20;user20@email.fr;;adresse20;;residence20;;PU;intitule20;Chercheur;imatricula;20;;;carteSncf20;101010120;13/06/1994;1;3;7;Anglais;;h;;;;"01/05/2019 16:15";
+21;admin;chef3;chef3;907286845@qq.com;;;;;;PU;;;;;"屏幕快照 2020-02-04 下午1.22.39.png";;;;02/02/2019;1;6;3;;1;H;;1;;"12/02/2020 09:43";
+22;membre;;;user33@user.fr;;;;;;PU;;;;;;;;;04/04/2016;;6;;;1;H;;1;;"06/02/2020 20:46";
+23;secretaire;;;18813104014@163.com;;;;;;PU;;;;;;;;;07/02/2019;1;6;;;1;H;;1;;"07/02/2020 17:10";

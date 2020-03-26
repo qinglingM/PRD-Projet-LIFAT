@@ -9,7 +9,9 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string|null $complement_motif
  * @property \Cake\I18n\FrozenTime|null $date_depart
+ * @property \Cake\I18n\FrozenTime|null $date_depart_arrive
  * @property \Cake\I18n\FrozenTime|null $date_retour
+ * @property \Cake\I18n\FrozenTime|null $date_retour_arrive
  * @property bool|null $sans_frais
  * @property string|null $etat
  * @property int|null $nb_nuites
@@ -39,7 +41,9 @@ class Mission extends Entity
     protected $_accessible = [
         'complement_motif' => true,
         'date_depart' => true,
+        'date_depart_arrive' => true,
         'date_retour' => true,
+        'date_retour_arrive' => true,
         'sans_frais' => true,
         'etat' => true,
         'nb_nuites' => true,

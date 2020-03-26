@@ -24,6 +24,7 @@ class Lieus extends Entity
 	 */
 	protected $_accessible = [
 		'nom_lieu' => true,
-		'est_dans_liste' => true
+		'est_dans_liste' => true,
+		'pays' => true
 	];
 }

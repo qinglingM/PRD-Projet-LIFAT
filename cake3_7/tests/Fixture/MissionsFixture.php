@@ -21,7 +21,11 @@ class MissionsFixture extends TestFixture
 		'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
 		'complement_motif' => ['type' => 'string', 'length' => 40, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
 		'date_depart' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
+		'date_depart_arrive' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
+
 		'date_retour' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
+		'date_retour_arrive' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
+
 		'sans_frais' => ['type' => 'boolean', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
 		'etat' => ['type' => 'string', 'length' => null, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
 		'nb_nuites' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
@@ -61,7 +65,9 @@ class MissionsFixture extends TestFixture
 				'id' => 1,
 				'complement_motif' => 'Lorem ipsum dolor sit amet',
 				'date_depart' => '2019-03-27 08:03:41',
-				'date_retour' => '2019-03-27 08:03:41',
+				'date_retour' => '2019-05-27 08:03:41',
+				'date_depart_arrive' => '2019-04-27 08:03:41',
+				'date_retour_arrive' =>'2019-06-27 08:03:41',
 				'sans_frais' => 1,
 				'etat' => 'Lorem ipsum dolor sit amet',
 				'nb_nuites' => 1,
