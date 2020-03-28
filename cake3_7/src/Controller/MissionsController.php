@@ -82,17 +82,14 @@ class MissionsController extends AppController
 
         $transportsController = new TransportsController();
         $passagersUniques = null;
-        $missionsTable = TableRegistry::getTableLocator()->get('Missions');
+        $this->Missions = TableRegistry::getTableLocator()->get('Missions');
 
-        $mission = $missionsTable->newEntity();
+        $mission = $this->Missions->newEntity();
 
         if ($this->request->is(['patch', 'post', 'put'])) {
 
-            $mission = $missionsTable->patchEntity($mission, $this->request->getData());
-            // print_r($this->request->getData());
+            $mission = $this->Missions->patchEntity($mission, $this->request->getData());
 
-            // $transport = $transportsController->Transports->patchEntity($transport, $this->request->getData());
-            // print_r($transport);
             $mission->responsable_id = $this->Auth->user('id');
             $types = $this->request->getData()['mul'];
             $commentaire_t = $this->request->getData()['commentaire_transport'];
@@ -123,7 +120,7 @@ class MissionsController extends AppController
                 // $mission->date_retour_arrive = new FrozenTime($mission->date_retour_arrive);
 
                 // print_r($this->Missions->save($mission));
-                if ($missionsTable->save($mission)) {
+                if ($this->Missions->save($mission)) {
                     // print_r($mission);
                     //add  transports
                     foreach ($types as $type) {
@@ -215,11 +212,6 @@ class MissionsController extends AppController
                         }
 
                     } else {
-                        print_r($mission->projet_id);
-                        print_r("--");
-                        print_r($mission->lieu_id);
-                        print_r("--");
-                        print_r($mission->motif_id);
                         $this->Flash->error(__('Veuillez compléter les informations pertinentes sur le Projet 、 Motif 、 Lieu.'));
 
                     }
@@ -230,8 +222,10 @@ class MissionsController extends AppController
 
             } else {
                 $this->Flash->error(__('La date de début doit être avant la date de fin.'));
-                // return $this->redirect(['action' => 'edit']);
+                return $this->redirect(['action' => 'edit']);
             }
+
+            // $this->Missions->save($mission);
 
         }
 
@@ -921,8 +915,8 @@ class MissionsController extends AppController
         $generator->setDepart(
             array_column($this->Missions->find()->select(['date_depart'])->where(['id' => $id])->all()->toArray(), 'date_depart')[0]->format('d/m/Y'),
             array_column($this->Missions->find()->select(['date_depart'])->where(['id' => $id])->all()->toArray(), 'date_depart')[0]->format('H:i'),
-//            array_column($this->Missions->find()->select(['date_depart_arrive'])->where(['id' => $id])->all()->toArray(), 'date_depart_arrive')[0]->format('d/m/Y'),
-            //            array_column($this->Missions->find()->select(['date_depart_arrive'])->where(['id' => $id])->all()->toArray(), 'date_depart_arrive')[0]->format('H:i'),
+            array_column($this->Missions->find()->select(['date_depart_arrive'])->where(['id' => $id])->all()->toArray(), 'date_depart_arrive')[0]->format('d/m/Y'),
+            array_column($this->Missions->find()->select(['date_depart_arrive'])->where(['id' => $id])->all()->toArray(), 'date_depart_arrive')[0]->format('H:i'),
 
             $varr = array_column(array_column($this->Missions->find()->contain('Lieus', function (Query $q) {
                 return $q->select(['lieus.nom_lieu']);})
@@ -938,8 +932,8 @@ class MissionsController extends AppController
         $generator->setArrivee(
             array_column($this->Missions->find()->select(['date_retour'])->where(['id' => $id])->all()->toArray(), 'date_retour')[0]->format('d/m/Y'),
             array_column($this->Missions->find()->select(['date_retour'])->where(['id' => $id])->all()->toArray(), 'date_retour')[0]->format('H:i'),
-//            array_column($this->Missions->find()->select(['date_retour_arrive'])->where(['id' => $id])->all()->toArray(), 'date_retour_arrive')[0]->format('d/m/Y'),
-            //            array_column($this->Missions->find()->select(['date_retour_arrive'])->where(['id' => $id])->all()->toArray(), 'date_retour_arrive')[0]->format('H:i'),
+            array_column($this->Missions->find()->select(['date_retour_arrive'])->where(['id' => $id])->all()->toArray(), 'date_retour_arrive')[0]->format('d/m/Y'),
+            array_column($this->Missions->find()->select(['date_retour_arrive'])->where(['id' => $id])->all()->toArray(), 'date_retour_arrive')[0]->format('H:i'),
             $varr = array_column(array_column($this->Missions->find()->contain('Lieus', function (Query $q) {
                 return $q->select(['lieus.nom_lieu']);})
                     ->where(['Missions.id' => $id])

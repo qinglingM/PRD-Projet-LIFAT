@@ -94,50 +94,50 @@ class MyValidGenerator
     /**
      * Intialisation of depart information
      */
-//    public function setDepart($dateD, $heureDepartD, $dateDepartArrive, $heureDepartArrive, $lieuMission, $lieuTravail, $pays)
-//    {
-//        $this->_dateD = $dateD;
-//        $this->_heureDepartD = $heureDepartD;
-//        $this->_dateDepartArrive = $dateDepartArrive;
-//        $this->_heureDepartArrive = $heureDepartArrive;
-//        $this->_lieuMission = $lieuMission;
-//        $this->_lieuTravail = $lieuTravail;
-//        $this->_pays = $pays;
-//    }
-
-    public function setDepart($dateD, $heureDepartD, $lieuMission, $lieuTravail, $pays)
+    public function setDepart($dateD, $heureDepartD, $dateDepartArrive, $heureDepartArrive, $lieuMission, $lieuTravail, $pays)
     {
         $this->_dateD = $dateD;
         $this->_heureDepartD = $heureDepartD;
-
+        $this->_dateDepartArrive = $dateDepartArrive;
+        $this->_heureDepartArrive = $heureDepartArrive;
         $this->_lieuMission = $lieuMission;
         $this->_lieuTravail = $lieuTravail;
         $this->_pays = $pays;
     }
+
+    // public function setDepart($dateD, $heureDepartD, $lieuMission, $lieuTravail, $pays)
+    // {
+    //     $this->_dateD = $dateD;
+    //     $this->_heureDepartD = $heureDepartD;
+
+    //     $this->_lieuMission = $lieuMission;
+    //     $this->_lieuTravail = $lieuTravail;
+    //     $this->_pays = $pays;
+    // }
 
     /**
      * Intialisation of arrive information
      */
-//    public function setArrivee($dateR, $heureDepartR, $dateRetourDepart, $heureRetourArrive, $lieuMission, $lieuTravail, $pays)
-//    {
-//        $this->_dateR = $dateR;
-//        $this->_heureDepartR = $heureDepartR;
-//        $this->_dateRetourDepart = $dateRetourDepart;
-//        $this->_heureRetourArrive = $heureRetourArrive;
-//        $this->_lieuMission = $lieuMission;
-//        $this->_lieuTravail = $lieuTravail;
-//        $this->_pays = $pays;
-//    }
-
-    public function setArrivee($dateR, $heureDepartR,  $lieuMission, $lieuTravail, $pays)
+    public function setArrivee($dateR, $heureDepartR, $dateRetourDepart, $heureRetourArrive, $lieuMission, $lieuTravail, $pays)
     {
         $this->_dateR = $dateR;
         $this->_heureDepartR = $heureDepartR;
-
+        $this->_dateRetourDepart = $dateRetourDepart;
+        $this->_heureRetourArrive = $heureRetourArrive;
         $this->_lieuMission = $lieuMission;
         $this->_lieuTravail = $lieuTravail;
         $this->_pays = $pays;
     }
+
+    // public function setArrivee($dateR, $heureDepartR, $lieuMission, $lieuTravail, $pays)
+    // {
+    //     $this->_dateR = $dateR;
+    //     $this->_heureDepartR = $heureDepartR;
+
+    //     $this->_lieuMission = $lieuMission;
+    //     $this->_lieuTravail = $lieuTravail;
+    //     $this->_pays = $pays;
+    // }
 
     /**
      * Set transport information
@@ -174,8 +174,8 @@ class MyValidGenerator
         $pdf->LIFAT($this->_matricule, $this->_dateCurrent);
         $pdf->agent($this->_id, $this->_name, $this->_prenom, $this->_email, $this->_equipe, $this->_date_naissance);
         $pdf->mission($this->_motifDeplacement, $this->_complementMotif, $this->_lieuMission, $this->_personnel_type);
-        $pdf->depart($this->_dateD, $this->_heureDepartD, $this->_lieuMission, $this->_lieuTravail, $this->_pays);
-        $pdf->arrive($this->_dateR, $this->_heureDepartR, $this->_lieuMission, $this->_lieuTravail, $this->_pays);
+        $pdf->depart($this->_dateD, $this->_heureDepartD, $this->_dateDepartArrive, $this->_heureDepartArrive, $this->_lieuMission, $this->_lieuTravail, $this->_pays);
+        $pdf->arrive($this->_dateR, $this->_heureDepartR, $this->_dateRetourDepart, $this->_heureRetourArrive, $this->_lieuMission, $this->_lieuTravail, $this->_pays);
         $pdf->transport($this->_transport);
         $pdf->signatures($this->_signature_path, $this->_cheifSignaturePath, $this->_juridiqueSignaturePath, $this->_presidentSignaturePath);
         $pdf->justificatif();

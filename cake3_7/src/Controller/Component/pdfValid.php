@@ -135,26 +135,7 @@ Composante, service ou unité de recherche demandant la mission : $complementMot
 
     }
 
-//    public function depart($date_a, $heure_ad, $date_depart_arrive, $heure_depart_arrive, $lieu, $lieutravail, $pays)
-//    {
-//        //cadre départ
-//        $this->setXY(10, 142);
-//        $this->SetFont('Times', 'B', 16);
-//        $this->SetTextColor(81, 130, 187);
-//        $this->Cell(30, 0, utf8_decode('Modalités de ALLER :'), 0, 1, 'L');
-//        $this->SetDrawColor(81, 130, 187);
-//        $this->Line(10, 146, 200, 146);
-//        $this->SetTextColor(0, 0, 0);
-//
-//        $this->SetXY(10, 147);
-//        $depart = "Date et heure de départ: $date_a  $heure_ad - $date_depart_arrive $heure_depart_arrive
-//Trajet(s): $lieutravail - $lieu
-//Pays: France - $pays";
-//        $this->setFont('Times', '', 11);
-//        $this->MultiCell(0, 6, utf8_decode($depart));
-//    }
-
-    public function depart($date_a, $heure_ad, $lieu, $lieutravail, $pays)
+    public function depart($date_a, $heure_ad, $date_depart_arrive, $heure_depart_arrive, $lieu, $lieutravail, $pays)
     {
         //cadre départ
         $this->setXY(10, 142);
@@ -166,34 +147,33 @@ Composante, service ou unité de recherche demandant la mission : $complementMot
         $this->SetTextColor(0, 0, 0);
 
         $this->SetXY(10, 147);
-        $depart = "Date et heure de départ: $date_a  $heure_ad
+        $depart = "Date et heure de départ et arrive: $date_a  $heure_ad - $date_depart_arrive $heure_depart_arrive
 Trajet(s): $lieutravail - $lieu
 Pays: France - $pays";
         $this->setFont('Times', '', 11);
         $this->MultiCell(0, 6, utf8_decode($depart));
     }
 
+//     public function depart($date_a, $heure_ad, $lieu, $lieutravail, $pays)
+    //     {
+    //         //cadre départ
+    //         $this->setXY(10, 142);
+    //         $this->SetFont('Times', 'B', 16);
+    //         $this->SetTextColor(81, 130, 187);
+    //         $this->Cell(30, 0, utf8_decode('Modalités de ALLER :'), 0, 1, 'L');
+    //         $this->SetDrawColor(81, 130, 187);
+    //         $this->Line(10, 146, 200, 146);
+    //         $this->SetTextColor(0, 0, 0);
 
-//    public function arrive($date_r, $heure_rd, $date_retour_arrive, $heure_retour_arrive, $lieu, $lieutravail, $pays)
-//    {
-//        //cadre arrivée
-//        $this->setXY(10, 172);
-//        $this->SetFont('Times', 'B', 16);
-//        $this->SetTextColor(81, 130, 187);
-//        $this->Cell(30, 0, utf8_decode('Modalités de RETOUR :'), 0, 1, 'L');
-//        $this->SetDrawColor(81, 130, 187);
-//        $this->Line(10, 176, 200, 176);
-//        $this->SetTextColor(0, 0, 0);
-//
-//        $this->SetXY(10, 177);
-//        $arrivee = "Date et heure de retour : $date_r $heure_rd - $date_retour_arrive $heure_retour_arrive
-//Trajet(s): $lieu - $lieutravail
-//Pays: $pays - France";
-//        $this->setFont('Times', '', 11);
-//        $this->MultiCell(0, 6, utf8_decode($arrivee));
-//    }
+//         $this->SetXY(10, 147);
+    //         $depart = "Date et heure de départ: $date_a  $heure_ad
+    // Trajet(s): $lieutravail - $lieu
+    // Pays: France - $pays";
+    //         $this->setFont('Times', '', 11);
+    //         $this->MultiCell(0, 6, utf8_decode($depart));
+    //     }
 
-    public function arrive($date_r, $heure_rd,  $lieu, $lieutravail, $pays)
+    public function arrive($date_r, $heure_rd, $date_retour_arrive, $heure_retour_arrive, $lieu, $lieutravail, $pays)
     {
         //cadre arrivée
         $this->setXY(10, 172);
@@ -205,12 +185,31 @@ Pays: France - $pays";
         $this->SetTextColor(0, 0, 0);
 
         $this->SetXY(10, 177);
-        $arrivee = "Date et heure de retour : $date_r $heure_rd
+        $arrivee = "Date et heure de départ et arrive : $date_r $heure_rd - $date_retour_arrive $heure_retour_arrive
 Trajet(s): $lieu - $lieutravail
 Pays: $pays - France";
         $this->setFont('Times', '', 11);
         $this->MultiCell(0, 6, utf8_decode($arrivee));
     }
+
+//     public function arrive($date_r, $heure_rd,  $lieu, $lieutravail, $pays)
+    //     {
+    //         //cadre arrivée
+    //         $this->setXY(10, 172);
+    //         $this->SetFont('Times', 'B', 16);
+    //         $this->SetTextColor(81, 130, 187);
+    //         $this->Cell(30, 0, utf8_decode('Modalités de RETOUR :'), 0, 1, 'L');
+    //         $this->SetDrawColor(81, 130, 187);
+    //         $this->Line(10, 176, 200, 176);
+    //         $this->SetTextColor(0, 0, 0);
+
+//         $this->SetXY(10, 177);
+    //         $arrivee = "Date et heure de retour : $date_r $heure_rd
+    // Trajet(s): $lieu - $lieutravail
+    // Pays: $pays - France";
+    //         $this->setFont('Times', '', 11);
+    //         $this->MultiCell(0, 6, utf8_decode($arrivee));
+    //     }
 
     public function transport($transports)
     {
