@@ -1460,8 +1460,11 @@ class MissionsController extends AppController
     {
         if ($this->Auth->user('role') == 'admin' || $this->Auth->user('role') == 'chef_equipe') {
             //admin看的是自己所在的equipe生效的mission
-            $query = $this->Missions->find()->contain('Membres', function (Query $q) {
-                return $q;})
+            $this->set('searchLabelExtra', "Numéro");
+
+            $query = $this->Missions->find('search', ['search' => $this->request->getQueryParams()])
+                ->contain('Membres', function (Query $q) {
+                    return $q;})
                 ->where(['Missions.etat' => 'soumis', 'Membres.equipe_id' => $this->Auth->user('equipe_id')]);
             //Association tables
             $this->paginate = [
@@ -1473,6 +1476,18 @@ class MissionsController extends AppController
             $this->Flash->error(__('Permission insuffisante pour afficher la liste des missions à valider'));
             $this->redirect(array('controller' => 'missions', 'action' => 'index'));
         }
+
+        // print_r(phpinfo());
+        // $this->set('searchLabelExtra', "Numéro et/ou État du mission");
+        // $query = $this->Missions
+        // // Use the plugins 'search' custom finder and pass in the processed query params
+        //     ->find('search', ['search' => $this->request->getQueryParams()])
+        //     ->where(['responsable_id' => $this->Auth->user('id')]);
+
+        //  $this->paginate = [
+        //      'contain' => ['Projets', 'Lieus', 'Motifs'],
+        //  ];
+        //  $this->set('missions', $this->paginate($query));
 
     }
 
@@ -1494,9 +1509,12 @@ class MissionsController extends AppController
             ];
             $this->set('missions', $this->paginate($query));
         } elseif ($this->Auth->user('role') == 'admin' || $this->Auth->user('role') == 'chef_equipe') {
+            $this->set('searchLabelExtra', "Numéro");
+
             //admin看的是自己所在的equipe生效的mission
-            $query = $this->Missions->find()->contain('Membres', function (Query $q) {
-                return $q;})
+            $query = $this->Missions->find('search', ['search' => $this->request->getQueryParams()])
+                ->contain('Membres', function (Query $q) {
+                    return $q;})
                 ->where(['Missions.etat' => 'valide', 'Membres.equipe_id' => $this->Auth->user('equipe_id')]);
             //Association tables
             $this->paginate = [
