@@ -7,11 +7,13 @@
 use App\Model\Entity\Mission;
 use App\View\AppView;?>
 
+<div class="note">Rappel :Vous devez remplir les options marquées qui avec *.
+</div>
 
 <div class="missions form large-12 medium-8 columns content">
 	<?=$this->Form->create($mission)?>
 	<fieldset>
-		<legend><?=__('Mission')?></legend>
+		<legend><?=__('Mission *')?></legend>
 		<?php
 echo $this->Form->control('projet_id', ['label' => 'Projet associé', 'options' => $projets, 'empty' => true]);
 echo $this->Form->control('sans_frais', ['label' => 'Mission Sans Frais', 'type' => 'checkbox']);
@@ -19,7 +21,7 @@ echo $this->Form->control('sans_frais', ['label' => 'Mission Sans Frais', 'type'
 	</fieldset>
 
 	<fieldset>
-		<legend><?=__('Motif')?></legend>
+		<legend><?=__('Motif *')?></legend>
 		<?php
 echo $this->Form->control('motif_id', ['label' => 'Motif', 'options' => $motifs, 'empty' => true]);
 echo $this->Form->control('complement_motif', ['label' => 'Complément du motif (Par exemple : Nom de la conférence, etc.))']);
@@ -27,7 +29,7 @@ echo $this->Form->control('complement_motif', ['label' => 'Complément du motif 
 	</fieldset>
 
 	<fieldset>
-		<legend><?=__('Lieu')?></legend>
+		<legend><?=__('Lieu *')?></legend>
 		<?php
 echo $this->Form->control('lieu_id', ['options' => $lieus, 'empty' => true]);
 echo $this->Form->control('nouveau_lieu', ['label' => 'Nouveau lieu (si non présent parmis les propositions)']);
@@ -36,7 +38,7 @@ echo $this->Form->control('nouveau_lieu', ['label' => 'Nouveau lieu (si non pré
 	</fieldset>
 
 	<fieldset>
-		<legend><?=__('Dates')?></legend>
+		<legend><?=__('Dates *')?></legend>
 		<?php
 echo $this->Form->control('date_depart', ['label' => 'Date et heure départ du départ', 'type' => 'datetime', 'empty' => true]);
 echo $this->Form->control('date_depart_arrive', ['label' => 'Date et heure arrivée du départ', 'type' => 'datetime', 'empty' => true]);

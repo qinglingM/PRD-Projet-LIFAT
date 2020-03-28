@@ -158,59 +158,72 @@ class MissionsController extends AppController
                         }
                     }
 
-                    TransportFactory::setConfig('gmail', [
-                        'url' => 'smtp://21707371t@gmail.com:sbCNM123@smtp.gmail.com:587?tls=true',
-                    ]);
+                    if (is_numeric($mission->projet_id) === true && is_numeric($mission->lieu_id) === true && is_numeric($mission->motif_id) === true) {
 
-                    //generate pdf
-                    $fileName = $mission->id . '.pdf';
-                    $pdf = $this->_fileGeneration($mission->id, $fileName);
-                    if ($this->_sendSubmit($mission->id)) {
-                        // On récupère motif_id et lieu_id pour les associer aux ordres de missions des passagers
-                        $motifId = $this->Missions->Motifs->id;
-                        $lieuId = $this->Missions->Lieus->id;
-                        $result = $this->Missions->find()->contain('Membres', function (Query $q) {
-                            return $q->select(['membres.nom']);})->where(['Missions.id' => $mission->id])->all()->toList();
-                        $nom_send = array_column(array_column($result, 'membres'), 'nom')[0];
-                        // print_r($nom_send);
-                        $result1 = $this->Missions->find()->contain('Membres', function (Query $q) {
-                            return $q->select(['membres.prenom']);})->where(['Missions.id' => $mission->id])->all()->toList();
-                        $prenom_send = array_column(array_column($result1, 'membres'), 'prenom')[0];
+                        TransportFactory::setConfig('gmail', [
+                            'url' => 'smtp://21707371t@gmail.com:sbCNM123@smtp.gmail.com:587?tls=true',
+                        ]);
 
-                        $date_depart = $mission->date_depart;
-                        $date_retour = $mission->date_retour;
-                        // Génération des ordres de mission pour chaque passager
-                        if ($passagersUniques != null) {
-                            foreach ($passagersUniques as $passager) {
-                                // print_r($passager);
-                                $mission1 = $this->Missions->newEntity();
-                                $this->Missions->id = null;
-                                $missionTemp = $mission1;
-                                $missionTemp->id = null;
-                                $missionTemp->responsable_id = $passager;
-                                $missionTemp->motif_id = $motifId;
-                                $missionTemp->lieu_id = $lieuId;
-                                $missionTemp->date_depart = $date_depart;
-                                $missionTemp->date_retour = $date_retour;
-                                $this->Missions->save($missionTemp);
-                                //$this->_sendConfirmModif($this->Mission->field('id'));
-                                $this->_sendPassager($missionTemp->id, $fileName, $commentaire_t, $nom_send, $prenom_send);
-                                // print_r('send');
+                        //generate pdf
+                        $fileName = $mission->id . '.pdf';
+                        $pdf = $this->_fileGeneration($mission->id, $fileName);
+                        if ($this->_sendSubmit($mission->id)) {
+                            // On récupère motif_id et lieu_id pour les associer aux ordres de missions des passagers
+                            $motifId = $this->Missions->Motifs->id;
+                            $lieuId = $this->Missions->Lieus->id;
+                            $result = $this->Missions->find()->contain('Membres', function (Query $q) {
+                                return $q->select(['membres.nom']);})->where(['Missions.id' => $mission->id])->all()->toList();
+                            $nom_send = array_column(array_column($result, 'membres'), 'nom')[0];
+                            // print_r($nom_send);
+                            $result1 = $this->Missions->find()->contain('Membres', function (Query $q) {
+                                return $q->select(['membres.prenom']);})->where(['Missions.id' => $mission->id])->all()->toList();
+                            $prenom_send = array_column(array_column($result1, 'membres'), 'prenom')[0];
+
+                            $date_depart = $mission->date_depart;
+                            $date_retour = $mission->date_retour;
+                            // Génération des ordres de mission pour chaque passager
+                            if ($passagersUniques != null) {
+                                foreach ($passagersUniques as $passager) {
+                                    // print_r($passager);
+                                    $mission1 = $this->Missions->newEntity();
+                                    $this->Missions->id = null;
+                                    $missionTemp = $mission1;
+                                    $missionTemp->id = null;
+                                    $missionTemp->responsable_id = $passager;
+                                    $missionTemp->motif_id = $motifId;
+                                    $missionTemp->lieu_id = $lieuId;
+                                    $missionTemp->date_depart = $date_depart;
+                                    $missionTemp->date_retour = $date_retour;
+                                    $this->Missions->save($missionTemp);
+                                    //$this->_sendConfirmModif($this->Mission->field('id'));
+                                    $this->_sendPassager($missionTemp->id, $fileName, $commentaire_t, $nom_send, $prenom_send);
+                                    // print_r('send');
+                                }
+                            } else {
+                                $this->request->getData()['passagers'] = null;
                             }
-                        } else {
-                            $this->request->getData()['passagers'] = null;
+
+                            if ($this->request->getData()['er_vehicule']) {
+                                $user = $this->Membres->get($mission->responsable_id);
+                                $user['im_vehicule'] = $this->request->getData()['im_vehicule'];
+                                $user['pf_vehicule'] = $this->request->getData()['pf_vehicule'];
+                                $this->Membres->save($user);
+                            }
+                            // print_r('saved');
+                            $this->Flash->success(__('Mission enregistré et soumis au chef d\'équipe.'));
+                            return $this->redirect(['action' => 'index']);
                         }
 
-                        if ($this->request->getData()['er_vehicule']) {
-                            $user = $this->Membres->get($mission->responsable_id);
-                            $user['im_vehicule'] = $this->request->getData()['im_vehicule'];
-                            $user['pf_vehicule'] = $this->request->getData()['pf_vehicule'];
-                            $this->Membres->save($user);
-                        }
+                    } else {
+                        print_r($mission->projet_id);
+                        print_r("--");
+                        print_r($mission->lieu_id);
+                        print_r("--");
+                        print_r($mission->motif_id);
+                        $this->Flash->error(__('Veuillez compléter les informations pertinentes sur le Projet 、 Motif 、 Lieu.'));
 
-                        $this->Flash->success(__('Mission enregistré et soumis au chef d\'équipe.'));
-                        // return $this->redirect(['action' => 'index']);
                     }
+
                 } else {
                     $this->Flash->error(__('The mission could not be saved. Please, try again.'));
                 }
@@ -501,15 +514,8 @@ class MissionsController extends AppController
                     ->first();
                 if (isset($transport_vehicule)) {
                     //如果data里面有这两项，就赋值给界面
-                    // $data = $this->request->getData();
-                    // $im_vehicule = array_column($transport_vehicule->toArray(),'im_vehicule');
-                    // $pf_vehicule = array_column($transport_vehicule->toArray(),'pf_vehicule');
                     $im_vehicule = $transport_vehicule['im_vehicule'];
                     $pf_vehicule = $transport_vehicule['pf_vehicule'];
-                    // print_r($im_vehicule);
-                    // print_r($pf_vehicule);
-                    // $data['im_vehicule'] = $im_vehicule;
-                    // $data['pf_vehicule'] = $pf_vehicule;
 
                 } else {}
                 //selected passagers when user create a mission
@@ -1145,7 +1151,7 @@ class MissionsController extends AppController
             ->cc($email_send)
             ->setTransport('gmail')
             // ->attachments(['mission_info' => '/Applications/MAMP/htdocs/PRD-Projet-LIFAT/cake3_7/webroot/'.$this->Missions->id.'pdf'])
-            ->attachments(['mission_info' => '/Applications/MAMP/htdocs/PRD-Projet-LIFAT/cake3_7/webroot/' . $this->Missions->id . '.pdf'])
+            ->attachments(['ODM.pdf' => '/Applications/MAMP/htdocs/PRD-Projet-LIFAT/cake3_7/webroot/' . $this->Missions->id . '.pdf'])
             ->send();
     }
 
@@ -1223,7 +1229,7 @@ class MissionsController extends AppController
             // ->cc($email_send)
             ->setTransport('gmail')
             // ->attachments(['mission_info' => '/Applications/MAMP/htdocs/PRD-Projet-LIFAT/cake3_7/webroot/'.$this->Missions->id.'pdf'])
-            ->attachments(['mission_info' => '/Applications/MAMP/htdocs/PRD-Projet-LIFAT/cake3_7/webroot/' . $fileName])
+            ->attachments(['ODM.pdf' => '/Applications/MAMP/htdocs/PRD-Projet-LIFAT/cake3_7/webroot/' . $fileName])
             ->send();
     }
 
