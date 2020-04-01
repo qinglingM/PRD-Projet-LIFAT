@@ -1603,7 +1603,7 @@ class MissionsController extends AppController
             return false;
         } else {
             //    Tous les membres permanents ont tous les droits sur les thèses
-            if ($user['permanent'] === true) {
+            if ($user['permanent'] == 1) {
                 return true;
             }
         }
