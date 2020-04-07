@@ -105,23 +105,14 @@ class MissionsController extends AppController
                 $dateTimeRetour = $mission->date_retour;
                 // Calcul du nombre de repas de de nuitées
                 $arrayRepasNuit = $this->_calculNombreRepasNuite($dateTimeDebut, $dateTimeRetour);
-                // print_r($arrayRepasNuit);
                 if ($mission->nb_repas == null) {
                     $mission->nb_repas = $arrayRepasNuit['nb_repas'];
                 }
                 if ($mission->nb_nuites == null) {
                     $mission->nb_nuites = $arrayRepasNuit['nb_nuites'];
                 }
-                // print_r($mission->date_depart_arrive);
-                // print_r($mission->date_retour_arrive);
-                // print_r($mission);
 
-                // $mission->date_depart_arrive = new FrozenTime($mission->date_depart_arrive);
-                // $mission->date_retour_arrive = new FrozenTime($mission->date_retour_arrive);
-
-                // print_r($this->Missions->save($mission));
                 if ($this->Missions->save($mission)) {
-                    // print_r($mission);
                     //add  transports
                     foreach ($types as $type) {
                         $transport = $transportsController->Transports->newEntity();
@@ -151,7 +142,6 @@ class MissionsController extends AppController
                         }
                         $transport->mission_id = $mission->id;
                         if ($transportsController->Transports->save($transport)) {
-                            // print_r($transport);
                         }
                     }
 
@@ -171,7 +161,6 @@ class MissionsController extends AppController
                             $result = $this->Missions->find()->contain('Membres', function (Query $q) {
                                 return $q->select(['membres.nom']);})->where(['Missions.id' => $mission->id])->all()->toList();
                             $nom_send = array_column(array_column($result, 'membres'), 'nom')[0];
-                            // print_r($nom_send);
                             $result1 = $this->Missions->find()->contain('Membres', function (Query $q) {
                                 return $q->select(['membres.prenom']);})->where(['Missions.id' => $mission->id])->all()->toList();
                             $prenom_send = array_column(array_column($result1, 'membres'), 'prenom')[0];
@@ -181,7 +170,6 @@ class MissionsController extends AppController
                             // Génération des ordres de mission pour chaque passager
                             if ($passagersUniques != null) {
                                 foreach ($passagersUniques as $passager) {
-                                    // print_r($passager);
                                     $mission1 = $this->Missions->newEntity();
                                     $this->Missions->id = null;
                                     $missionTemp = $mission1;
@@ -192,9 +180,7 @@ class MissionsController extends AppController
                                     $missionTemp->date_depart = $date_depart;
                                     $missionTemp->date_retour = $date_retour;
                                     $this->Missions->save($missionTemp);
-                                    //$this->_sendConfirmModif($this->Mission->field('id'));
                                     $this->_sendPassager($missionTemp->id, $fileName, $commentaire_t, $nom_send, $prenom_send);
-                                    // print_r('send');
                                 }
                             } else {
                                 $this->request->getData()['passagers'] = null;
@@ -206,7 +192,6 @@ class MissionsController extends AppController
                                 $user['pf_vehicule'] = $this->request->getData()['pf_vehicule'];
                                 $this->Membres->save($user);
                             }
-                            // print_r('saved');
                             $this->Flash->success(__('Mission enregistré et soumis au chef d\'équipe.'));
                             return $this->redirect(['action' => 'index']);
                         }
@@ -225,8 +210,6 @@ class MissionsController extends AppController
                 return $this->redirect(['action' => 'edit']);
             }
 
-            // $this->Missions->save($mission);
-
         }
 
         $projets = $this->Missions->Projets->find('list', ['limit' => 200]);
@@ -238,7 +221,6 @@ class MissionsController extends AppController
             ->all()->toArray();
 
         $mission_trans_type = array_column($tmp_query, 'type_transport'); //array
-        // debug($this->Missions->getErrors());
 
         $this->set(compact('mission', 'projets', 'lieus', 'motifs', 'mission_trans_type', 'membres', 'passagersUniques'));
 
@@ -259,20 +241,14 @@ class MissionsController extends AppController
         $this->loadModel('Transports');
 
         $transportsController = new TransportsController();
-        // $passagersUniques = null;
         $mission = $this->Missions->get($id, [
             'contain' => ['Membres', 'Lieus', 'Motifs'],
         ]);
 
-        // $mission['Mission']['user_id'] == $this->Auth->user('id')
         if ($mission->responsable_id == $this->Auth->user('id') || $this->Auth->user('role') === Membre::CHEFDEQUIPE || $this->Auth->user('role') === Membre::ADMIN) {
             if ($mission->etat === 'soumis') {
                 if ($this->request->is(['patch', 'post', 'put'])) {
                     $mission = $this->Missions->patchEntity($mission, $this->request->getData());
-                    // print_r("getData()");
-                    // print_r('getData'.$this->request->getData());
-                    // print_r($this->request->getData());
-                    // $transport = $transportsController->Transports->patchEntity($transport, $this->request->getData());
 
                     $type_trans = array('vehicule_service', 'vehicule_personnel');
                     $transport_vehicule = $transportsController->Transports->find()->select(['im_vehicule', 'pf_vehicule'])->where(['mission_id' => $id, 'type_transport IN' => $type_trans])
@@ -281,13 +257,11 @@ class MissionsController extends AppController
                     $types = $this->request->getData()['mul'];
 
                     if (isset($transport_vehicule)) {
-                        //如果data里面有这两项，就赋值给界面
+                        //S'il y a ces deux éléments dans les données, elles sont affectées à l'interface
                         $im_vehicule = array_column($transport_vehicule->toArray(), 'im_vehicule');
                         $pf_vehicule = array_column($transport_vehicule->toArray(), 'pf_vehicule');
                         $data['im_vehicule'] = $im_vehicule;
                         $data['pf_vehicule'] = $pf_vehicule;
-                        // print_r($transport_vehicule['im_vehicule']);
-                        // print_r($transport_vehicule['pf_vehicule']);
 
                     } else {
                         // //如果data里面没有这两项，就把用户的vehicule信息返回到界面
@@ -307,9 +281,6 @@ class MissionsController extends AppController
 
                     $mission->responsable_id = $this->Auth->user('id');
 
-                    // $types = $this->request->getData()['mul'];
-                    // $transport_types =  $this->request->getData()['transport_id'];
-                    // print_r('transport_types : '.$transport_types);
                     $commentaire_t = $this->request->getData()['commentaire_transport'];
 
                     if (isset($this->request->getData()['passagers'])) {
@@ -330,17 +301,12 @@ class MissionsController extends AppController
                             $mission->nb_nuites = $arrayRepasNuit['nb_nuites'];
                         }
 
-                        // print_r("------------");
-
                         if ($this->Missions->save($mission)) {
                             //edit transports
-                            //1 取transport的id 2 调用edit（）
+                            //1 get transport's id 2 appelle edit（）
                             $transport_ids = $transportsController->Transports->find()->select('id')->where(['mission_id' => $id])->all()->toArray();
-                            // print_r("transport id = ");
-                            // print_r($transportsController->Transports->find()->select('id')->where(['mission_id' => $id]));
 
                             foreach ($transport_ids as $transport_id) {
-                                // $transportsController->Transports->edit($transport_id->id);
                                 $transport_id2 = $transportsController->Transports->get($transport_id->id);
                                 //methode2 : delete exist transport, apres renew transport
                                 $transportsController->request->allowMethod(['post', 'delete']);
@@ -350,47 +316,6 @@ class MissionsController extends AppController
                                 } else {
                                     // $transportsController->Flash->error(__('The transport could not be deleted. Please, try again.'));
                                 }
-
-                                // methode1 : 调用edit（）
-                                // if ($transportsController->request->is(['patch', 'post', 'put'])) {
-                                //     $transport = $transportsController->Transports->patchEntity($transport_id2, $transportsController->request->getData());
-                                //     $type = $this->request->getData()['mul'][0];
-                                //     // foreach($types as $type) {
-                                //         if ( $type === 'Value1') {
-                                //             $transport->type_transport = 'train';
-                                //             $transport->im_vehicule = null;
-                                //             $transport->pf_vehicule = null;
-                                //         }elseif($type === 'Value2') {
-                                //             $typetransport = 'avion';
-                                //             $transport->type_transport = 'avion';
-                                //             $transport->im_vehicule = null;
-                                //             $transport->pf_vehicule = null;
-                                //         }elseif($type === 'Value3'){
-                                //             $typetransport = 'vehicule_personnel';
-                                //             $transport->type_transport = 'Véhicule_Personnel';
-                                //             $transport->im_vehicule = $this->request->getData()['im_vehicule'];
-                                //             $transport->pf_vehicule = $this->request->getData()['pf_vehicule'];
-                                //         }elseif($type === 'Value4'){
-                                //             $typetransport = 'vehicule_service';
-                                //             $transport->type_transport = 'Véhicule_service';
-                                //             $transport->im_vehicule = $this->request->getData()['im_vehicule'];
-                                //             $transport->pf_vehicule = $this->request->getData()['pf_vehicule'];
-                                //         }elseif($type === 'Value5'){
-                                //             $typetransport = 'autre ';
-                                //             $transport->type_transport = 'Autre';
-                                //         }
-
-                                //         if ($transportsController->Transports->save($transport)) {
-                                //             print_r($transport);
-                                //             // $this->Flash->success(__('The transport has been saved.'));
-                                //             // break;
-                                //             // return $transportsController->redirect(['action' => 'index']);
-                                //         }else{
-                                //             // $this->Flash->error(__('The transport could not be saved. Please, try again.'));
-                                //         }
-                                //     // }
-                                // }
-                                // $transportsController->set(compact('transport'));
                             }
                             foreach ($types as $type) {
                                 $transport = $transportsController->Transports->newEntity();
@@ -420,12 +345,10 @@ class MissionsController extends AppController
                                 }
                                 $transport->mission_id = $mission->id;
                                 if ($transportsController->Transports->save($transport)) {
-                                    // print_r($transport);
                                 }
                             }
                             $transportsController->set(compact('transport'));
                             // end edit transport
-
                             TransportFactory::setConfig('gmail', [
                                 'url' => 'smtp://21707371t@gmail.com:sbCNM123@smtp.gmail.com:587?tls=true',
                             ]);
@@ -441,7 +364,6 @@ class MissionsController extends AppController
                                 $result = $this->Missions->find()->contain('Membres', function (Query $q) {
                                     return $q->select(['membres.nom']);})->where(['Missions.id' => $mission->id])->all()->toList();
                                 $nom_send = array_column(array_column($result, 'membres'), 'nom')[0];
-                                // print_r($nom_se0nd);
                                 $result1 = $this->Missions->find()->contain('Membres', function (Query $q) {
                                     return $q->select(['membres.prenom']);})->where(['Missions.id' => $mission->id])->all()->toList();
                                 $prenom_send = array_column(array_column($result1, 'membres'), 'prenom')[0];
@@ -451,7 +373,6 @@ class MissionsController extends AppController
                                 // Génération des ordres de mission pour chaque passager
                                 if ($passagersUniques != null) {
                                     foreach ($passagersUniques as $passager) {
-                                        // print_r($passager);
                                         $mission1 = $this->Missions->newEntity();
                                         $this->Missions->id = null;
                                         $missionTemp = $mission1;
@@ -463,12 +384,8 @@ class MissionsController extends AppController
                                         $missionTemp->date_retour = $date_retour;
                                         $this->Missions->save($missionTemp);
                                         print_r($missionTemp);
-                                        //$this->_sendConfirmModif($this->Mission->field('id'));
                                         $this->_sendPassager($missionTemp->id, $fileName, $commentaire_t, $nom_send, $prenom_send);
-                                        // print_r('send');
                                     }
-                                    // $this->Flash->success(__('Mission enregistré et soumis au chef d\'équipe.'));
-                                    // return $this->redirect(['action' => 'index']);
 
                                 } else {
                                     $this->request->getData()['passagers'] = null;
@@ -495,8 +412,6 @@ class MissionsController extends AppController
                 $lieus = $this->Missions->Lieus->find('list', ['limit' => 200]);
                 $motifs = $this->Missions->Motifs->find('list', ['limit' => 200]);
                 $membres = $this->Missions->Membres->find('list', ['limit' => 200]);
-                //transports
-                // $transports = ['Train','Avion','Véhicule Personnel','Véhicule de service','Autre'];
                 //selected types when user create a mission
                 $tmp_query = $transportsController->Transports->find()->select('type_transport')->distinct('type_transport')->where(['mission_id' => $id])
                     ->all()->toArray();
@@ -507,13 +422,12 @@ class MissionsController extends AppController
                 $transport_vehicule = $transportsController->Transports->find()->select(['im_vehicule', 'pf_vehicule'])->where(['mission_id' => $id, 'type_transport IN' => $type_trans])
                     ->first();
                 if (isset($transport_vehicule)) {
-                    //如果data里面有这两项，就赋值给界面
+                    //S'il y a ces deux éléments dans les données, elles sont affectées à l'interface
                     $im_vehicule = $transport_vehicule['im_vehicule'];
                     $pf_vehicule = $transport_vehicule['pf_vehicule'];
 
                 } else {}
                 //selected passagers when user create a mission
-
                 if (isset($im_vehicule) && isset($pf_vehicule)) {
                     $this->set(compact('mission', 'projets', 'lieus', 'motifs', 'membres', 'mission_trans_type', 'im_vehicule', 'pf_vehicule'));
 
@@ -568,15 +482,6 @@ class MissionsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
-
-        // $this->request->allowMethod(['post', 'delete']);
-        // $membre = $this->Missions->get($id);
-        // if ($this->Missions->delete($membre)) {
-        //     $this->Flash->success(__('Le Missions a été supprimé.'));
-        // } else {
-        //     $this->Flash->error(__('La Missions du budget à échoué.'));
-        // }
-        // return $this->redirect(['action' => 'index']);
     }
 
     /**
@@ -598,34 +503,17 @@ class MissionsController extends AppController
         include dirname(__FILE__) . '/Component/generator.php';
 
         $generator = new \MyGenerator();
-        // Fin modification
         $this->Missions->id = $id;
-        //-------------- // =  $this->Mission->field('motif_id'); //--------------------------
-        // print_r(array_column($this->Missions->find()->select(['responsable_id'])->where(['id' => $id])->all()->toArray(),'responsable_id'));
         $this->Missions->Membres->id = array_column($this->Missions->find()->select(['responsable_id'])->where(['id' => $id])->all()->toArray(), 'responsable_id')[0];
         $this->Missions->Motifs->id = array_column($this->Missions->find()->select(['motif_id'])->where(['id' => $id])->all()->toArray(), 'motif_id')[0];
         $this->Missions->Lieus->id = array_column($this->Missions->find()->select(['lieu_id'])->where(['missions.id' => $id])->all()->toArray(), 'lieu_id')[0];
-        //  print_r($this->Missions->Lieus->id);
-        //----------------- // = $this->Mission->User->Equipe->id = $this->Mission->User->field('equipe_id'); //-----
         $result = $this->Missions->find()->contain('Membres', function (Query $q) {
             return $q->select(['membres.equipe_id']);})->where(['Missions.id' => $id])->all()->toList();
         $this->Missions->Membres->Equipes->id = array_column(array_column($result, 'membres'), 'equipe_id')[0];
-        // print_r($this->Missions->Membres->Equipes->id);
         $this->Missions->Projets->id = array_column($this->Missions->find()->select(['projet_id'])->where(['id' => $id])->all()->toArray(), 'projet_id');
 
-        //---------------  // transports = $this->Transport->findAllByMissionId($missionId); //--------
-
-        // $transports = array_column($this->Transports->find()->select('type_transport')->where(['mission_id' => $id])->all()->toArray(),'type_transport');
-        // $objectTransports = $this->Transports->find()->select('type_transport')->where(['mission_id' => $id])->all()->toList();
-
-        // print_r ($objectTransports);
-
-        // $transports = $this->Transports->find()->select('type_transport')->where(['mission_id' => $id])->distinct('type_transport')->all()->toList();
         $transports = $this->Transports->find()->where(['mission_id' => $id])->all()->toList();
 
-        //---------------  // End transports//------------------------------------
-
-        //-----------------------TO DO-------------------------------
         //Ne rajoute la signature du chef d'équipe que si la mission a été validée
         $etat = array_column($this->Missions->find()->select('etat')->where(['id' => $id])->all()->toArray(), 'etat')[0];
 
@@ -634,15 +522,8 @@ class MissionsController extends AppController
             $result_1 = $this->Missions->find()->contain('Membres', function (Query $q) {
                 return $q->select(['membres.equipe_id']);})->where(['Missions.id' => $id])->all()->toList();
             $equipeid = array_column(array_column($result_1, 'membres'), 'equipe_id')[0];
-            // print_r($equipeid);
             $chefid = array_column($this->Missions->Membres->Equipes->find()->where(['id' => $equipeid])->all()->toArray(), 'responsable_id')[0];
-            // print_r($chefid);
             $chefsign = array_column($this->Missions->Membres->find()->where(['id' => $chefid])->all()->toArray(), 'signature_name')[0];
-
-            // print_r($chefsign);
-            // $cheif = $this->Membres->find('first', array('conditions' => array('User.role' => 'admin', 'User.equipe_id' => $this->Mission->User->field('equipe_id'))));
-            // génère la signature du chef
-            // $cheifSignaturePath = "./img/Signatures/".$chefsign;
             $cheifSignaturePath = "./img/Signatures/" . $chefsign;
 
         } else {
@@ -653,21 +534,13 @@ class MissionsController extends AppController
             return $q->select(['membres.equipe_id']);})->where(['Missions.id' => $id])->all()->toList();
         $var1 = array_column(array_column($result, 'membres'), 'equipe_id')[0];
         $equipenom = array_column($this->Missions->Membres->Equipes->find()->select(['Equipes.nom_equipe'])->where(['Equipes.id' => $var1])->all()->toArray(), 'nom_equipe')[0];
-        // print_r($equipenom);
-
-        // print_r(array_column(array_column($this->Missions->find()->contain('Membres', function (Query $q) {
-        //     return $q ->select(['membres.signature_name']);})
-        //     ->where(['Missions.id' => $id])
-        //     ->all()->toList(),'membres'),'signature_name')[0]);
 
         $sign = array_column(array_column($this->Missions->find()->contain('Membres', function (Query $q) {
             return $q->select(['membres.signature_name']);})
                 ->where(['Missions.id' => $id])
                 ->all()->toList(), 'membres'), 'signature_name')[0];
-        // print_r($sign);
         $signaturePath = "/Signatures/" . $sign;
-        // print_r($signaturePath);
-        // //---------------------------TO DO END----------------------------------
+
         $generator->setAgent(
             array_column(array_column($this->Missions->find()->contain('Membres', function (Query $q) {
                 return $q->select(['membres.id']);})
@@ -711,9 +584,7 @@ class MissionsController extends AppController
                     ->where(['Missions.id' => $id])
                     ->all()->toList(), 'membres'), 'type_personnel')[0],
             $signaturePath,
-            //------------- TO DO ----------------
             $cheifSignaturePath,
-            // $equipenom,
             array_column(array_column($this->Missions->find()->contain('Membres', function (Query $q) {
                 return $q->select(['membres.date_naissance']);})
                     ->where(['Missions.id' => $id])
@@ -753,24 +624,17 @@ class MissionsController extends AppController
 
         $im_vehicule = '';
         $pf_vehicule = '';
-        // print_r($transports);
+
         // decision about imatriculation
         foreach ($transports as $transport) {
-            // print_r($transport);
-            // print_r($transport->im_vehicule);
-            // print_r('transport'.$transport->pf_vehicule);
-
             if ($transport->type_transport === 'vehicule_service' || $transport->type_transport === 'vehicule_personnel') {
                 $im_vehicule = $transport->im_vehicule;
                 $pf_vehicule = $transport->pf_vehicule;
-                // print_r("---");
                 break;
             }
         }
-        // print_r($transports);
 
         $generator->setTransport($transports);
-        // print_r($generator->getTransport());
         $generator->setTransportBis(
             $im_vehicule,
             $pf_vehicule,
@@ -811,15 +675,12 @@ class MissionsController extends AppController
         $generator = new \MyValidGenerator();
         // Fin modification
         $this->Missions->id = $id;
-        // print_r(array_column($this->Missions->find()->select(['responsable_id'])->where(['id' => $id])->all()->toArray(),'responsable_id'));
         $this->Missions->Membres->id = array_column($this->Missions->find()->select(['responsable_id'])->where(['id' => $id])->all()->toArray(), 'responsable_id')[0];
         $this->Missions->Motifs->id = array_column($this->Missions->find()->select(['motif_id'])->where(['id' => $id])->all()->toArray(), 'motif_id')[0];
         $this->Missions->Lieus->id = array_column($this->Missions->find()->select(['lieu_id'])->where(['missions.id' => $id])->all()->toArray(), 'lieu_id')[0];
-        //  print_r($this->Missions->Lieus->id);
         $result = $this->Missions->find()->contain('Membres', function (Query $q) {
             return $q->select(['membres.equipe_id']);})->where(['Missions.id' => $id])->all()->toList();
         $this->Missions->Membres->Equipes->id = array_column(array_column($result, 'membres'), 'equipe_id')[0];
-        // print_r($this->Missions->Membres->Equipes->id);
         $this->Missions->Projets->id = array_column($this->Missions->find()->select(['projet_id'])->where(['id' => $id])->all()->toArray(), 'projet_id');
 
         $transports = $this->Transports->find()->where(['mission_id' => $id])->all()->toList();
@@ -833,8 +694,7 @@ class MissionsController extends AppController
             $equipeid = array_column(array_column($result_1, 'membres'), 'equipe_id')[0];
             $chefid = array_column($this->Missions->Membres->Equipes->find()->where(['id' => $equipeid])->all()->toArray(), 'responsable_id')[0];
             $chefsign = array_column($this->Missions->Membres->find()->where(['id' => $chefid])->all()->toArray(), 'signature_name')[0];
-            // print_r($chefsign);
-            // print_r('jnas'.$chefsign);
+
             // génère la signature du chef
             $cheifSignaturePath = "/Signatures/" . $chefsign;
         } else {
@@ -850,9 +710,7 @@ class MissionsController extends AppController
             return $q->select(['membres.signature_name']);})
                 ->where(['Missions.id' => $id])
                 ->all()->toList(), 'membres'), 'signature_name')[0];
-        // print_r($sign);
         $signaturePath = "/Signatures/" . $sign;
-        // print_r($signaturePath);
 
         $dataCurrent = date("d/m/Y");
         $generator->setLIFAT(
@@ -863,11 +721,8 @@ class MissionsController extends AppController
 
         $lieutravailTmp = $this->Missions->find()->contain('Membres', function (Query $q) {
             return $q->select(['membres.lieu_travail_id']);})->where(['Missions.id' => $id])->all()->toList();
-        // print_r($this->Missions->find()->contain('Membres', function (Query $q) {
-        // return $q ->select(['membres.lieu_travail_id']);})->where(['Missions.id' => $id]));
         $Tmp1 = array_column(array_column($lieutravailTmp, 'membres'), 'lieu_travail_id')[0];
         $lieutravail = array_column($this->Missions->Membres->LieuTravails->find()->select(['LieuTravails.nom_lieu'])->where(['LieuTravails.id' => $Tmp1])->all()->toArray(), 'nom_lieu')[0];
-        // print_r($lieutravail);
 
         $generator->setAgent(
             array_column(array_column($this->Missions->find()->contain('Membres', function (Query $q) {
@@ -947,7 +802,6 @@ class MissionsController extends AppController
 
         $im_vehicule = '';
         $pf_vehicule = '';
-        // print_r($transports);
         // decision about imatriculation
         foreach ($transports as $transport) {
             if ($transport->type_transport === 'vehicule_service' || $transport->type_transport === 'vehicule_personnel') {
@@ -975,9 +829,7 @@ class MissionsController extends AppController
             $mission = $this->Missions->get($id, [
                 'contain' => ['Projets', 'Lieus', 'Motifs', 'Membres'],
             ]);
-            // print_r($mission->etat);
             if ($this->Auth->user('id') === $mission->responsable_id || $this->Auth->user('role') === Membre::ADMIN || $this->Auth->user('role') === Membre::SECRETAIRE || $this->Auth->user('role') === Membre::CHEFDEQUIPE) {
-                // $fileName = $mission->id.'.pdf';
                 $this->_fileValidGeneration($id);
             } else {
                 $this->Flash->error(__('Lecture de l\'OdM impossible : Permission insuffisante'));
@@ -985,7 +837,6 @@ class MissionsController extends AppController
             }
         } else {
             $this->Flash->error(__('L\'ordre de mission inexistant.'));
-            // $this->redirect(array('controller' => 'missions', 'action' => 'index'));
             $this->redirect(['action' => 'index']);
         }
     }
@@ -997,9 +848,7 @@ class MissionsController extends AppController
             $mission = $this->Missions->get($id, [
                 'contain' => ['Projets', 'Lieus', 'Motifs', 'Membres'],
             ]);
-            // print_r($mission->etat);
             if ($this->Auth->user('id') === $mission->responsable_id || $this->Auth->user('role') === Membre::ADMIN || $this->Auth->user('role') === Membre::SECRETAIRE || $this->Auth->user('role') === Membre::CHEFDEQUIPE) {
-                // $fileName = $mission->id.'.pdf';
                 $this->_fileGeneration($id);
             } else {
                 $this->Flash->error(__('Lecture de l\'OdM impossible : Permission insuffisante'));
@@ -1007,16 +856,14 @@ class MissionsController extends AppController
             }
         } else {
             $this->Flash->error(__('L\'ordre de mission inexistant.'));
-            // $this->redirect(array('controller' => 'missions', 'action' => 'index'));
             $this->redirect(['action' => 'index']);
         }
     }
 
     // Utilisé par la fonction edit(), permet d'estimer le nombre de repas et de nuité à partir des dates rentrées par l'utilisateur
-    public function _calculNombreRepasNuite($dateDebut, $dateFin)
+    public function _calculNombreRepasNuite($fi, $dateFin)
     {
         $diff = date_diff($dateDebut, $dateFin);
-        // print_r($diff);
         $nombreNuite = $diff->days;
         $nombreRepas = round(($diff->format("%h") + $diff->days * 24) / 12, 0);
         return array('nb_nuites' => $nombreNuite, 'nb_repas' => $nombreRepas);
@@ -1064,26 +911,18 @@ class MissionsController extends AppController
     public function _sendSubmit($id)
     {
         $this->Missions->id = $id;
-        // print_r($this->Missions->id);
         $this->Missions->Membres->id = array_column($this->Missions->find()->select(['responsable_id'])->where(['id' => $id])->all()->toArray(), 'responsable_id')[0];
         $this->Missions->Motifs->id = array_column($this->Missions->find()->select(['motif_id'])->where(['id' => $id])->all()->toArray(), 'motif_id')[0];
 
-        // print_r($this->Missions->Motifs->id);
-        // $this->Missions->Lieus->id = array_column($this->Missions->find()->select(['lieu_id'])->where(['id' => $id])->all()->toArray(),'lieu_id')[0];
         $this->Missions->Lieus->id = array_column($this->Missions->find()->select(['lieu_id'])->where(['id' => $id])->all()->toArray(), 'lieu_id')[0];
-        // print_r($this->Missions->Lieus->id);
         // récupère les emails des chefs d'équipe
         $result_1 = $this->Missions->find()->contain('Membres', function (Query $q) {
             return $q->select(['membres.equipe_id']);})->where(['Missions.id' => $id])->all()->toList();
         $equipeid = array_column(array_column($result_1, 'membres'), 'equipe_id')[0];
-        // print_r($equipeid);
 
         $chefid = array_column($this->Missions->Membres->Equipes->find()->where(['id' => $equipeid])->all()->toArray(), 'responsable_id')[0];
-        // print_r($chefid);
 
         $chefemail = array_column($this->Missions->Membres->find()->where(['id' => $chefid])->all()->toArray(), 'email')[0];
-
-        // print_r($chefemail);
 
         $result = $this->Missions->find()->contain('Membres', function (Query $q) {
             return $q->select(['membres.nom']);})->where(['Missions.id' => $id])->all()->toList();
@@ -1098,24 +937,16 @@ class MissionsController extends AppController
 
         $result_3 = $this->Missions->find()->contain('Motifs', function (Query $q) {
             return $q->select(['Motifs.nom_motif']);})->where(['Missions.id' => $id])->all()->toList();
-        // print_r($result_3);
-        // print_r(array_column($result_3,'motifs'));
+
         $nommotif = array_column(array_column($result_3, 'motif'), 'nom_motif')[0];
 
-        // print_r($nommotif);
         $result_4 = $this->Missions->find()->contain('Lieus', function (Query $q) {
             return $q->select(['Lieus.nom_lieu']);})->where(['Missions.id' => $id])->all()->toList();
         $nomlieu = array_column(array_column($result_4, 'lieus'), 'nom_lieu')[0];
-        // print_r($nomlieu);
-        // $nommotif = array_column($this->Missions->find()->select(['nom_motif'])->where(['id' => $id])->all()->toArray(),'nom_motif')[0];
-        // $nomlieu = array_column($this->Missions->find()->select(['nom_lieu'])->where(['missions.id' => $id])->all()->toArray(),'nom_lieu')[0];
-        // print_r($id);
-        // print_r($this->Missions->find()->select(['date_depart'])->where(['id' => $id]));
+
         $date_d = array_column($this->Missions->find()->select(['date_depart'])->where(['id' => $id])->all()->toArray(), 'date_depart')[0]->format('d/m/Y');
         $date_r = array_column($this->Missions->find()->select(['date_retour'])->where(['id' => $id])->all()->toArray(), 'date_retour')[0]->format('d/m/Y');
         $commentaire_t = array_column($this->Missions->find()->select(['commentaire_transport'])->where(['id' => $id])->all()->toArray(), 'commentaire_transport')[0];
-
-        // $this->_fileGeneration($mission->id);
 
         // Interaction avec le view
         $email = new Email();
@@ -1126,15 +957,6 @@ class MissionsController extends AppController
         $email->set('date_depart', $date_d);
         $email->set('date_retour', $date_r);
         $email->set('commentaire', $commentaire_t);
-        // cake3_7/webroot/147.pdf
-        // $email->attachments(["OM.pdf" => './cake3_7/tmp/']);
-
-        // $email->profile(['from' => ['Site de gestion des OdM' => 'donotreply@odm.li.univ-tours.fr']]);
-        //  = 'Site de gestion des OdM <donotreply@odm.li.univ-tours.fr>';
-
-        // TransportFactory::setConfig('gmail', [
-        //     'url' => 'smtp://21707371t@gmail.com:CNMsb123@smtp.gmail.com:587?tls=true',
-        //     ]);
 
         return $email
             ->template('submit_om')
@@ -1144,7 +966,6 @@ class MissionsController extends AppController
             ->subject('Ordre de mission de ' . $prenom_send . ' ' . $nom_send . ' à valider')
             ->cc($email_send)
             ->setTransport('gmail')
-            // ->attachments(['mission_info' => '/Applications/MAMP/htdocs/PRD-Projet-LIFAT/cake3_7/webroot/'.$this->Missions->id.'pdf'])
             ->attachments(['ODM.pdf' => '/Applications/MAMP/htdocs/PRD-Projet-LIFAT/cake3_7/webroot/' . $this->Missions->id . '.pdf'])
             ->send();
     }
@@ -1155,45 +976,27 @@ class MissionsController extends AppController
     public function _sendPassager($id, $fileName, $commentaire_t, $nom, $prenom)
     {
         $this->Missions->id = $id;
-        // print_r($this->Missions->id);
         $this->Missions->Membres->id = array_column($this->Missions->find()->select(['responsable_id'])->where(['id' => $id])->all()->toArray(), 'responsable_id')[0];
         $this->Missions->Motifs->id = array_column($this->Missions->find()->select(['motif_id'])->where(['id' => $id])->all()->toArray(), 'motif_id')[0];
 
         print_r($this->Missions->Motifs->id);
-        // $this->Missions->Lieus->id = array_column($this->Missions->find()->select(['lieu_id'])->where(['id' => $id])->all()->toArray(),'lieu_id')[0];
         $this->Missions->Lieus->id = array_column($this->Missions->find()->select(['lieu_id'])->where(['id' => $id])->all()->toArray(), 'lieu_id')[0];
         print_r($this->Missions->Lieus->id);
         // récupère les emails des chefs d'équipe
-
         $result2 = $this->Missions->find()->contain('Membres', function (Query $q) {
             return $q->select(['membres.email']);})->where(['Missions.id' => $id])->all()->toList();
         $email_send = array_column(array_column($result2, 'membres'), 'email')[0];
-        // print_r($email_send);
-
-        // $result_5 = $this->Missions->find()->contain('Membres', function (Query $q) {
-        //     return $q ->select(['membres.email']);})->where(['Missions.id' => $id])->all()->toList();
-        // $email_to = array_column(array_column($result,'membres'),'email')[0];
 
         $result_3 = $this->Missions->find()->contain('Motifs', function (Query $q) {
             return $q->select(['Motifs.nom_motif']);})->where(['Missions.id' => $id])->all()->toList();
-        // print_r($result_3);
-        // print_r(array_column($result_3,'motifs'));
         $nommotif = array_column(array_column($result_3, 'motif'), 'nom_motif')[0];
 
-        // print_r($nommotif);
         $result_4 = $this->Missions->find()->contain('Lieus', function (Query $q) {
             return $q->select(['Lieus.nom_lieu']);})->where(['Missions.id' => $id])->all()->toList();
         $nomlieu = array_column(array_column($result_4, 'lieus'), 'nom_lieu')[0];
-        // print_r($nomlieu);
-        // $nommotif = array_column($this->Missions->find()->select(['nom_motif'])->where(['id' => $id])->all()->toArray(),'nom_motif')[0];
-        // $nomlieu = array_column($this->Missions->find()->select(['nom_lieu'])->where(['missions.id' => $id])->all()->toArray(),'nom_lieu')[0];
-        // print_r($id);
-        // print_r($this->Missions->find()->select(['date_depart'])->where(['id' => $id]));
+
         $date_d = array_column($this->Missions->find()->select(['date_depart'])->where(['id' => $id])->all()->toArray(), 'date_depart')[0]->format('d/m/Y');
         $date_r = array_column($this->Missions->find()->select(['date_retour'])->where(['id' => $id])->all()->toArray(), 'date_retour')[0]->format('d/m/Y');
-        // $commentaire_t = array_column($this->Missions->find()->select(['commentaire_transport'])->where(['id' => $id])->all()->toArray(),'commentaire_transport')[0];
-
-        // $this->_fileGeneration($mission->id);
 
         // Interaction avec le view
         $email = new Email();
@@ -1204,15 +1007,6 @@ class MissionsController extends AppController
         $email->set('date_depart', $date_d);
         $email->set('date_retour', $date_r);
         $email->set('commentaire', $commentaire_t);
-        // cake3_7/webroot/147.pdf
-        // $email->attachments(["OM.pdf" => './cake3_7/tmp/']);
-
-        // $email->profile(['from' => ['Site de gestion des OdM' => 'donotreply@odm.li.univ-tours.fr']]);
-        //  = 'Site de gestion des OdM <donotreply@odm.li.univ-tours.fr>';
-
-        // TransportFactory::setConfig('gmail', [
-        //     'url' => 'smtp://21707371t@gmail.com:CNMsb123@smtp.gmail.com:587?tls=true',
-        //     ]);
 
         return $email
             ->template('submit_om')
@@ -1222,14 +1016,13 @@ class MissionsController extends AppController
             ->subject('Ordre de mission de ' . $nom . ' ' . $prenom . ' à valider')
             // ->cc($email_send)
             ->setTransport('gmail')
-            // ->attachments(['mission_info' => '/Applications/MAMP/htdocs/PRD-Projet-LIFAT/cake3_7/webroot/'.$this->Missions->id.'pdf'])
             ->attachments(['ODM.pdf' => '/Applications/MAMP/htdocs/PRD-Projet-LIFAT/cake3_7/webroot/' . $fileName])
             ->send();
     }
 
-// /**
-    //     * validation of an mission orders
-    //     */
+    /**
+     * validation of an mission orders
+     */
     public function valid($id = null)
     {
 
@@ -1238,13 +1031,9 @@ class MissionsController extends AppController
             $mission = $this->Missions->get($id);
 
             $this->Missions->id = $id;
-            // print_r($mission->id);
             // if mission exist
-            // print_r(array_column($this->Missions->find()->select(['responsable_id'])->where(['id' => $id])->all()->toArray(),'responsable_id')[0]);
             if (array_column($this->Missions->find()->select(['responsable_id'])->where(['id' => $id])->all()->toArray(), 'responsable_id')[0] != 0) {
-                //if ($this->Mission->field('valide') == false) {
                 $etat = array_column($this->Missions->find()->select('etat')->where(['id' => $id])->all()->toArray(), 'etat')[0];
-                // print_r($etat);
                 if ($etat != 'valide') {
                     // financial element have to be set
                     if (empty($mission)) {
@@ -1281,55 +1070,30 @@ class MissionsController extends AppController
 
     }
 
-//     /**
-    //     * send mail to secretaries after confirmation from cheif team
-    //     * Load User model cause of the needed to know mail team cheif
-    //     **/
+    /**
+     * send mail to secretaries after confirmation from cheif team
+     * Load User model cause of the needed to know mail team cheif
+     **/
     public function _sendValidation($id)
     {
 
         $this->Missions->id = $id;
-        // print_r($this->Missions->id );
         $this->Missions->Membres->id = array_column($this->Missions->find()->select(['responsable_id'])->where(['id' => $id])->all()->toArray(), 'responsable_id')[0];
         $this->Missions->Motifs->id = array_column($this->Missions->find()->select(['motif_id'])->where(['id' => $id])->all()->toArray(), 'motif_id')[0];
         $this->Missions->Lieus->id = array_column($this->Missions->find()->select(['lieu_id'])->where(['id' => $id])->all()->toArray(), 'lieu_id')[0];
         $result_1 = $this->Missions->find()->contain('Membres', function (Query $q) {
             return $q->select(['membres.equipe_id']);})->where(['Missions.id' => $id])->all()->toList();
         $this->Missions->Membres->Equipes->id = array_column(array_column($result_1, 'membres'), 'equipe_id')[0];
-        // print_r($this->Missions->Membres->Equipes->id);
 
         // emails of secretaries
         $result_2 = $this->Missions->Membres->find()->select(['membres.email'])->where(['membres.role' => 'secretaire'])
             ->all()->toArray();
         $secretaries = array_column(array_column($result_2, 'membres'), 'email');
 
-        // $result_7 =     $this->Missions->Membres->find()->select(['membres.email'])->where(['membres.id'=> $this->Missions->Membres->id])
-        // ->all()->toArray();
-        // // $membreemail =
-        // print_r($result_7);
-
-        // $mails = "";
-        // $i = count($secretaries) - 1;
-        // foreach ($secretaries as $secretary => $mail ) {
-        //     if ( $i == 0 )
-        //         $mails .= $mail;
-        //     else
-        //         $mails .= $mail." , ";
-        //     $i--;
-        // }
-
         $mails = array();
         foreach ($secretaries as $secretary => $mail) {
             array_push($mails, $mail);
         }
-        // print_r($mails);
-
-        //Noms des secrétaires
-        // $secretaries = null;
-        // $secretaries = $this->Missions->User->find('list', array(
-        //     'fields' => array('User.first_name'),
-        //     'conditions' => array('User.role' => 'secretary')
-        //      ));
 
         $result_3 = $this->Missions->Membres->find()->select(['membres.email'])->where(['membres.role' => 'secretaire'])
             ->all()->toArray();
@@ -1346,26 +1110,19 @@ class MissionsController extends AppController
 
             $i--;
         }
-        //  print_r($secretaryNames);
 
         // emails of team cheifs
         $result_7 = $this->Missions->Membres->find()->select(['membres.email'])->where(['membres.role' => 'chef_equipe', 'membres.equipe_id' => $this->Missions->Membres->Equipes->id])
             ->all()->toArray();
-        // print_r($result_7);
         $cheifs = array_column(array_column($result_7, 'membres'), 'email')[0];
 
         // // Ajoute en cc l'utilisateur (s'il ne s'agit pas du chef car le chef est déjà en copie)
-        // if (array_search($this->Mission->User->field('email'), $ccMails) === FALSE)
-        //     array_push($ccMails, $this->Mission->User->field('email'));
 
         // generation of the OdM
         $tmpfname = tempnam("/tmp", "FOO");
         $tmpfname2 = tempnam("/tmp", "BAR");
-        //echo $tmpfname;
         $this->_fileGeneration($id, $tmpfname);
         $this->_fileValidGeneration($id, $tmpfname2);
-        // Génération du fichier texte
-        // $fp = @fopen($tmpfname2, "w+");
 
         $result = $this->Missions->find()->contain('Membres', function (Query $q) {
             return $q->select(['membres.nom']);})->where(['Missions.id' => $id])->all()->toList();
@@ -1378,13 +1135,10 @@ class MissionsController extends AppController
         $result2 = $this->Missions->find()->contain('Membres', function (Query $q) {
             return $q->select(['membres.email']);})->where(['Missions.id' => $id])->all()->toList();
         $email_send = array_column(array_column($result2, 'membres'), 'email')[0];
-        // print_r($email_send);
         $result_3 = $this->Missions->find()->contain('Motifs', function (Query $q) {
             return $q->select(['Motifs.nom_motif']);})->where(['Missions.id' => $id])->all()->toList();
-        // print_r(array_column($result_3,'motifs'));
         $nommotif = array_column(array_column($result_3, 'motif'), 'nom_motif')[0];
 
-        // print_r($nommotif);
         $result_4 = $this->Missions->find()->contain('Lieus', function (Query $q) {
             return $q->select(['Lieus.nom_lieu']);})->where(['Missions.id' => $id])->all()->toList();
         $nomlieu = array_column(array_column($result_4, 'lieus'), 'nom_lieu')[0];
@@ -1392,7 +1146,6 @@ class MissionsController extends AppController
         $var1 = $this->Missions->Membres->Equipes->find()->select(['Equipes.nom_equipe'])->where(['Equipes.id' => $this->Missions->Membres->Equipes->id])->all()->toArray();
         $nomequipe = array_column($var1, 'nom_equipe')[0];
 
-        // print_r($this->Missions->find()->select(['date_depart'])->where(['id' => $id]));
         $date_d = array_column($this->Missions->find()->select(['date_depart'])->where(['id' => $id])->all()->toArray(), 'date_depart')[0]->format('d/m/Y');
         $date_r = array_column($this->Missions->find()->select(['date_retour'])->where(['id' => $id])->all()->toArray(), 'date_retour')[0]->format('d/m/Y');
         $commentaire_t = array_column($this->Missions->find()->select(['commentaire_transport'])->where(['id' => $id])->all()->toArray(), 'commentaire_transport')[0];
@@ -1405,15 +1158,10 @@ class MissionsController extends AppController
         $lieu = $nomlieu;
         $motif = $nommotif;
 
-        // fwrite($fp, $nom." ".$prenom."\t".$equipe."\t\t\t".$date_d."\t".$date_r."\t".$lieu."\t".$motif);
-        // fclose($fp);
-
-        //cc给chef自己一份，cc给membre一份
+        //cc a chef et createur de mission
         $ccMails = array();
         array_push($ccMails, $email_send);
         array_push($ccMails, $cheifs);
-        // print_r($ccMails);
-        // print_r('ccMails'+$ccMails);
 
         // Interaction avec le view
         $email = new Email();
@@ -1426,25 +1174,19 @@ class MissionsController extends AppController
         $email->set('commentaire', $commentaire_t);
         $email->set('secretaryName', $secretaryNames);
 
-        // cake3_7/webroot/147.pdf
-        // $email->attachments(["OM.pdf" => './cake3_7/tmp/']);
-
         // $email->profile(['from' => ['Site de gestion des OdM' => 'donotreply@odm.li.univ-tours.fr']]);
         //  = 'Site de gestion des OdM <donotreply@odm.li.univ-tours.fr>';
         TransportFactory::setConfig('gmail', [
             'url' => 'smtp://21707371t@gmail.com:sbCNM123@smtp.gmail.com:587?tls=true',
         ]);
-        // $nom_pdf =
         return $email
             ->template('validation_om')
             ->emailFormat('text')
             ->from('21707371t@gmail.com')
-            // ->to('qingling.meng@etu.univ-tours.fr')
             ->to($mails)
             ->subject('Ordre de mission de ' . $prenom_send . ' ' . $nom_send . ' validé')
             ->cc($ccMails)
             ->setTransport('gmail')
-            // ->attachments(["OM.pdf" => $tmpfname, "VM.pdf" => $tmpfname2]);
             ->attachments(["DOM.pdf" => $tmpfname, "VOM.pdf" => $tmpfname2])
             ->send();
 
@@ -1453,13 +1195,13 @@ class MissionsController extends AppController
         unlink($tmpfname2);
     }
 
-//     /**
-    //     * liste des missions à valider par le chef d'équipe
-    //     **/
+    /**
+     * liste des missions à valider par le chef d'équipe
+     **/
     public function needValidation()
     {
         if ($this->Auth->user('role') == 'admin' || $this->Auth->user('role') == 'chef_equipe') {
-            //admin看的是自己所在的equipe生效的mission
+
             $this->set('searchLabelExtra', "Numéro");
 
             $query = $this->Missions->find('search', ['search' => $this->request->getQueryParams()])
@@ -1472,22 +1214,9 @@ class MissionsController extends AppController
             ];
             $this->set('missions', $this->paginate($query));
         } else {
-            //$this->Session->setFlash('Permission insuffisante pour afficher la liste des missions à valider','flash_failure');
             $this->Flash->error(__('Permission insuffisante pour afficher la liste des missions à valider'));
             $this->redirect(array('controller' => 'missions', 'action' => 'index'));
         }
-
-        // print_r(phpinfo());
-        // $this->set('searchLabelExtra', "Numéro et/ou État du mission");
-        // $query = $this->Missions
-        // // Use the plugins 'search' custom finder and pass in the processed query params
-        //     ->find('search', ['search' => $this->request->getQueryParams()])
-        //     ->where(['responsable_id' => $this->Auth->user('id')]);
-
-        //  $this->paginate = [
-        //      'contain' => ['Projets', 'Lieus', 'Motifs'],
-        //  ];
-        //  $this->set('missions', $this->paginate($query));
 
     }
 
@@ -1511,7 +1240,6 @@ class MissionsController extends AppController
         } elseif ($this->Auth->user('role') == 'admin' || $this->Auth->user('role') == 'chef_equipe') {
             $this->set('searchLabelExtra', "Numéro");
 
-            //admin看的是自己所在的equipe生效的mission
             $query = $this->Missions->find('search', ['search' => $this->request->getQueryParams()])
                 ->contain('Membres', function (Query $q) {
                     return $q;})
@@ -1551,19 +1279,15 @@ class MissionsController extends AppController
 
         $result_3 = $this->Missions->find()->contain('Motifs', function (Query $q) {
             return $q->select(['Motifs.nom_motif']);})->where(['Missions.id' => $id])->all()->toList();
-        // print_r($result_3);
         $nommotif = array_column(array_column($result_3, 'motif'), 'nom_motif')[0];
-        // print_r($nommotif);
         $result_4 = $this->Missions->find()->contain('Lieus', function (Query $q) {
             return $q->select(['Lieus.nom_lieu']);})->where(['Missions.id' => $id])->all()->toList();
         $nomlieu = array_column(array_column($result_4, 'lieus'), 'nom_lieu')[0];
-        // print_r($nomlieu);
 
         $date_d = array_column($this->Missions->find()->select(['date_depart'])->where(['id' => $id])->all()->toArray(), 'date_depart')[0]->format('d/m/Y');
         $date_r = array_column($this->Missions->find()->select(['date_retour'])->where(['id' => $id])->all()->toArray(), 'date_retour')[0]->format('d/m/Y');
         $commentaire_t = array_column($this->Missions->find()->select(['commentaire_transport'])->where(['id' => $id])->all()->toArray(), 'commentaire_transport')[0];
 
-        // $this->Email->to = $this->Mission->User->field('email');
         // Interaction avec le view
         $email = new Email();
         $email->set('nom', $nom_send);
@@ -1582,7 +1306,6 @@ class MissionsController extends AppController
             ->emailFormat('text')
             ->from('21707371t@gmail.com')
             ->to($email_send)
-            // ->to('mql951002@gmail.com')
             ->subject('Ordre de mission de ' . $nommotif)
             ->setTransport('gmail')
             ->send();
