@@ -12,7 +12,7 @@ echo $this->Form->end();
 ?>
 	</fieldset>
 </div>
-<!--
+
 <hr>
 <?php
 
@@ -42,5 +42,5 @@ if (isset($phpCAS['membre'])) {
 	</p>
 	<?php
 }
-?> -->
+?>
 
