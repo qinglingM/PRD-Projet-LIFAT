@@ -861,7 +861,7 @@ class MissionsController extends AppController
     }
 
     // Utilisé par la fonction edit(), permet d'estimer le nombre de repas et de nuité à partir des dates rentrées par l'utilisateur
-    public function _calculNombreRepasNuite($fi, $dateFin)
+    public function _calculNombreRepasNuite($dateDebut, $dateFin)
     {
         $diff = date_diff($dateDebut, $dateFin);
         $nombreNuite = $diff->days;
