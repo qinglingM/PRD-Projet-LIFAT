@@ -279,7 +279,7 @@ class MissionsController extends AppController
                         // }
                     }
 
-                    $mission->responsable_id = $this->Auth->user('id');
+                    // $mission->responsable_id = $this->Auth->user('id');
 
                     $commentaire_t = $this->request->getData()['commentaire_transport'];
 
@@ -356,7 +356,7 @@ class MissionsController extends AppController
                             //generate pdf
                             $fileName = $mission->id . '.pdf';
                             $pdf = $this->_fileGeneration($mission->id, $fileName);
-                            if ($this->_sendSubmit($mission->id)) {
+                            if ($this->_sendConfirmModif($mission->id)) {
                                 // On récupère motif_id et lieu_id pour les associer aux ordres de missions des passagers
                                 $motifId = $mission->motif_id;
                                 $lieuId = $mission->lieu_id;
@@ -397,7 +397,7 @@ class MissionsController extends AppController
                                     $user['pf_vehicule'] = $this->request->getData()['pf_vehicule'];
                                     $this->Membres->save($user);
                                 }
-                                $this->Flash->success(__('Mission modifié et soumis au chef d\'équipe.'));
+                                $this->Flash->success(__('Mission modifié et e créateur a été prévenu.'));
                                 return $this->redirect(['action' => 'index']);
                             }
                         } else {
@@ -1266,9 +1266,13 @@ class MissionsController extends AppController
         $this->Missions->Motifs->id = array_column($this->Missions->find()->select(['motif_id'])->where(['id' => $id])->all()->toArray(), 'motif_id')[0];
         $this->Missions->Lieus->id = array_column($this->Missions->find()->select(['lieu_id'])->where(['missions.id' => $id])->all()->toArray(), 'lieu_id')[0];
 
-        $result = $this->Missions->find()->contain('Membres', function (Query $q) {
-            return $q->select(['membres.nom']);})->where(['Missions.id' => $id])->all()->toList();
-        $nom_send = array_column(array_column($result, 'membres'), 'nom')[0];
+        print_r($this->Missions->Membres->id);
+        $query = $this->Missions->Membres->find()->select('nom')->where(['id' => $this->Missions->Membres->id])->all()->toList();
+        $nom_send = array_column($query, 'nom')[0];
+
+        // $result = $this->Missions->find()->contain('Membres', function (Query $q) {
+        //     return $q->select(['membres.nom']);})->where(['Missions.id' => $id])->all()->toList();
+        // $nom_send = array_column(array_column($result, 'membres'), 'nom')[0];
         $result1 = $this->Missions->find()->contain('Membres', function (Query $q) {
             return $q->select(['membres.prenom']);})->where(['Missions.id' => $id])->all()->toList();
         $prenom_send = array_column(array_column($result1, 'membres'), 'prenom')[0];
@@ -1297,9 +1301,9 @@ class MissionsController extends AppController
         $email->set('date_depart', $date_d);
         $email->set('date_retour', $date_r);
         $email->set('commentaire', $commentaire_t);
-        TransportFactory::setConfig('gmail', [
-            'url' => 'smtp://21707371t@gmail.com:sbCNM123@smtp.gmail.com:587?tls=true',
-        ]);
+        // TransportFactory::setConfig('gmail', [
+        //     'url' => 'smtp://21707371t@gmail.com:sbCNM123@smtp.gmail.com:587?tls=true',
+        // ]);
 
         return $email
             ->template('modification_odm')

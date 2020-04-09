@@ -42,7 +42,7 @@ echo $this->element('searchbar');
 				<td><?=h($mission->date_depart)?></td>
 				<td><?=h($mission->date_retour)?></td>
 				<td class="actions">
-					<?=$this->Html->link(__('Details'), ['action' => 'generation', $mission->id])?>
+					<?=$this->Html->link(__('Details'), ['action' => 'generationValid', $mission->id])?>
 				</td>
 			</tr>
         <?php endforeach;?>
