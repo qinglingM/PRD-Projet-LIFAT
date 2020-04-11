@@ -397,7 +397,7 @@ class MissionsController extends AppController
                                     $user['pf_vehicule'] = $this->request->getData()['pf_vehicule'];
                                     $this->Membres->save($user);
                                 }
-                                $this->Flash->success(__('Mission modifié et e créateur a été prévenu.'));
+                                $this->Flash->success(__('Mission modifié et le créateur a été prévenu.'));
                                 return $this->redirect(['action' => 'index']);
                             }
                         } else {
@@ -467,7 +467,7 @@ class MissionsController extends AppController
                 }
                 if ($this->Missions->delete($mission)) {
 
-                    $this->Flash->success(__('The mission has been deleted.'));
+                    $this->Flash->success(__('La mission a été supprimée.'));
 
                 } else {
                     $this->Flash->error(__('The mission could not be deleted. Please, try again.'));

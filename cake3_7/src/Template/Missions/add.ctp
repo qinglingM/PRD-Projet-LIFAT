@@ -42,11 +42,11 @@ echo $this->Form->control('nouveau_lieu', ['label' => 'Nouveau lieu (si non pré
 		<?php
 echo $this->Form->control('date_depart', ['label' => 'Date et heure départ du départ', 'type' => 'datetime', 'empty' => true]);
 // echo $this->Form->control('depart_arrive', ['label' => 'Date et heure arrivée du départ', 'type' => 'datetime', 'empty' => true]);
-echo $this->Form->control('date_depart_arrive', ['label' => 'Date et heure du départ arrive', 'type' => 'datetime', 'empty' => true]);
+echo $this->Form->control('date_depart_arrive', ['label' => 'Date et heure arrive du départ ', 'type' => 'datetime', 'empty' => true]);
 
 echo $this->Form->control('date_retour', ['label' => 'Date et heure départ du retour', 'type' => 'datetime', 'empty' => true]);
 // echo $this->Form->control('retour_arrive', ['label' => 'Date et heure arrivée du retour', 'type' => 'datetime', 'empty' => true]);
-echo $this->Form->control('date_retour_arrive', ['label' => 'Date et heure du retour arrive', 'type' => 'datetime', 'empty' => true]);
+echo $this->Form->control('date_retour_arrive', ['label' => 'Date et heure arrive du retour ', 'type' => 'datetime', 'empty' => true]);
 
 // echo $this->Form->control('test_field', ['label' => 'Test field ']);
 
