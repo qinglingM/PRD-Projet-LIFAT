@@ -5,7 +5,7 @@ Dans le ficheir cake3_7 :
 
 Dans le ficheir Documents : 
   - Rapport_PRD_QinglingMENG_Groupe1.pdf -> Le rapport final 
-  - Slide_LIFATManager.pdf -> Le slide pour montrer les resultats : il convient le Vidéo montrée
+  - Slide_LIFATManager.pdf -> Le slide pour montrer les resultats : il convient les vidéos montrée (Veuilliez telecharger le slide pour acceder les liens)
   - Poster_PRD_QinglingMENG.pdf -> Le poster
   - Cahier de test.pdf 
   - Documentation d'exploitation.pdf
